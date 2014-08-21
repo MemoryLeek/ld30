@@ -1,14 +1,19 @@
 #include <assert.h>
+#include <algorithm>
 #include <iostream>
+#include <vector>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "states/GameState.h"
 #include "states/SplashState.h"
 #include "ui/Label.h"
 
 int main(int argc, char *argv[])
 {
+	std::vector<std::string> arguments(argv + 1, argv + argc);
+
 	if(SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO) != 0)
 	{
 		std::cout << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
@@ -33,7 +38,15 @@ int main(int argc, char *argv[])
 	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	assert(renderer);
 
-	IState *currentState = new SplashState(renderer);
+	IState *currentState;
+	if(std::find(arguments.begin(), arguments.end(), "--nosplash") != arguments.end())
+	{
+		currentState = new GameState(renderer);
+	}
+	else
+	{
+		currentState = new SplashState(renderer);
+	}
 
 	Ui::Label fpsLabel(5, 0, "", font, renderer);
 	double lastFpsUpdate = 0;

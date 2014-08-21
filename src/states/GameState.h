@@ -5,6 +5,8 @@
 
 #include "IState.h"
 
+class Sprite;
+
 class GameState : public IState
 {
 	public:
@@ -15,6 +17,8 @@ class GameState : public IState
 
 	private:
 		SDL_Renderer *const m_renderer;
+
+		Sprite *m_character;
 };
 
 #endif // SPLASHSTATE_H
