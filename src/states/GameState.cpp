@@ -20,7 +20,12 @@ GameState::~GameState()
 
 IState *GameState::update(double delta)
 {
-	m_renderer.setCamera(m_character);
+	// Create camera node 100px in front of character
+	Node cameraNode(100, 0, 0, m_character);
+	m_renderer.setCamera(&cameraNode);
+
+	// Rotate the character to verify that it actually works
+	m_character->setAngle(m_character->angle() + delta * 100);
 
 	m_character->draw(m_renderer);
 
