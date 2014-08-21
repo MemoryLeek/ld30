@@ -23,7 +23,7 @@ namespace Ui
 
 	void Label::setText(const std::string &text)
 	{
-		SDL_Surface *surface = TTF_RenderText_Solid(m_font, text.c_str(), {255, 255, 255, SDL_ALPHA_OPAQUE});
+		SDL_Surface *surface = TTF_RenderText_Solid(m_font, text.c_str(), {0, 0, 0, SDL_ALPHA_OPAQUE});
 		if(!surface)
 		{
 			std::cout << "Failed to create text surface: " << TTF_GetError() << std::endl;
@@ -43,7 +43,7 @@ namespace Ui
 		}
 
 		// Fetch width and height to use in draw
-		SDL_QueryTexture(m_texture, NULL, NULL, &m_width, &m_height);
+		SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
 
 		// Text is now rendered to texture, delete the surface
 		SDL_FreeSurface(surface);
@@ -57,6 +57,6 @@ namespace Ui
 		}
 
 		const SDL_Rect dest = {m_x, m_y, m_width, m_height};
-		SDL_RenderCopy(renderer, m_texture, NULL, &dest);
+		SDL_RenderCopy(renderer, m_texture, nullptr, &dest);
 	}
 }

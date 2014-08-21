@@ -10,13 +10,18 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCES
 	main.cpp
-	Window.cpp
+
+	states/GameState.cpp
+	states/SplashState.cpp
 
 	ui/Label.cpp
 )
 
 set(HEADERS
-	Window.h
+	IState.h
+
+	states/GameState.h
+	states/SplashState.h
 
 	ui/Label.h
 )

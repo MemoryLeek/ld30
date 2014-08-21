@@ -1,9 +1,10 @@
+#include <assert.h>
 #include <iostream>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "Window.h"
+#include "states/SplashState.h"
 #include "ui/Label.h"
 
 int main(int argc, char *argv[])
@@ -20,8 +21,6 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	Window window(800, 600, "LD30");
-
 	TTF_Font *font = TTF_OpenFont("resources/ttf/Oxygen-Regular.ttf", 10);
 	if(!font)
 	{
@@ -29,13 +28,20 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	Ui::Label fpsLabel(5, 0, "", font, window.renderer());
+	SDL_Window *window = SDL_CreateWindow("LD30", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_OPENGL);
+	assert(window);
+	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	assert(renderer);
+
+	IState *currentState = new SplashState(renderer);
+
+	Ui::Label fpsLabel(5, 0, "", font, renderer);
 	double lastFpsUpdate = 0;
 
 	const uint64_t ticksPerSecond = SDL_GetPerformanceFrequency();
 	bool debugText = false;
 	uint64_t lastTicks = SDL_GetPerformanceCounter();
-	while(window.isOpen())
+	for(bool shouldRun = true; shouldRun && currentState;)
 	{
 		const uint64_t currentTicks = SDL_GetPerformanceCounter();
 		const double delta = (double)(currentTicks - lastTicks) / ticksPerSecond;
@@ -46,7 +52,7 @@ int main(int argc, char *argv[])
 		{
 			if(event.type == SDL_QUIT)
 			{
-				window.close();
+				shouldRun = false;
 			}
 			else if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_F12)
 			{
@@ -54,7 +60,15 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		window.clear();
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+		SDL_RenderClear(renderer);
+
+		IState *newState = currentState->update(delta);
+		if(newState != currentState)
+		{
+			delete currentState;
+			currentState = newState;
+		}
 
 		if(debugText)
 		{
@@ -65,11 +79,14 @@ int main(int argc, char *argv[])
 				fpsLabel.setText(std::to_string(fps).append(" FPS"));
 				lastFpsUpdate = 0;
 			}
-			fpsLabel.draw(window.renderer());
+			fpsLabel.draw(renderer);
 		}
 
-		window.flip();
+		SDL_RenderPresent(renderer);
 	}
+
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 
 	TTF_Quit();
 	SDL_Quit();
