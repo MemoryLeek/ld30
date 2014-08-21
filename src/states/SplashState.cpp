@@ -5,7 +5,7 @@
 #include "GameState.h"
 #include "SplashState.h"
 
-SplashState::SplashState(SDL_Renderer *renderer)
+SplashState::SplashState(Renderer &renderer)
 	: m_renderer(renderer)
 	, m_splashTexture(nullptr)
 	, m_totalTime(0)
@@ -25,12 +25,8 @@ SplashState::SplashState(SDL_Renderer *renderer)
 	int textureHeight;
 	SDL_QueryTexture(m_splashTexture, nullptr, nullptr, &textureWidth, &textureHeight);
 
-	int windowWidth;
-	int windowHeight;
-	SDL_GetRendererOutputSize(m_renderer, &windowWidth, &windowHeight);
-
-	m_destination.x = windowWidth / 2 - textureWidth / 2;
-	m_destination.y = windowHeight / 2 - textureHeight / 2;
+	m_destination.x = renderer.width() / 2 - textureWidth / 2;
+	m_destination.y = renderer.height() / 2 - textureHeight / 2;
 	m_destination.w = textureWidth;
 	m_destination.h = textureHeight;
 }

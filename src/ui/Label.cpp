@@ -1,10 +1,11 @@
 #include <iostream>
 
 #include "Label.h"
+#include "Renderer.h"
 
 namespace Ui
 {
-	Label::Label(int x, int y, const std::string &text, TTF_Font *font, SDL_Renderer *renderer)
+	Label::Label(int x, int y, const std::string &text, TTF_Font *font, Renderer &renderer)
 		: m_x(x)
 		, m_y(y)
 		, m_width(0)
@@ -49,14 +50,14 @@ namespace Ui
 		SDL_FreeSurface(surface);
 	}
 
-	void Label::draw(SDL_Renderer *renderer) const
+	void Label::draw(Renderer &renderer) const
 	{
 		if(!m_texture)
 		{
 			return;
 		}
 
-		const SDL_Rect dest = {m_x, m_y, m_width, m_height};
+		const SDL_Rect dest = {m_x - renderer.cameraOffsetX(), m_y - renderer.cameraOffsetY(), m_width, m_height};
 		SDL_RenderCopy(renderer, m_texture, nullptr, &dest);
 	}
 }

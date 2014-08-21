@@ -35,8 +35,11 @@ int main(int argc, char *argv[])
 
 	SDL_Window *window = SDL_CreateWindow("LD30", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_OPENGL);
 	assert(window);
-	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	assert(renderer);
+	SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	assert(sdlRenderer);
+
+	// Wrap the renderer in our own class to manage camera etc.
+	Renderer renderer(sdlRenderer);
 
 	IState *currentState;
 	if(std::find(arguments.begin(), arguments.end(), "--nosplash") != arguments.end())
@@ -82,6 +85,9 @@ int main(int argc, char *argv[])
 			delete currentState;
 			currentState = newState;
 		}
+
+		// Clear camera before drawing UI
+		renderer.setCamera(nullptr);
 
 		if(debugText)
 		{

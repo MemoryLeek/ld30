@@ -3,7 +3,7 @@
 #include "GameState.h"
 #include "Sprite.h"
 
-GameState::GameState(SDL_Renderer *renderer)
+GameState::GameState(Renderer &renderer)
 	: m_renderer(renderer)
 {
 	SDL_Surface *image = IMG_Load("resources/sprites/standing.png");
@@ -20,6 +20,8 @@ GameState::~GameState()
 
 IState *GameState::update(double delta)
 {
+	m_renderer.setCamera(m_character);
+
 	m_character->draw(m_renderer);
 
 	return this;

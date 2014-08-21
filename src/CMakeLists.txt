@@ -11,6 +11,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCES
 	main.cpp
 	Node.cpp
+	Renderer.cpp
 	Sprite.cpp
 
 	states/GameState.cpp
@@ -22,6 +23,7 @@ set(SOURCES
 set(HEADERS
 	IState.h
 	Node.h
+	Renderer.h
 	Sprite.h
 
 	states/GameState.h
@@ -32,4 +34,4 @@ set(HEADERS
 
 include_directories(${CMAKE_SOURCE_DIR})
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
-target_link_libraries(${PROJECT_NAME} ${BOX2D_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})

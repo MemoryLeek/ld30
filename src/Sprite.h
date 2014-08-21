@@ -5,12 +5,14 @@
 
 #include "Node.h"
 
+class Renderer;
+
 class Sprite : public Node
 {
 	public:
 		Sprite(float x, float y, float angle, SDL_Texture *texture);
 
-		void draw(SDL_Renderer *renderer);
+		void draw(Renderer &renderer);
 
 	private:
 		SDL_Texture *m_texture;
