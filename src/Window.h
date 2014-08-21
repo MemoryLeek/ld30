@@ -17,6 +17,8 @@ class Window
 		void clear();
 		void flip();
 
+		SDL_Renderer *renderer() const;
+
 	private:
 		SDL_Window *m_window;
 		SDL_Renderer *m_renderer;

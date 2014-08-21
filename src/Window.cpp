@@ -39,3 +39,8 @@ void Window::flip()
 {
 	SDL_RenderPresent(m_renderer);
 }
+
+SDL_Renderer *Window::renderer() const
+{
+	return m_renderer;
+}
