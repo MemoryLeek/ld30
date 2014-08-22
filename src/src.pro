@@ -16,7 +16,11 @@ HEADERS += IState.h \
            states/GameState.h \
            states/SplashState.h \
            ui/Label.h \
-    StateHandler.h
+    StateHandler.h \
+    IDrawable.h \
+    states/MenuState.h \
+    states/MainMenuState.h \
+    states/MenuItem.h
 SOURCES += main.cpp \
            Node.cpp \
            Renderer.cpp \
@@ -24,4 +28,7 @@ SOURCES += main.cpp \
            states/GameState.cpp \
            states/SplashState.cpp \
 		   ui/Label.cpp \
-    StateHandler.cpp
+    StateHandler.cpp \
+    states/MainMenuState.cpp \
+    states/MenuItem.cpp \
+    states/MenuState.cpp

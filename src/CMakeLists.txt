@@ -17,6 +17,9 @@ set(SOURCES
 
 	states/GameState.cpp
 	states/SplashState.cpp
+	states/MenuState.cpp
+	states/MainMenuState.cpp
+	states/MenuItem.cpp
 
 	ui/Label.cpp
 )
@@ -30,6 +33,9 @@ set(HEADERS
 
 	states/GameState.h
 	states/SplashState.h
+	states/MenuState.h
+	states/MainMenuState.h
+	states/MenuItem.h
 
 	ui/Label.h
 )

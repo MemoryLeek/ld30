@@ -9,8 +9,9 @@
 #include "Renderer.h"
 #include "StateHandler.h"
 
-#include "states/GameState.h"
+#include "states/MainMenuState.h"
 #include "states/SplashState.h"
+
 #include "ui/Label.h"
 
 int main(int argc, char *argv[])
@@ -22,6 +23,9 @@ int main(int argc, char *argv[])
 		std::cout << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
 		return -1;
 	}
+
+//	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+//	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 16);
 
 	if(TTF_Init() != 0)
 	{
@@ -47,7 +51,7 @@ int main(int argc, char *argv[])
 
 	if(std::find(arguments.begin(), arguments.end(), "--nosplash") != arguments.end())
 	{
-		stateHandler.changeState<GameState>();
+		stateHandler.changeState<MainMenuState>();
 	}
 	else
 	{

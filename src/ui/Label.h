@@ -5,11 +5,11 @@
 
 #include <SDL2/SDL_ttf.h>
 
-class Renderer;
+#include "IDrawable.h"
 
 namespace Ui
 {
-	class Label
+	class Label : public IDrawable
 	{
 		public:
 			Label(int x, int y, const std::string &text, TTF_Font *font, Renderer &renderer);
@@ -17,7 +17,7 @@ namespace Ui
 
 			void setText(const std::string &text);
 
-			void draw(Renderer &renderer) const;
+			void draw(Renderer &renderer) override;
 
 		private:
 			int m_x;

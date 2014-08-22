@@ -50,7 +50,7 @@ namespace Ui
 		SDL_FreeSurface(surface);
 	}
 
-	void Label::draw(Renderer &renderer) const
+	void Label::draw(Renderer &renderer)
 	{
 		if(!m_texture)
 		{

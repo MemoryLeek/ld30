@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL_image.h>
 
-#include "GameState.h"
+#include "MainMenuState.h"
 #include "SplashState.h"
 #include "StateHandler.h"
 #include "Renderer.h"
@@ -66,7 +66,7 @@ void SplashState::onKeyDown(SDL_Keycode keyCode)
 
 void SplashState::onKeyUp(SDL_Keycode keyCode)
 {
-	m_stateHandler.changeState<GameState>();
+	m_stateHandler.changeState<MainMenuState>();
 }
 
 void SplashState::skip()
