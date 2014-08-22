@@ -4,17 +4,25 @@
 #include <SDL2/SDL_render.h>
 
 #include "IState.h"
-#include "Renderer.h"
+
+class StateHandler;
+class Renderer;
 
 class SplashState : public IState
 {
 	public:
-		SplashState(Renderer &renderer);
+		SplashState(StateHandler &stateHandler, Renderer &renderer);
 		~SplashState();
 
-		IState *update(double delta) override;
+		bool update(double delta) override;
+
+		void onKeyDown(SDL_Keycode keyCode) override;
+		void onKeyUp(SDL_Keycode keyCode) override;
 
 	private:
+		void skip();
+
+		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
 		SDL_Texture *m_splashTexture;
 

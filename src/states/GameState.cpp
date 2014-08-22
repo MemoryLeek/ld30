@@ -2,9 +2,13 @@
 
 #include "GameState.h"
 #include "Sprite.h"
+#include "StateHandler.h"
+#include "Renderer.h"
 
-GameState::GameState(Renderer &renderer)
-	: m_renderer(renderer)
+GameState::GameState(StateHandler &stateHandler, Renderer &renderer)
+	: m_stateHandler(stateHandler)
+	, m_renderer(renderer)
+	, m_running(true)
 {
 	SDL_Surface *image = IMG_Load("resources/sprites/standing.png");
 	// texture WILL LEAK, cba to properly free it for this simple test
@@ -18,7 +22,7 @@ GameState::~GameState()
 {
 }
 
-IState *GameState::update(double delta)
+bool GameState::update(double delta)
 {
 	// Create camera node 100px in front of character
 	Node cameraNode(100, 0, 0, m_character);
@@ -29,5 +33,23 @@ IState *GameState::update(double delta)
 
 	m_character->draw(m_renderer);
 
-	return this;
+	return m_running;
+}
+
+void GameState::onKeyDown(SDL_Keycode keyCode)
+{
+	switch (keyCode)
+	{
+		case SDLK_ESCAPE:
+		{
+			m_running = false;
+
+			break;
+		}
+	}
+}
+
+void GameState::onKeyUp(SDL_Keycode keyCode)
+{
+
 }

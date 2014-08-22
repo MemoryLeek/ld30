@@ -1,3 +1,10 @@
 src/build/
+src/CMakeFiles
 
+Makefile
+CMakeCache.txt
+ld30
+
+*.o
 *.user
+*.cmake

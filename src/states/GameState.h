@@ -4,22 +4,29 @@
 #include <SDL2/SDL_render.h>
 
 #include "IState.h"
-#include "Renderer.h"
 
 class Sprite;
+class Renderer;
+class StateHandler;
 
 class GameState : public IState
 {
 	public:
-		GameState(Renderer &renderer);
+		GameState(StateHandler &stateHandler, Renderer &renderer);
 		~GameState();
 
-		IState *update(double delta) override;
+		bool update(double delta) override;
+
+		void onKeyDown(SDL_Keycode keyCode) override;
+		void onKeyUp(SDL_Keycode keyCode) override;
 
 	private:
+		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
 
 		Sprite *m_character;
+
+		bool m_running;
 };
 
 #endif // SPLASHSTATE_H

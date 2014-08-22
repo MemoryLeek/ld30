@@ -13,6 +13,7 @@ set(SOURCES
 	Node.cpp
 	Renderer.cpp
 	Sprite.cpp
+	StateHandler.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -25,6 +26,7 @@ set(HEADERS
 	Node.h
 	Renderer.h
 	Sprite.h
+	StateHandler.h
 
 	states/GameState.h
 	states/SplashState.h

@@ -6,6 +6,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "Renderer.h"
+#include "StateHandler.h"
+
 #include "states/GameState.h"
 #include "states/SplashState.h"
 #include "ui/Label.h"
@@ -40,15 +43,15 @@ int main(int argc, char *argv[])
 
 	// Wrap the renderer in our own class to manage camera etc.
 	Renderer renderer(sdlRenderer);
+	StateHandler stateHandler(renderer);
 
-	IState *currentState;
 	if(std::find(arguments.begin(), arguments.end(), "--nosplash") != arguments.end())
 	{
-		currentState = new GameState(renderer);
+		stateHandler.changeState<GameState>();
 	}
 	else
 	{
-		currentState = new SplashState(renderer);
+		stateHandler.changeState<SplashState>();
 	}
 
 	Ui::Label fpsLabel(5, 0, "", font, renderer);
@@ -57,34 +60,56 @@ int main(int argc, char *argv[])
 	const uint64_t ticksPerSecond = SDL_GetPerformanceFrequency();
 	bool debugText = false;
 	uint64_t lastTicks = SDL_GetPerformanceCounter();
-	for(bool shouldRun = true; shouldRun && currentState;)
+	for(bool shouldRun = true; shouldRun;)
 	{
 		const uint64_t currentTicks = SDL_GetPerformanceCounter();
 		const double delta = (double)(currentTicks - lastTicks) / ticksPerSecond;
 		lastTicks = currentTicks;
 
 		SDL_Event event;
+
 		while(SDL_PollEvent(&event))
 		{
-			if(event.type == SDL_QUIT)
+			switch (event.type)
 			{
-				shouldRun = false;
-			}
-			else if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_F12)
-			{
-				debugText = !debugText;
+				case SDL_QUIT:
+				{
+					shouldRun = false;
+
+					break;
+				}
+
+				case SDL_KEYDOWN:
+				{
+					stateHandler
+						.currentState()
+						.onKeyDown(event.key.keysym.sym);
+
+					if (event.key.keysym.sym == SDLK_F11) // Jag har yakuake på F12
+					{
+						debugText = !debugText;
+					}
+
+					break;
+				}
+
+				case SDL_KEYUP:
+				{
+					stateHandler
+						.currentState()
+						.onKeyUp(event.key.keysym.sym);
+
+					break;
+				}
 			}
 		}
 
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 
-		IState *newState = currentState->update(delta);
-		if(newState != currentState)
-		{
-			delete currentState;
-			currentState = newState;
-		}
+		shouldRun &= stateHandler
+			.currentState()
+			.update(delta);
 
 		// Clear camera before drawing UI
 		renderer.setCamera(nullptr);

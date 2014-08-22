@@ -4,9 +4,12 @@
 
 #include "GameState.h"
 #include "SplashState.h"
+#include "StateHandler.h"
+#include "Renderer.h"
 
-SplashState::SplashState(Renderer &renderer)
-	: m_renderer(renderer)
+SplashState::SplashState(StateHandler &stateHandler, Renderer &renderer)
+	: m_stateHandler(stateHandler)
+	, m_renderer(renderer)
 	, m_splashTexture(nullptr)
 	, m_totalTime(0)
 {
@@ -36,11 +39,11 @@ SplashState::~SplashState()
 	SDL_DestroyTexture(m_splashTexture);
 }
 
-IState *SplashState::update(double delta)
+bool SplashState::update(double delta)
 {
 	if(!m_splashTexture)
 	{
-		return this;
+		return true;
 	}
 
 	// Fade in texture over time
@@ -48,11 +51,25 @@ IState *SplashState::update(double delta)
 	SDL_SetTextureAlphaMod(m_splashTexture, alpha);
 	SDL_RenderCopy(m_renderer, m_splashTexture, NULL, &m_destination);
 
-	m_totalTime += delta;
-	if(m_totalTime > 2)
+	if ((m_totalTime += delta) > 2)
 	{
-		return new GameState(m_renderer);
+		skip();
 	}
 
-	return this;
+	return true;
+}
+
+void SplashState::onKeyDown(SDL_Keycode keyCode)
+{
+	skip();
+}
+
+void SplashState::onKeyUp(SDL_Keycode keyCode)
+{
+	m_stateHandler.changeState<GameState>();
+}
+
+void SplashState::skip()
+{
+
 }
