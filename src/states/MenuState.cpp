@@ -27,7 +27,7 @@ bool MenuState::update(double delta)
 		SDL_QueryTexture(texture, nullptr, nullptr, &dest.w, &dest.h);
 
 		dest.x = (m_renderer.width() - dest.w) / 2;
-		dest.y = (m_renderer.height() - (values.size() - i) * (dest.h + PADDING)) / 2;
+		dest.y = (m_renderer.height() - values.size() * dest.h) / 2 + i * dest.h;
 
 		SDL_RenderCopy(m_renderer, texture, nullptr, &dest);
 		SDL_FreeSurface(surface);
@@ -71,6 +71,13 @@ void MenuState::onKeyDown(SDL_Keycode keyCode)
 
 			break;
 		}
+
+		case SDLK_ESCAPE:
+		{
+			cancel();
+
+			break;
+		}
 	}
 }
 
@@ -82,4 +89,9 @@ void MenuState::onKeyUp(SDL_Keycode keyCode)
 void MenuState::exit()
 {
 	m_running = false;
+}
+
+void MenuState::cancel()
+{
+
 }

@@ -13,8 +13,6 @@ class Renderer;
 
 class MenuState : public IState
 {
-	const int PADDING = 20;
-
 	public:
 		MenuState(StateHandler &stateHandler, Renderer &renderer);
 
@@ -27,6 +25,8 @@ class MenuState : public IState
 
 	protected:
 		virtual std::vector<MenuItem> items() = 0;
+
+		virtual void cancel();
 
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;

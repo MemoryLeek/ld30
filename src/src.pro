@@ -20,7 +20,10 @@ HEADERS += IState.h \
     IDrawable.h \
     states/MenuState.h \
     states/MainMenuState.h \
-    states/MenuItem.h
+    states/MenuItem.h \
+    states/SettingsMenuState.h \
+	states/ResolutionMenuState.h \
+	StringEx.h
 SOURCES += main.cpp \
            Node.cpp \
            Renderer.cpp \
@@ -31,4 +34,7 @@ SOURCES += main.cpp \
     StateHandler.cpp \
     states/MainMenuState.cpp \
     states/MenuItem.cpp \
-    states/MenuState.cpp
+    states/MenuState.cpp \
+    states/SettingsMenuState.cpp \
+	states/ResolutionMenuState.cpp \
+	StringEx.cpp

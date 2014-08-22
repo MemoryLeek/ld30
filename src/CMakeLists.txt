@@ -15,12 +15,15 @@ set(SOURCES
 	Renderer.cpp
 	Sprite.cpp
 	StateHandler.cpp
+	StringEx.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
 	states/MenuState.cpp
 	states/MainMenuState.cpp
 	states/MenuItem.cpp
+	states/SettingsMenuState.cpp
+	states/ResolutionMenuState.cpp
 
 	ui/Label.cpp
 )
@@ -31,12 +34,16 @@ set(HEADERS
 	Renderer.h
 	Sprite.h
 	StateHandler.h
+	StringEx.h
 
 	states/GameState.h
 	states/SplashState.h
 	states/MenuState.h
 	states/MainMenuState.h
 	states/MenuItem.h
+	states/SettingsMenuState.h
+	states/ResolutionMenuState.h
+
 
 	ui/Label.h
 )

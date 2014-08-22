@@ -10,6 +10,8 @@ class MainMenuState : public MenuState
 
 		std::vector<MenuItem> items() override;
 
+		void settingsMenu();
+
 	private:
 		void start();
 };
