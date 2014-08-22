@@ -11,7 +11,7 @@ class Renderer;
 class SplashState : public IState
 {
 	public:
-		SplashState(StateHandler &stateHandler, Renderer &renderer);
+		SplashState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
 		~SplashState();
 
 		bool update(double delta) override;

@@ -5,8 +5,9 @@
 #include "StateHandler.h"
 #include "Renderer.h"
 
-GameState::GameState(StateHandler &stateHandler, Renderer &renderer)
+GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
 	: m_stateHandler(stateHandler)
+	, m_settingsHandler(settingsHandler)
 	, m_renderer(renderer)
 	, m_running(true)
 {

@@ -3,9 +3,10 @@
 #include "MenuState.h"
 #include "Renderer.h"
 
-MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer)
+MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
+	, m_settingsHandler(settingsHandler)
 	, m_selectedIndex(0)
 	, m_mouseX(0)
 	, m_mouseY(0)

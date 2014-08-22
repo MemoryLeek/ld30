@@ -3,10 +3,11 @@
 #include "ResolutionMenuState.h"
 #include "SettingsMenuState.h"
 #include "StateHandler.h"
+#include "SettingsHandler.h"
 #include "StringEx.h"
 
-ResolutionMenuState::ResolutionMenuState(StateHandler &stateHandler, Renderer &renderer)
-	: MenuState(stateHandler, renderer)
+ResolutionMenuState::ResolutionMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
+	: MenuState(stateHandler, renderer, settingsHandler)
 {
 
 }
@@ -31,9 +32,9 @@ std::vector<MenuItem> ResolutionMenuState::items()
 
 void ResolutionMenuState::setResolution(int width, int height)
 {
-	// Do stuff here, like, save the resolution and such
-
-	std::cout << "This would have selected the resolution " << StringEx::format("%1x%2", width, height) << std::endl;
+	m_settingsHandler
+		.settings()
+		.setResolution(width, height);
 
 	exit();
 }

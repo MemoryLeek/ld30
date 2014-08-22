@@ -6,8 +6,8 @@
 #include "SettingsMenuState.h"
 #include "StateHandler.h"
 
-MainMenuState::MainMenuState(StateHandler &stateHandler, Renderer &renderer)
-	: MenuState(stateHandler, renderer)
+MainMenuState::MainMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
+	: MenuState(stateHandler, renderer, settingsHandler)
 {
 
 }
@@ -25,6 +25,11 @@ std::vector<MenuItem> MainMenuState::items()
 void MainMenuState::settingsMenu()
 {
 	m_stateHandler.changeState<SettingsMenuState>();
+}
+
+void MainMenuState::cancel()
+{
+	exit();
 }
 
 void MainMenuState::start()

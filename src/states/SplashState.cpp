@@ -7,7 +7,7 @@
 #include "StateHandler.h"
 #include "Renderer.h"
 
-SplashState::SplashState(StateHandler &stateHandler, Renderer &renderer)
+SplashState::SplashState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
 	, m_splashTexture(nullptr)

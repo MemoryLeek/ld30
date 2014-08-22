@@ -16,6 +16,11 @@ set(SOURCES
 	Sprite.cpp
 	StateHandler.cpp
 	StringEx.cpp
+	BinaryStream.cpp
+	Settings.cpp
+	SettingsHandler.cpp
+	DefaultSettingsProvider.cpp
+	SettingsProvider.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -35,6 +40,12 @@ set(HEADERS
 	Sprite.h
 	StateHandler.h
 	StringEx.h
+	BinaryStream.h
+	ISettingsProvider.h
+	Settings.h
+	SettingsHandler.h
+	DefaultSettingsProvider.h
+	SettingsProvider.h
 
 	states/GameState.h
 	states/SplashState.h
@@ -43,7 +54,6 @@ set(HEADERS
 	states/MenuItem.h
 	states/SettingsMenuState.h
 	states/ResolutionMenuState.h
-
 
 	ui/Label.h
 )

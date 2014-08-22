@@ -8,11 +8,12 @@
 class Sprite;
 class Renderer;
 class StateHandler;
+class SettingsHandler;
 
 class GameState : public IState
 {
 	public:
-		GameState(StateHandler &stateHandler, Renderer &renderer);
+		GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
 		~GameState();
 
 		bool update(double delta) override;
@@ -26,6 +27,7 @@ class GameState : public IState
 	private:
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
+		SettingsHandler &m_settingsHandler;
 
 		Sprite *m_character;
 

@@ -23,7 +23,14 @@ HEADERS += IState.h \
     states/MenuItem.h \
     states/SettingsMenuState.h \
 	states/ResolutionMenuState.h \
-	StringEx.h
+	StringEx.h \
+	BinaryStream.h \
+    SettingsHandler.h \
+	Settings.h \
+	ISettingsProvider.h \
+	DefaultSettingsProvider.h \
+	SettingsProvider.h
+
 SOURCES += main.cpp \
            Node.cpp \
            Renderer.cpp \
@@ -37,4 +44,9 @@ SOURCES += main.cpp \
     states/MenuState.cpp \
     states/SettingsMenuState.cpp \
 	states/ResolutionMenuState.cpp \
-	StringEx.cpp
+	StringEx.cpp \
+	BinaryStream.cpp \
+    SettingsHandler.cpp \
+	Settings.cpp \
+	DefaultSettingsProvider.cpp \
+	SettingsProvider.cpp

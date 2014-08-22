@@ -6,13 +6,14 @@
 class MainMenuState : public MenuState
 {
 	public:
-		MainMenuState(StateHandler &stateHandler, Renderer &renderer);
+		MainMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
 
 		std::vector<MenuItem> items() override;
 
 		void settingsMenu();
 
 	private:
+		void cancel() override;
 		void start();
 };
 

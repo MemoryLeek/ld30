@@ -10,11 +10,12 @@
 
 class StateHandler;
 class Renderer;
+class SettingsHandler;
 
 class MenuState : public IState
 {
 	public:
-		MenuState(StateHandler &stateHandler, Renderer &renderer);
+		MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
 
 		bool update(double delta) override;
 
@@ -34,6 +35,7 @@ class MenuState : public IState
 
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
+		SettingsHandler &m_settingsHandler;
 
 	private:
 		TTF_Font *m_font;

@@ -1,7 +1,8 @@
 #include "StateHandler.h"
 
-StateHandler::StateHandler(Renderer &renderer)
+StateHandler::StateHandler(Renderer &renderer, SettingsHandler &settingsHandler)
 	: m_renderer(renderer)
+	, m_settingsHandler(settingsHandler)
 	, m_currentState(0)
 {
 

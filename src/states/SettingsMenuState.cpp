@@ -3,8 +3,8 @@
 #include "MainMenuState.h"
 #include "StateHandler.h"
 
-SettingsMenuState::SettingsMenuState(StateHandler &stateHandler, Renderer &renderer)
-	: MenuState(stateHandler, renderer)
+SettingsMenuState::SettingsMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
+	: MenuState(stateHandler, renderer, settingsHandler)
 {
 
 }
