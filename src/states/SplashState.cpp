@@ -69,6 +69,21 @@ void SplashState::onKeyUp(SDL_Keycode keyCode)
 
 }
 
+void SplashState::onMouseButtonDown(SDL_MouseButtonEvent event)
+{
+	skip();
+}
+
+void SplashState::onMouseButtonUp(SDL_MouseButtonEvent event)
+{
+
+}
+
+void SplashState::onMouseMove(SDL_MouseMotionEvent event)
+{
+
+}
+
 void SplashState::skip()
 {
 	m_stateHandler.changeState<MainMenuState>();

@@ -20,6 +20,9 @@ class MenuState : public IState
 
 		void onKeyDown(SDL_Keycode keyCode) override;
 		void onKeyUp(SDL_Keycode keyCode) override;
+		void onMouseButtonDown(SDL_MouseButtonEvent event) override;
+		void onMouseButtonUp(SDL_MouseButtonEvent event) override;
+		void onMouseMove(SDL_MouseMotionEvent event) override;
 
 		void exit();
 
@@ -27,6 +30,7 @@ class MenuState : public IState
 		virtual std::vector<MenuItem> items() = 0;
 
 		virtual void cancel();
+		virtual void activate();
 
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
@@ -35,7 +39,11 @@ class MenuState : public IState
 		TTF_Font *m_font;
 
 		int m_selectedIndex;
-		int m_running;
+		int m_mouseX;
+		int m_mouseY;
+
+		bool m_running;
+		bool m_itemUnderCursor;
 };
 
 #endif // MENUSTATE_H

@@ -105,6 +105,33 @@ int main(int argc, char *argv[])
 
 					break;
 				}
+
+				case SDL_MOUSEBUTTONDOWN:
+				{
+					stateHandler
+						.currentState()
+						.onMouseButtonDown(event.button);
+
+					break;
+				}
+
+				case SDL_MOUSEBUTTONUP:
+				{
+					stateHandler
+						.currentState()
+						.onMouseButtonUp(event.button);
+
+					break;
+				}
+
+				case SDL_MOUSEMOTION:
+				{
+					stateHandler
+						.currentState()
+						.onMouseMove(event.motion);
+
+					break;
+				}
 			}
 		}
 

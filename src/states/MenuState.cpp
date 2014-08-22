@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "MenuState.h"
 #include "Renderer.h"
 
@@ -5,7 +7,10 @@ MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer)
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
 	, m_selectedIndex(0)
+	, m_mouseX(0)
+	, m_mouseY(0)
 	, m_running(true)
+	, m_itemUnderCursor(false)
 {
 	m_font = TTF_OpenFont("resources/ttf/Oxygen-Regular.ttf", 20);
 }
@@ -65,9 +70,7 @@ void MenuState::onKeyDown(SDL_Keycode keyCode)
 
 		case SDLK_RETURN:
 		{
-			availableItems
-				.at(m_selectedIndex)
-				.invoke();
+			activate();
 
 			break;
 		}
@@ -86,6 +89,48 @@ void MenuState::onKeyUp(SDL_Keycode keyCode)
 
 }
 
+void MenuState::onMouseButtonDown(SDL_MouseButtonEvent event)
+{
+	switch (event.button)
+	{
+		case SDL_BUTTON_LEFT:
+		{
+			if (m_itemUnderCursor)
+			{
+				activate();
+			}
+
+			break;
+		}
+	}
+}
+
+void MenuState::onMouseButtonUp(SDL_MouseButtonEvent event)
+{
+
+}
+
+void MenuState::onMouseMove(SDL_MouseMotionEvent event)
+{
+	m_itemUnderCursor = false;
+	m_selectedIndex = -1;
+
+	const std::vector<MenuItem> &availableItems = items();
+
+	if (event.x > m_renderer.width() / 2 - 100 &&
+		event.x < m_renderer.width() / 2 + 100)
+	{
+		const int h = availableItems.size() * 26;
+		const int y = (m_renderer.height() - h) / 2;
+
+		if (event.y > y && event.y < y + h)
+		{
+			m_selectedIndex = (event.y - y) / 26;
+			m_itemUnderCursor = true;
+		}
+	}
+}
+
 void MenuState::exit()
 {
 	m_running = false;
@@ -94,4 +139,15 @@ void MenuState::exit()
 void MenuState::cancel()
 {
 
+}
+
+void MenuState::activate()
+{
+	if (m_selectedIndex >= 0)
+	{
+		const std::vector<MenuItem> &availableItems = items();
+		const MenuItem &item = availableItems[m_selectedIndex];
+
+		item.invoke();
+	}
 }

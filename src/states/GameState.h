@@ -19,6 +19,9 @@ class GameState : public IState
 
 		void onKeyDown(SDL_Keycode keyCode) override;
 		void onKeyUp(SDL_Keycode keyCode) override;
+		void onMouseButtonDown(SDL_MouseButtonEvent event) override;
+		void onMouseButtonUp(SDL_MouseButtonEvent event) override;
+		void onMouseMove(SDL_MouseMotionEvent event) override;
 
 	private:
 		StateHandler &m_stateHandler;

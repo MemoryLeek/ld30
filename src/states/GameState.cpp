@@ -53,3 +53,18 @@ void GameState::onKeyUp(SDL_Keycode keyCode)
 {
 
 }
+
+void GameState::onMouseButtonDown(SDL_MouseButtonEvent event)
+{
+
+}
+
+void GameState::onMouseButtonUp(SDL_MouseButtonEvent event)
+{
+
+}
+
+void GameState::onMouseMove(SDL_MouseMotionEvent event)
+{
+
+}
