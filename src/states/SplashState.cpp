@@ -66,10 +66,10 @@ void SplashState::onKeyDown(SDL_Keycode keyCode)
 
 void SplashState::onKeyUp(SDL_Keycode keyCode)
 {
-	m_stateHandler.changeState<MainMenuState>();
+
 }
 
 void SplashState::skip()
 {
-
+	m_stateHandler.changeState<MainMenuState>();
 }
