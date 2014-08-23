@@ -1,3 +1,6 @@
+#include <fstream>
+#include <iostream>
+
 #include <SDL2/SDL_image.h>
 
 #include "GameState.h"
@@ -7,8 +10,9 @@
 
 GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
 	: m_stateHandler(stateHandler)
-	, m_settingsHandler(settingsHandler)
 	, m_renderer(renderer)
+	, m_settingsHandler(settingsHandler)
+	, m_level(renderer)
 	, m_running(true)
 {
 	SDL_Surface *image = IMG_Load("resources/sprites/standing.png");
@@ -17,6 +21,14 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	SDL_FreeSurface(image);
 
 	m_character = new Sprite(10, 20, 0, texture);
+
+	std::fstream file("map.wld", std::ios::in | std::ios::binary);
+
+	if (file.is_open())
+	{
+		BinaryStream stream(file);
+		stream >> m_level;
+	}
 }
 
 GameState::~GameState()
@@ -25,6 +37,23 @@ GameState::~GameState()
 
 bool GameState::update(double delta)
 {
+	int width = 0;
+	int height = 0;
+
+	SDL_QueryTexture(m_level.tileset(), nullptr, nullptr, &width, &height);
+
+	for (const LevelTile &tile : m_level.tiles())
+	{
+		const int w = width / 32;
+		const int y = tile.id() / w;
+		const int x = tile.id() - (y * w);
+
+		SDL_Rect target = { tile.x() * TILE_SIZE, tile.y() * TILE_SIZE, TILE_SIZE, TILE_SIZE };
+		SDL_Rect source = {x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE };
+
+		SDL_RenderCopy(m_renderer, m_level.tileset(), &source, &target);
+	}
+
 	// Create camera node 100px in front of character
 	Node cameraNode(100, 0, 0, m_character);
 	m_renderer.setCamera(&cameraNode);

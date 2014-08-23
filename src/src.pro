@@ -29,7 +29,10 @@ HEADERS += IState.h \
 	Settings.h \
 	ISettingsProvider.h \
 	DefaultSettingsProvider.h \
-	SettingsProvider.h
+	SettingsProvider.h \
+    Level.h \
+    ImageWrapper.h \
+    LevelTile.h
 
 SOURCES += main.cpp \
            Node.cpp \
@@ -49,4 +52,7 @@ SOURCES += main.cpp \
     SettingsHandler.cpp \
 	Settings.cpp \
 	DefaultSettingsProvider.cpp \
-	SettingsProvider.cpp
+	SettingsProvider.cpp \
+    Level.cpp \
+    ImageWrapper.cpp \
+    LevelTile.cpp

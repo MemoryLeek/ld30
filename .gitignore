@@ -1,9 +1,12 @@
 src/build/
 src/CMakeFiles
 
+tools/falcon/falcon
+
 Makefile
 CMakeCache.txt
 ld30
+settings.dat
 
 *.o
 *.user

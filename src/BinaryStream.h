@@ -2,6 +2,7 @@
 #define BINARYSTREAM_H
 
 #include <fstream>
+#include <vector>
 
 class BinaryStream
 {
@@ -22,5 +23,22 @@ class BinaryStream
 	private:
 		std::fstream &m_subject;
 };
+
+template<class T>
+BinaryStream &operator >>(BinaryStream &stream, std::vector<T> &vector)
+{
+	unsigned int size = 0;
+	stream >> size;
+
+	for(unsigned int i = 0; i < size; i++)
+	{
+		T t;
+		stream >> t;
+
+		vector.push_back(t);
+	}
+
+	return stream;
+}
 
 #endif // BINARYSTREAM_H

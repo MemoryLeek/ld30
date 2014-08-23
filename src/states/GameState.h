@@ -4,6 +4,7 @@
 #include <SDL2/SDL_render.h>
 
 #include "IState.h"
+#include "Level.h"
 
 class Sprite;
 class Renderer;
@@ -30,6 +31,7 @@ class GameState : public IState
 		SettingsHandler &m_settingsHandler;
 
 		Sprite *m_character;
+		Level m_level;
 
 		bool m_running;
 };

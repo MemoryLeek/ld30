@@ -21,6 +21,9 @@ set(SOURCES
 	SettingsHandler.cpp
 	DefaultSettingsProvider.cpp
 	SettingsProvider.cpp
+	Level.cpp
+	LevelTile.cpp
+	ImageWrapper.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -46,6 +49,9 @@ set(HEADERS
 	SettingsHandler.h
 	DefaultSettingsProvider.h
 	SettingsProvider.h
+	Level.h
+	LevelTile.h
+	ImageWrapper.h
 
 	states/GameState.h
 	states/SplashState.h
