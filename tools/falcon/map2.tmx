@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="15" height="40" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="35" height="60" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="512" height="512"/>
  </tileset>
- <layer name="Foreground" width="15" height="40">
+ <layer name="Foreground" width="35" height="60">
   <data encoding="base64" compression="zlib">
-   eJzFlU1OAkEQhcvNhNFZ+bMYdYWyEFyBLlBWggcwxgsIFxjQC4AXIIb7+ibpipWyp7obQlx8m06/1NR71TU5ER06jiLgewUowTn4TuACXIIb8AkOEqicttxBW9ftgtcEeuAWDMHDFoxArrzLI/2WPrN3Mb7Luy3VfyvgVWZoQ75XSpsZ2mNwAk7BmaeupW2DK3ANOoG6nPeb0/bBANyB+4a6nPcUzET9JzAGE/DcoF2Clcvuw/BMf/NaZDcPaHXdF/qd1TnZc87zLL/53fU6InvOH90d3W/sDinob7+pe8PXF2dr+ezra0b2e2DtwkO5R21maEM7jPP1aYcuQwu5r5jC6UM56/8Cz3JoZ8l82Zfav3q2vsjeO/od1WdytjaJWn5LsXMltZXoN2Y2SpFlT2hD+fI869x2yVeepeTLGcXk+18ZyTezjc96/+mzJp9/AFyHczs=
+   eJztlzlOA0EQRYsEGUzEErBELAGYiCUAOzJwAIS4APgC2HAB4AIIcV9+yVNy0aqZBmmq20gdvMBdlvpPT/1fPRMimhQKhUJh7lgCywFdsFLVugG63raWTbAFPhXbYKemputtazkEL2BB8VTtZdV03eNc6rRYNU8t/OxH4E7RA8c1NV1vW8sFuDQYNNSk3rYW8VGTdyw8fRTzjsbLR7x3h356h3+H/apZTKjF8k4qT3fUs1paVsEaWAcbCc6lScsu2AP74CDxuUim3FdaTsApOAPnic6F84sz5RGM1PkMwRW4BjeJtLyCN5pmx7PxrlL17gfNsmMc0eJ9Lrc0mzWspW4WyX885pF+Rw807ZXYLOqTzzwK+0Xf7XLMI90vv8HzXmf1hWRLSh9ZfTGi5vnopaXpvf0HLV758pceErzypa6H+hE877uC5EYsZ7y/G2UWxe68nvkifcr+4Ox9p+Z7pvec5j109n5l1iKzmsmRu1oL7zGmfFnH+0qWyN1Fr1n0nLSEWTIw1nLmi17LmS/i6Rz5Ujxto2fyPPgovN+Ha6l8VCgUCoV2+AYKqhT0
   </data>
  </layer>
- <layer name="Collision" width="15" height="40">
+ <layer name="Collision" width="35" height="60">
   <data encoding="base64" compression="zlib">
-   eJzjZ2Bg4KcAkwOGsl5k/IQEzI+DTSyGAXQ+PjDY9Qqg4cGoF12cEr3YAC419NZLanqkll5SACzvUKKXnDKMEr2UlJ20spceGJtbiHUztfQSC6itl57+HerxSywY6DgiFwMAX4Niug==
+   eJztl1EKgCAQRL1B3f98HqSfAtnEWmvcQefBQgSzPVJpS0kIIQQj24dCuNTIZ3lzcpnfpazsKITL1TvaJZvrt8+QC5fLbkou8S7WicnlKYdwKe/J5e7A9A1gcBmRa9E7h6BceuZqJpcRc53eS9sl6l+NyaXm5s3N7oLOIXqutkbRLkxnmsml5ubNIVzQOUTPFdaIZe8KIYT4hwPfqmna
   </data>
  </layer>
- <objectgroup name="Object Layer" width="15" height="40"/>
+ <objectgroup name="Object Layer" width="35" height="60"/>
 </map>

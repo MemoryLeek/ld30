@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="15" height="40" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="35" height="60" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="tileset2" tilewidth="32" tileheight="32">
   <image source="tileset2.png" width="512" height="512"/>
  </tileset>
- <layer name="Foreground" width="15" height="40">
+ <layer name="Foreground" width="35" height="60">
   <data encoding="base64" compression="zlib">
-   eJztlbtOQzEQRC1eVRQQRWh4CQQVCASBglcipDS8RAVUKAUCGighTfgD+AP4VsZiVxlWaycG0VGc4vp6rmbXs9eVEEJVGAfX9KxrE6DtsAJmwCx4AI/0HJkD8xntKrgBXfAClkANTIEFsA4qjpeo3QcH4BW8iXYH7JKW/amXE3AmvIMPsAWOwDHYIK36W5M1W8OeaGtCqVZriDQyWu5BVWo4pToi5wmt7YHnxfoZxAvnwvrp54Vz0e98rZf4rU3ZX3dq4/O1Xg5DL5uRVuKM2FNdtJN0VkzDaKfD9xloyfcXjS/2p1rumZLKjyWntfmxM53Tcn68DNkca0+azjtdV62XY+1JKuNeXmx9Fs6VzYutz8L7vDzr2hAYBiPCWGKftzYKLsAluPqB9hbcgfvw9R8q0T6BZ9ABy4VaZrtA6/Gv7a15M+XNl6dNzdQgd0XJHOXumd/M0V/12d5vzYI+a0/bIf9/8vr8CbgDiQA=
+   eJzt2LlOAzEQBmCHq0IhoggNl0BQgYggUHBGSGm4lAqo0BYIaKAEGngDeAN4Vn4LjzKMvCsKH1tM8RW7KfJnPPbspmGMaSillKqdSWg6U3DDruleCwqP0FnWYA7m4RGe2LW1AIsJs6zDLbzBO6xAG2ZgCTqe+rUiZTmAQ/iAT5dlF/ZYFl4/qlXoLGdw4XzBN2zDCZzCJstC9dtw90JnKYR9l6Xt5M5Ca2YdJczCe7Lp1uycrZs1SJRF9mTHUytZL6pVjCzy91Kt+Dkn6zVIlIVqxc+51OeL7FObbct9f9ezlqGz8PNF9umxGc4Cq2/S7Gm+Bl2XZdoM9zYXq3cpy6z5OxP77vcvi7rF7F3KwnuY0FoUJXJkkedhrH30nyz8PIy5jyiLnEPUoz3PZ3Q/VhbfHKIeLZtRobP4zlPZH1LMc1eep7I/pFj9UjaP6N4IjMKYM2HiPjNUZRmHS7iC6xpkuYN7eDC/z505szzDC7zCauYs3E7GLD6aRbPUNYtvZvvmd4osZTM79pyuelfLMafL3tXqNqdz926uLPL/g57Jt49ozxSm+vk2xT5SSikVxg9D547c
   </data>
  </layer>
- <layer name="Collision" width="15" height="40">
+ <layer name="Collision" width="35" height="60">
   <data encoding="base64" compression="zlib">
-   eJxLZGBgSKQAIwN0PgMDffUm4mATMo9SvdjU0VovseFCinn0dAu19JLjN2yAmnpJNX+w6yVkJiV66Y2JcSMxfqG2XmxuHOx6sYFRvQOvl5K8MNTzEa30kosBxoF2OQ==
+   eJzt1oENgCAMRFFW7f5LuEBBihUP+y8hEbHJI5Zoa4QQQhRjD8YbltF85K1osc51ry7L4u1XyeI9U90y06u7evcEyxdn2py5mmVUl2VZ2XMly936jn7Bsm7x7lexRMffLZ4tWlfR4r0XLFqWmTosWLBoW5S+jUqWaB2WOhaVf0xCCCE5uQBRkXY5
   </data>
  </layer>
- <objectgroup name="Objects" width="15" height="40">
-  <object name="Spawn" type="spawn" x="224" y="1184" width="32" height="32"/>
-  <object name="Goal" type="goal" x="64" y="64" width="32" height="32"/>
+ <objectgroup name="Objects" width="35" height="60">
+  <object name="Spawn" type="spawn" x="544" y="1504" width="32" height="32"/>
+  <object name="Goal" type="goal" x="384" y="384" width="32" height="32"/>
  </objectgroup>
 </map>

@@ -218,6 +218,8 @@ void GameState::drawLevel(Level &level, double delta)
 	SDL_Texture *tileset = level.tileset();
 	SDL_QueryTexture(tileset, nullptr, nullptr, &width, &height);
 
+	m_cameraScale = sin((m_levelAlpha / 255.0f) * M_PI) * 20 + 2;
+
 	const int cx = m_renderer.cameraOffsetX();
 	const int cy = m_renderer.cameraOffsetY();
 
