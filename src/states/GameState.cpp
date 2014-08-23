@@ -66,10 +66,18 @@ bool GameState::update(double delta)
 		{
 			const SDL_Point mouseWorld = {m_mousePosition.x + m_renderer.cameraOffsetX(), m_mousePosition.y + m_renderer.cameraOffsetY()};
 			m_character->walkTowards(mouseWorld);
+
+			if(m_timeSinceStep == 0 || m_timeSinceStep > 0.3)
+			{
+				SoundHandler::play((SoundHandler::Sound::Value)(SoundHandler::Sound::Step + rand() % 10));
+				m_timeSinceStep = 0;
+			}
+			m_timeSinceStep += delta;
 		}
 		else
 		{
 			m_character->walkTowards({0, 0});
+			m_timeSinceStep = 0;
 		}
 
 		std::vector<Player*> movableObjects;
@@ -203,6 +211,7 @@ void GameState::switchLevels()
 	{
 		std::cout << "Dayyym, you dead." << std::endl;
 		m_deathCamLifetime = 3;
+		SoundHandler::play(SoundHandler::Sound::Squish);
 		m_character->kill();
 	}
 }

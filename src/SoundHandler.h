@@ -13,7 +13,9 @@ class SoundHandler
 			enum Value
 			{
 				Click,
-				WorldSwitch
+				WorldSwitch,
+				Step, // CARE! We load 10 step sounds in sequence from here to Step + 9
+				Squish = Step + 10
 			};
 		};
 

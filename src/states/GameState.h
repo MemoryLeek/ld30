@@ -39,6 +39,7 @@ class GameState : public IState
 
 		Player *m_character;
 		float m_deathCamLifetime;
+		float m_timeSinceStep;
 
 		Level *m_level;
 		Level m_level1;

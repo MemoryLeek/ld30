@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 
 #include <SDL2/SDL_mixer.h>
 
@@ -46,6 +47,13 @@ void SoundHandler::init()
 
 		m_samples.emplace(Sound::Click, Mix_LoadWAV("resources/sfx/click.wav"));
 		m_samples.emplace(Sound::WorldSwitch, Mix_LoadWAV("resources/sfx/switch.wav"));
+		for(int i = 0; i < 10; i++)
+		{
+			std::ostringstream path;
+			path << "resources/sfx/step" << i << ".wav";
+			m_samples.emplace((Sound::Value)(Sound::Step + i), Mix_LoadWAV(path.str().c_str()));
+		}
+		m_samples.emplace(Sound::Squish, Mix_LoadWAV("resources/sfx/squish.wav"));
 	}
 
 	m_loaded = true;
