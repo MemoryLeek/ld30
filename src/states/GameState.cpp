@@ -27,10 +27,26 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, image);
 	SDL_FreeSurface(image);
 
-	m_character = new Player(32, 32, texture);
-
 	loadLevel("map.wld", m_level1);
 	loadLevel("map2.wld", m_level2);
+
+	for (const LevelTile &tile : m_level1.tiles())
+	{
+		for (IDrawable *drawable : tile.objects())
+		{
+			Spawn *spawn = dynamic_cast<Spawn *>(drawable);
+
+			if (spawn)
+			{
+				const int x = tile.x();
+				const int y = tile.y();
+
+				m_character = new Player(x * TILE_SIZE, y * TILE_SIZE, texture);
+			}
+		}
+	}
+
+	SDL_assert(m_character);
 }
 
 GameState::~GameState()
@@ -78,11 +94,11 @@ bool GameState::update(double delta)
 			SDL_RenderCopy(m_renderer, m_level->tileset(), &source, &target);
 		}
 
-		if (!tile.walkable())
-		{
-			SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-			SDL_RenderDrawRect(m_renderer, &target);
-		}
+//		if (!tile.walkable())
+//		{
+//			SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+//			SDL_RenderDrawRect(m_renderer, &target);
+//		}
 
 		for (IDrawable *drawable : tile.objects())
 		{

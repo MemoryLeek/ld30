@@ -38,10 +38,8 @@ HEADERS += IState.h \
     drawables/Spawn.h \
     drawables/Goal.h \
 	Util.h \
-	PathFinder.h \
-	PathNode.h \
-	DereferencedEqual.h \
-	DereferencedLess.h
+	Player.h \
+	CollisionHandler.h
 
 SOURCES += main.cpp \
            Node.cpp \
@@ -69,5 +67,5 @@ SOURCES += main.cpp \
     LevelTileMapObject.cpp \
     drawables/Spawn.cpp \
 	drawables/Goal.cpp \
-	PathFinder.cpp \
-	PathNode.cpp
+	Player.cpp \
+	CollisionHandler.cpp
