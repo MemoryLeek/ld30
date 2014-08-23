@@ -46,9 +46,11 @@ bool SplashState::update(double delta)
 		return true;
 	}
 
-	// Fade in texture over time
-	const int alpha = (m_totalTime < 1) ? 255 * m_totalTime : 255;
-	SDL_SetTextureAlphaMod(m_splashTexture, alpha);
+	// Fade background from black to white
+	int blackness = (m_totalTime > 0.2) ? 255 * (m_totalTime - 0.2) : 0;
+	blackness = (blackness > 255) ? 255 : blackness;
+	SDL_SetRenderDrawColor(m_renderer, blackness, blackness, blackness, SDL_ALPHA_OPAQUE);
+	SDL_RenderClear(m_renderer);
 	SDL_RenderCopy(m_renderer, m_splashTexture, NULL, &m_destination);
 
 	if ((m_totalTime += delta) > 2)
