@@ -28,7 +28,7 @@ void CollisionHandler::resolveCollisions(std::vector<Player*> dynamicObjects, co
 
 bool CollisionHandler::isPlayerInWall(const Player &player, const Level &level)
 {
-	const SDL_Rect dObjGeom = {player.x(), player.y(), player.width(), player.height()};
+	const SDL_Rect dObjGeom = {player.x(), player.y(), player.width() - 4, player.height() - 4};
 	for(const LevelTile &staticObject : level.tiles())
 	{
 		if(!staticObject.walkable())
