@@ -13,6 +13,7 @@ class CollisionHandler
 {
 	public:
 		static void resolveCollisions(std::vector<Player*> dynamicObjects, const Level *level);
+		static bool isPlayerInWall(const Player &player, const Level &level);
 
 	private:
 		static bool intersects(const SDL_Rect &a, const SDL_Rect &b);

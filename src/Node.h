@@ -12,6 +12,7 @@ class Node
 		float y() const;
 		void setY(float y);
 		void moveY(float y);
+		void setPosition(float x, float y);
 		float angle() const;
 		void setAngle(float angle);
 

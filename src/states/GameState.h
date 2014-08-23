@@ -30,6 +30,8 @@ class GameState : public IState
 
 	private:
 		void loadLevel(const std::string &fileName, Level &target);
+		void switchLevels();
+		void moveToSpawn(Player *player, Level *level);
 
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;

@@ -30,21 +30,8 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	loadLevel("map.wld", m_level1);
 	loadLevel("map2.wld", m_level2);
 
-	for (const LevelTile &tile : m_level1.tiles())
-	{
-		for (IDrawable *drawable : tile.objects())
-		{
-			Spawn *spawn = dynamic_cast<Spawn *>(drawable);
-
-			if (spawn)
-			{
-				const int x = tile.x();
-				const int y = tile.y();
-
-				m_character = new Player(x * TILE_SIZE, y * TILE_SIZE, texture);
-			}
-		}
-	}
+	m_character = new Player(0, 0, texture);
+	moveToSpawn(m_character, m_level);
 
 	SDL_assert(m_character);
 }
@@ -124,14 +111,7 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 
 		case SDLK_TAB:
 		{
-			if (m_level == &m_level1)
-			{
-				m_level = &m_level2;
-			}
-			else
-			{
-				m_level = &m_level1;
-			}
+			switchLevels();
 
 			break;
 		}
@@ -168,5 +148,46 @@ void GameState::loadLevel(const std::string &fileName, Level &target)
 	{
 		BinaryStream stream(file);
 		stream >> target;
+	}
+}
+
+void GameState::switchLevels()
+{
+	if (m_level == &m_level1)
+	{
+		m_level = &m_level2;
+	}
+	else
+	{
+		m_level = &m_level1;
+	}
+
+	// It's unhealthy to run while switching dimensions
+	m_mouseButtonDown = false;
+
+	if(CollisionHandler::isPlayerInWall(*m_character, *m_level))
+	{
+		std::cout << "Dayyym, you dead." << std::endl;
+		m_level = &m_level1;
+		moveToSpawn(m_character, m_level);
+	}
+}
+
+void GameState::moveToSpawn(Player *player, Level *level)
+{
+	for (const LevelTile &tile : m_level1.tiles())
+	{
+		for (IDrawable *drawable : tile.objects())
+		{
+			Spawn *spawn = dynamic_cast<Spawn *>(drawable);
+
+			if (spawn)
+			{
+				const int x = tile.x();
+				const int y = tile.y();
+
+				m_character->setPosition(x * TILE_SIZE, y * TILE_SIZE);
+			}
+		}
 	}
 }

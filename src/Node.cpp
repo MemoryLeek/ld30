@@ -62,6 +62,12 @@ void Node::moveY(float y)
 	m_y += y;
 }
 
+void Node::setPosition(float x, float y)
+{
+	m_x = x;
+	m_y = y;
+}
+
 float Node::angle() const
 {
 	return m_angle;

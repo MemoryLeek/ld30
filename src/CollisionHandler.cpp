@@ -26,6 +26,24 @@ void CollisionHandler::resolveCollisions(std::vector<Player*> dynamicObjects, co
 	}
 }
 
+bool CollisionHandler::isPlayerInWall(const Player &player, const Level &level)
+{
+	const SDL_Rect dObjGeom = {player.x(), player.y(), player.width(), player.height()};
+	for(const LevelTile &staticObject : level.tiles())
+	{
+		if(!staticObject.walkable())
+		{
+			const SDL_Rect sObjGeom = {staticObject.x() * 32, staticObject.y() * 32, 32, 32};
+			if(intersects(dObjGeom, sObjGeom))
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 bool CollisionHandler::intersects(const SDL_Rect &a, const SDL_Rect &b)
 {
 	if(fabs(a.x - b.x) > a.w / 2 + b.w / 2 || fabs(a.y - b.y) > a.h / 2 + b.h / 2)
