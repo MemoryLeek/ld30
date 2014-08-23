@@ -7,7 +7,6 @@
 
 #include "IState.h"
 #include "Level.h"
-#include "Pathfinder.h"
 
 class Player;
 class Renderer;
@@ -35,7 +34,6 @@ class GameState : public IState
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
 		SettingsHandler &m_settingsHandler;
-		Pathfinder m_pathfinder;
 
 		Player *m_character;
 

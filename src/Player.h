@@ -12,10 +12,10 @@ class Player : public Sprite
 
 		void draw(double delta, Renderer &renderer) override;
 
-		void setPath(std::stack<SDL_Point> path);
+		void walkTowards(SDL_Point point);
 
 	private:
-		std::stack<SDL_Point> m_path;
+		SDL_Point m_targetPoint;
 };
 
 #endif // PLAYER_H

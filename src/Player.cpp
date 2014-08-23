@@ -10,83 +10,27 @@ Player::Player(float x, float y, SDL_Texture *texture)
 
 void Player::draw(double delta, Renderer &renderer)
 {
-	const float speed = 100;
-	while(!m_path.empty())
+	const float dist = Util::distanceBetween(x(), y(), m_targetPoint.x, m_targetPoint.y);
+	if(dist > 16 && !(m_targetPoint.x == 0 && m_targetPoint.y == 0))
 	{
-		const SDL_Point &target = m_path.top();
-		const SDL_Point worldTarget = {target.x * 32, target.y * 32};
-
-		const float currentD = Util::distanceBetween(x(), y(), worldTarget.x, worldTarget.y);
-//		std::cout << "Current distance to next node " << currentD << std::endl;
-		if((int)y() == worldTarget.y && (int)x() == worldTarget.x)
+		float angle = atanf((y() - m_targetPoint.y) / (x() - m_targetPoint.x)) * 180 / M_PI;
+		if(x() - m_targetPoint.x > 0)
 		{
-			m_path.pop();
-			continue;
+			angle -= 180;
 		}
+		setAngle(angle);
 
-		if((int)y() == worldTarget.y) // Walking horizontally
-		{
-			setY(worldTarget.y); // Align to tile
-			if(x() - worldTarget.x > 0) // Move left
-			{
-				setX(x() - speed * delta);
-			}
-			else // Move right
-			{
-				setX(x() + speed * delta);
-			}
-		}
-		else if((int)x() == worldTarget.x)
-		{
-			setX(worldTarget.x); // Align to tile
-			if(y() - worldTarget.y > 0) // Move up
-			{
-				setY(y() - speed * delta);
-			}
-			else // Move down
-			{
-				setY(y() + speed * delta);
-			}
-		}
-
-//		float newX = x();
-//		if(x() - worldTarget.x > 0) // Move left
-//		{
-//			newX -= speed * delta;
-//		}
-//		else // Move right
-//		{
-//			newX += speed * delta;
-//		}
-
-//		float newY = y();
-//		if(y() - worldTarget.y > 0) // Move left
-//		{
-//			newY -= speed * delta;
-//		}
-//		else // Move right
-//		{
-//			newY += speed * delta;
-//		}
-
-		const float newD = Util::distanceBetween(x(), y(), worldTarget.x, worldTarget.y);
-//		std::cout << "New distance to next node " << newD << std::endl;
-		if(newD > currentD)
-		{
-			m_path.pop();
-		}
-		else
-		{
-//			setX(newX);
-//			setY(newY);
-			break;
-		}
+		const float moveDistance = delta * 100;
+		const float xMovement = cosf(angle * M_PI / 180) * moveDistance;
+		const float yMovement = sinf(angle * M_PI / 180) * moveDistance;
+		setX(x() + xMovement);
+		setY(y() + yMovement);
 	}
 
 	Sprite::draw(delta, renderer);
 }
 
-void Player::setPath(std::stack<SDL_Point> path)
+void Player::walkTowards(SDL_Point point)
 {
-	m_path = path;
+	m_targetPoint = point;
 }

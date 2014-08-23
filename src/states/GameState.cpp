@@ -26,12 +26,10 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, image);
 	SDL_FreeSurface(image);
 
-	m_character = new Player(0, 0, texture);
+	m_character = new Player(32, 32, texture);
 
 	loadLevel("map.wld", m_level1);
 	loadLevel("map2.wld", m_level2);
-
-	m_pathfinder.reload(m_level1);
 }
 
 GameState::~GameState()
@@ -44,9 +42,12 @@ bool GameState::update(double delta)
 
 	if(m_mouseButtonDown)
 	{
-		const SDL_Point mouseWorld = {(m_mousePosition.x + m_renderer.cameraOffsetX() + 16) / 32, (m_mousePosition.y + m_renderer.cameraOffsetY() + 16) / 32};
-		std::stack<SDL_Point> path = m_pathfinder.find({m_character->x() / 32, m_character->y() / 32}, mouseWorld);
-		m_character->setPath(path);
+		const SDL_Point mouseWorld = {m_mousePosition.x + m_renderer.cameraOffsetX(), m_mousePosition.y + m_renderer.cameraOffsetY()};
+		m_character->walkTowards(mouseWorld);
+	}
+	else
+	{
+		m_character->walkTowards({0, 0});
 	}
 
 	int width = 0;
@@ -108,12 +109,10 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 			if (m_level == &m_level1)
 			{
 				m_level = &m_level2;
-				m_pathfinder.reload(m_level2);
 			}
 			else
 			{
 				m_level = &m_level1;
-				m_pathfinder.reload(m_level1);
 			}
 
 			break;
