@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL_image.h>
 
+#include "CollisionHandler.h"
 #include "GameState.h"
 #include "Player.h"
 #include "Sprite.h"
@@ -50,6 +51,10 @@ bool GameState::update(double delta)
 		m_character->walkTowards({0, 0});
 	}
 
+	std::vector<Player*> movableObjects;
+	movableObjects.push_back(m_character);
+	CollisionHandler::resolveCollisions(movableObjects, m_level);
+
 	int width = 0;
 	int height = 0;
 
@@ -84,9 +89,6 @@ bool GameState::update(double delta)
 			drawable->draw(delta, m_renderer);
 		}
 	}
-
-	// Rotate the character to verify that it actually works
-//	m_character->setAngle(m_character->angle() + delta * 100);
 
 	m_character->draw(delta, m_renderer);
 

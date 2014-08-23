@@ -13,6 +13,9 @@ class Sprite : public Node, public IDrawable
 	public:
 		Sprite(float x, float y, float angle, SDL_Texture *texture);
 
+		int width() const;
+		int height() const;
+
 		void draw(double delta, Renderer &renderer) override;
 
 	private:

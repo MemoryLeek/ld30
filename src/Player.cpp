@@ -20,7 +20,7 @@ void Player::draw(double delta, Renderer &renderer)
 		}
 		setAngle(angle);
 
-		const float moveDistance = delta * 100;
+		const float moveDistance = delta * 150;
 		const float xMovement = cosf(angle * M_PI / 180) * moveDistance;
 		const float yMovement = sinf(angle * M_PI / 180) * moveDistance;
 		setX(x() + xMovement);

@@ -8,6 +8,16 @@ Sprite::Sprite(float x, float y, float angle, SDL_Texture *texture)
 	SDL_QueryTexture(texture, nullptr, nullptr, &m_width, &m_height);
 }
 
+int Sprite::width() const
+{
+	return m_width;
+}
+
+int Sprite::height() const
+{
+	return m_height;
+}
+
 void Sprite::draw(double delta, Renderer &renderer)
 {
 	// x/y represents center of sprite

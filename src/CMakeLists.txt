@@ -27,6 +27,7 @@ set(SOURCES
 	LevelTileLayer.cpp
 	LevelTileMapObject.cpp
 	Player.cpp
+	CollisionHandler.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -62,6 +63,7 @@ set(HEADERS
 	LevelTileMapObject.h
 	Player.h
 	Util.h
+	CollisionHandler.h
 
 	states/GameState.h
 	states/SplashState.h

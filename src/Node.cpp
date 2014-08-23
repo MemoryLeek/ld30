@@ -31,6 +31,11 @@ void Node::setX(float x)
 	m_x = x;
 }
 
+void Node::moveX(float x)
+{
+	m_x += x;
+}
+
 float Node::y() const
 {
 	if(!m_parent)
@@ -50,6 +55,11 @@ float Node::y() const
 void Node::setY(float y)
 {
 	m_y = y;
+}
+
+void Node::moveY(float y)
+{
+	m_y += y;
 }
 
 float Node::angle() const
