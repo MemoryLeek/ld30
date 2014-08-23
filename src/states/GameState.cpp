@@ -20,7 +20,7 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, image);
 	SDL_FreeSurface(image);
 
-	m_character = new Sprite(10, 20, 0, texture);
+	m_character = new Sprite(0, 0, 0, texture);
 
 	std::fstream file("map.wld", std::ios::in | std::ios::binary);
 
@@ -37,26 +37,39 @@ GameState::~GameState()
 
 bool GameState::update(double delta)
 {
+	// Create camera node 100px in front of character
+	Node cameraNode(100, 0, 0, m_character);
+	m_renderer.setCamera(&cameraNode);
+
 	int width = 0;
 	int height = 0;
 
 	SDL_QueryTexture(m_level.tileset(), nullptr, nullptr, &width, &height);
 
+	const int cx = m_renderer.cameraOffsetX();
+	const int cy = m_renderer.cameraOffsetY();
+
 	for (const LevelTile &tile : m_level.tiles())
 	{
-		const int w = width / 32;
-		const int y = tile.id() / w;
-		const int x = tile.id() - (y * w);
+		const SDL_Rect target = { tile.x() * TILE_SIZE - TILE_SIZE / 2 - cx, tile.y() * TILE_SIZE - TILE_SIZE / 2 - cy, TILE_SIZE, TILE_SIZE };
 
-		SDL_Rect target = { tile.x() * TILE_SIZE, tile.y() * TILE_SIZE, TILE_SIZE, TILE_SIZE };
-		SDL_Rect source = {x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE };
+		for (const LevelTileLayer &layer : tile.layers())
+		{
+			const int w = width / 32;
+			const int y = layer.id() / w;
+			const int x = layer.id() - (y * w);
 
-		SDL_RenderCopy(m_renderer, m_level.tileset(), &source, &target);
+			const SDL_Rect source = { x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE };
+
+			SDL_RenderCopy(m_renderer, m_level.tileset(), &source, &target);
+		}
+
+		if (!tile.walkable())
+		{
+			SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+			SDL_RenderDrawRect(m_renderer, &target);
+		}
 	}
-
-	// Create camera node 100px in front of character
-	Node cameraNode(100, 0, 0, m_character);
-	m_renderer.setCamera(&cameraNode);
 
 	// Rotate the character to verify that it actually works
 	m_character->setAngle(m_character->angle() + delta * 100);

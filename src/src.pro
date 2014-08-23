@@ -32,7 +32,8 @@ HEADERS += IState.h \
 	SettingsProvider.h \
     Level.h \
     ImageWrapper.h \
-    LevelTile.h
+    LevelTile.h \
+    LevelTileLayer.h
 
 SOURCES += main.cpp \
            Node.cpp \
@@ -55,4 +56,5 @@ SOURCES += main.cpp \
 	SettingsProvider.cpp \
     Level.cpp \
     ImageWrapper.cpp \
-    LevelTile.cpp
+    LevelTile.cpp \
+    LevelTileLayer.cpp

@@ -26,41 +26,56 @@ int main(int argc, char **argv)
 		Tiled::Map *map = mapReader.readMap(source);
 		Tiled::Tileset *tileset = map->tilesetAt(0);
 
-		Tiled::Layer *layer = map->layerAt(0);
-		Tiled::TileLayer *tileLayer = dynamic_cast<Tiled::TileLayer *>(layer);
+		const QString &tilesetFileName = tileset->imageSource();
+		const QImage image(tilesetFileName);
 
-		if (tileLayer)
+		qDebug() << map->width() << map->height();
+
+		Level level(map->width(), map->height(), image);
+
+		for (int x = 0; x < map->width(); x++)
 		{
-			const QString &tilesetFileName = tileset->imageSource();
-			const QImage image(tilesetFileName);
-
-			qDebug() << map->width() << map->height();
-
-			Level level(map->width(), map->height(), image);
-
-			for (int x = 0; x < map->width(); x++)
+			for (int y = 0; y < map->height(); y++)
 			{
-				for (int y = 0; y < map->height(); y++)
-				{
-					Tiled::Cell cell = tileLayer->cellAt(x, y);
-					Tiled::Tile *tile = cell.tile;
+				LevelTile levelTile(x, y);
 
-					if (tile)
+				for (int i = 0; i < map->layerCount(); i++)
+				{
+					Tiled::Layer *layer = map->layerAt(i);
+					Tiled::TileLayer *tileLayer = dynamic_cast<Tiled::TileLayer *>(layer);
+
+					if (tileLayer)
 					{
-						LevelTile levelTile(tile->id(), x, y);
-						level.addTile(levelTile);
+						Tiled::Cell cell = tileLayer->cellAt(x, y);
+						Tiled::Tile *tile = cell.tile;
+
+						if (tile)
+						{
+							if (layer->name() != "Collision")
+							{
+								const int id = tile->id();
+
+								levelTile.addLayer(id);
+							}
+							else
+							{
+								levelTile.setWalkable(false);
+							}
+						}
 					}
 				}
-			}
 
-			QFile file(target);
-
-			if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-			{
-				QDataStream stream(&file);
-				stream.setByteOrder(QDataStream::LittleEndian);
-				stream << level;
+				level.addTile(levelTile);
 			}
+		}
+
+		QFile file(target);
+
+		if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+		{
+			QDataStream stream(&file);
+			stream.setByteOrder(QDataStream::LittleEndian);
+			stream << level;
 		}
 	}
 }

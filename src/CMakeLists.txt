@@ -24,6 +24,7 @@ set(SOURCES
 	Level.cpp
 	LevelTile.cpp
 	ImageWrapper.cpp
+	LevelTileLayer.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -52,6 +53,7 @@ set(HEADERS
 	Level.h
 	LevelTile.h
 	ImageWrapper.h
+	LevelTileLayer.h
 
 	states/GameState.h
 	states/SplashState.h

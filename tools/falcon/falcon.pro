@@ -11,8 +11,10 @@ LIBS += -ltiled
 # Input
 SOURCES += main.cpp \
     Level.cpp \
-    LevelTile.cpp
+    LevelTile.cpp \
+    LevelTileLayer.cpp
 
 HEADERS += \
     Level.h \
-    LevelTile.h
+    LevelTile.h \
+    LevelTileLayer.h

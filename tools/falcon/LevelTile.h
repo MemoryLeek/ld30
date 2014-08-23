@@ -2,16 +2,25 @@
 #define LEVELTILE_H
 
 #include <QDataStream>
+#include <QList>
+
+#include "LevelTileLayer.h"
 
 class LevelTile
 {
 	friend QDataStream &operator <<(QDataStream &stream, const LevelTile &tile);
 
 	public:
-		LevelTile(int id, int x, int y);
+		LevelTile(int x, int y);
+
+		void addLayer(LevelTileLayer layer);
+		void setWalkable(bool walkable);
 
 	private:
-		int m_id;
+		QList<LevelTileLayer> m_layers;
+
+		bool m_walkable;
+
 		int m_x;
 		int m_y;
 };
