@@ -38,6 +38,7 @@ class GameState : public IState
 		SettingsHandler &m_settingsHandler;
 
 		Player *m_character;
+		float m_deathCamLifetime;
 
 		Level *m_level;
 		Level m_level1;

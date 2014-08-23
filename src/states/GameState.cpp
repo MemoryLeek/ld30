@@ -45,24 +45,41 @@ bool GameState::update(double delta)
 {
 	m_renderer.setCamera(m_character);
 
-	if(m_mouseButtonDown)
+	if(m_deathCamLifetime > 0)
 	{
-		const SDL_Point mouseWorld = {m_mousePosition.x + m_renderer.cameraOffsetX(), m_mousePosition.y + m_renderer.cameraOffsetY()};
-		m_character->walkTowards(mouseWorld);
+		m_deathCamLifetime -= delta;
 	}
-	else
+	else if(m_character->isDead())
 	{
-		m_character->walkTowards({0, 0});
+		m_level = &m_level1;
+		const Spawn *spawn = m_level->findTile<Spawn>();
+		if(spawn)
+		{
+			m_character->respawn(spawn->x(), spawn->y());
+		}
 	}
 
-	std::vector<Player*> movableObjects;
-	movableObjects.push_back(m_character);
-	CollisionHandler::resolveCollisions(movableObjects, m_level);
-
-	const Goal *goal = m_level->findTile<Goal>();
-	if(goal && ((int)m_character->x() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileX() && ((int)m_character->y() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileY())
+	if(!m_character->isDead())
 	{
-		std::cout << "Wow man, you made it to ze goal!" << std::endl;
+		if(m_mouseButtonDown)
+		{
+			const SDL_Point mouseWorld = {m_mousePosition.x + m_renderer.cameraOffsetX(), m_mousePosition.y + m_renderer.cameraOffsetY()};
+			m_character->walkTowards(mouseWorld);
+		}
+		else
+		{
+			m_character->walkTowards({0, 0});
+		}
+
+		std::vector<Player*> movableObjects;
+		movableObjects.push_back(m_character);
+		CollisionHandler::resolveCollisions(movableObjects, m_level);
+
+		const Goal *goal = m_level->findTile<Goal>();
+		if(goal && ((int)m_character->x() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileX() && ((int)m_character->y() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileY())
+		{
+			std::cout << "Wow man, you made it to ze goal!" << std::endl;
+		}
 	}
 
 	int width = 0;
@@ -100,7 +117,10 @@ bool GameState::update(double delta)
 		}
 	}
 
-	m_character->draw(delta, m_renderer);
+	if(!m_character->isDead())
+	{
+		m_character->draw(delta, m_renderer);
+	}
 
 	return m_running;
 }
@@ -175,8 +195,8 @@ void GameState::switchLevels()
 	if(CollisionHandler::isPlayerInWall(*m_character, *m_level))
 	{
 		std::cout << "Dayyym, you dead." << std::endl;
-		m_level = &m_level1;
-		moveToSpawn(m_character, m_level);
+		m_deathCamLifetime = 3;
+		m_character->kill();
 	}
 }
 

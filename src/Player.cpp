@@ -5,7 +5,24 @@
 
 Player::Player(float x, float y, SDL_Texture *texture)
 	: Sprite(x, y, 0, texture)
+	, m_dead(false)
 {
+}
+
+bool Player::isDead() const
+{
+	return m_dead;
+}
+
+void Player::kill()
+{
+	m_dead = true;
+}
+
+void Player::respawn(float x, float y)
+{
+	setPosition(x, y);
+	m_dead = false;
 }
 
 void Player::draw(double delta, Renderer &renderer)
