@@ -4,6 +4,7 @@ INCLUDE(FindPkgConfig)
 PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
 PKG_SEARCH_MODULE(SDL2_IMAGE REQUIRED SDL2_image)
 PKG_SEARCH_MODULE(SDL2_TTF REQUIRED SDL2_ttf)
+PKG_SEARCH_MODULE(SDL2_MIXER REQUIRED SDL2_mixer)
 
 project(ld30)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -28,6 +29,7 @@ set(SOURCES
 	LevelTileMapObject.cpp
 	Player.cpp
 	CollisionHandler.cpp
+	SoundHandler.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -64,6 +66,7 @@ set(HEADERS
 	Player.h
 	Util.h
 	CollisionHandler.h
+	SoundHandler.h
 
 	states/GameState.h
 	states/SplashState.h
@@ -81,7 +84,7 @@ set(HEADERS
 
 include_directories(${CMAKE_SOURCE_DIR})
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
 
 # Hacks for crap OS
 if(WIN32)

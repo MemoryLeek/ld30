@@ -9,6 +9,7 @@
 #include "Sprite.h"
 #include "StateHandler.h"
 #include "Renderer.h"
+#include "SoundHandler.h"
 
 #include "drawables/Spawn.h"
 #include "drawables/Goal.h"
@@ -180,6 +181,12 @@ void GameState::loadLevel(const std::string &fileName, Level &target)
 
 void GameState::switchLevels()
 {
+	if(m_character->isDead())
+	{
+		return; // You're not going anywhere
+	}
+
+	SoundHandler::play(SoundHandler::Sound::WorldSwitch);
 	if (m_level == &m_level1)
 	{
 		m_level = &m_level2;

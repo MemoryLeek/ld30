@@ -11,6 +11,7 @@
 #include "DefaultSettingsProvider.h"
 #include "SettingsProvider.h"
 #include "SettingsHandler.h"
+#include "SoundHandler.h"
 
 #include "states/MainMenuState.h"
 #include "states/SplashState.h"
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
 {
 	std::vector<std::string> arguments(argv + 1, argv + argc);
 
-	if(SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO) != 0)
+	if(SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0)
 	{
 		std::cout << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
 		return -1;

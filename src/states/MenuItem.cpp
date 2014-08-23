@@ -1,5 +1,6 @@
 #include "MenuItem.h"
 #include "Renderer.h"
+#include "SoundHandler.h"
 
 MenuItem::MenuItem(const std::string &text, std::function<void()> callback)
 	: m_text(text)
@@ -15,6 +16,7 @@ std::string MenuItem::text() const
 
 void MenuItem::invoke() const
 {
+	SoundHandler::play(SoundHandler::Sound::Click);
 	m_callback();
 }
 
