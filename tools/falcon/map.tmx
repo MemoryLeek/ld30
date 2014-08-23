@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="15" height="40" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
-  <image source="tileset.png" width="512" height="512"/>
+ <tileset firstgid="1" name="tileset2" tilewidth="32" tileheight="32">
+  <image source="tileset2.png" width="512" height="512"/>
  </tileset>
  <layer name="Foreground" width="15" height="40">
   <data encoding="base64" compression="zlib">
-   eJwTYGBgEKAi5iQCo6vHp5cSe9HFqaGXWP8NRb3kxicus4ixgxS9+NIQKXqxiVOStogNM3xuJkYvofAcinrpjcnJH6N6R/UOJb2U5IXRfERZuKBjABxdG9M=
+   eJztlbtOQzEQRC1eVRQQRWh4CQQVCASBglcipDS8RAVUKAUCGighTfgD+AP4VsZiVxlWaycG0VGc4vp6rmbXs9eVEEJVGAfX9KxrE6DtsAJmwCx4AI/0HJkD8xntKrgBXfAClkANTIEFsA4qjpeo3QcH4BW8iXYH7JKW/amXE3AmvIMPsAWOwDHYIK36W5M1W8OeaGtCqVZriDQyWu5BVWo4pToi5wmt7YHnxfoZxAvnwvrp54Vz0e98rZf4rU3ZX3dq4/O1Xg5DL5uRVuKM2FNdtJN0VkzDaKfD9xloyfcXjS/2p1rumZLKjyWntfmxM53Tcn68DNkca0+azjtdV62XY+1JKuNeXmx9Fs6VzYutz8L7vDzr2hAYBiPCWGKftzYKLsAluPqB9hbcgfvw9R8q0T6BZ9ABy4VaZrtA6/Gv7a15M+XNl6dNzdQgd0XJHOXumd/M0V/12d5vzYI+a0/bIf9/8vr8CbgDiQA=
   </data>
  </layer>
  <layer name="Collision" width="15" height="40">
   <data encoding="base64" compression="zlib">
-   eJwTYGBgEKAiJgagq8enlxJ70cWpoZcYMFT1khufuMwixg5S9OIyi1S92MQpSVvEhhk+NxOjF595Q1UvvTE2txACo3pH9Q4lvZTkhdF8hF0duRgAM6cPYQ==
+   eJxLZGBgSKQAIwN0PgMDffUm4mATMo9SvdjU0VovseFCinn0dAu19JLjN2yAmnpJNX+w6yVkJiV66Y2JcSMxfqG2XmxuHOx6sYFRvQOvl5K8MNTzEa30kosBxoF2OQ==
   </data>
  </layer>
  <objectgroup name="Objects" width="15" height="40">
