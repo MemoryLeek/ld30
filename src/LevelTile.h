@@ -3,6 +3,7 @@
 
 #include "BinaryStream.h"
 #include "LevelTileLayer.h"
+#include "LevelTileMapObject.h"
 
 const int TILE_SIZE = 32;
 
@@ -14,6 +15,7 @@ class LevelTile
 		LevelTile();
 
 		std::vector<LevelTileLayer> layers() const;
+		std::vector<LevelTileMapObject> objects() const;
 
 		bool walkable() const;
 
@@ -22,6 +24,7 @@ class LevelTile
 
 	private:
 		std::vector<LevelTileLayer> m_layers;
+		std::vector<LevelTileMapObject> m_objects;
 
 		bool m_walkable;
 

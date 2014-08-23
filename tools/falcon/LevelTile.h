@@ -5,6 +5,7 @@
 #include <QList>
 
 #include "LevelTileLayer.h"
+#include "LevelTileMapObject.h"
 
 class LevelTile
 {
@@ -15,9 +16,11 @@ class LevelTile
 
 		void addLayer(LevelTileLayer layer);
 		void setWalkable(bool walkable);
+		void addMapObject(LevelTileMapObject object);
 
 	private:
 		QList<LevelTileLayer> m_layers;
+		QList<LevelTileMapObject> m_objects;
 
 		bool m_walkable;
 

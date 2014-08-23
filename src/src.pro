@@ -33,7 +33,10 @@ HEADERS += IState.h \
     Level.h \
     ImageWrapper.h \
     LevelTile.h \
-    LevelTileLayer.h
+    LevelTileLayer.h \
+    LevelTileMapObject.h \
+    drawables/Spawn.h \
+    drawables/Goal.h
 
 SOURCES += main.cpp \
            Node.cpp \
@@ -57,4 +60,7 @@ SOURCES += main.cpp \
     Level.cpp \
     ImageWrapper.cpp \
     LevelTile.cpp \
-    LevelTileLayer.cpp
+    LevelTileLayer.cpp \
+    LevelTileMapObject.cpp \
+    drawables/Spawn.cpp \
+    drawables/Goal.cpp

@@ -25,6 +25,7 @@ set(SOURCES
 	LevelTile.cpp
 	ImageWrapper.cpp
 	LevelTileLayer.cpp
+	LevelTileMapObject.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -33,6 +34,9 @@ set(SOURCES
 	states/MenuItem.cpp
 	states/SettingsMenuState.cpp
 	states/ResolutionMenuState.cpp
+	
+	drawables/Goal.cpp
+	drawables/Spawn.cpp
 
 	ui/Label.cpp
 )
@@ -54,6 +58,7 @@ set(HEADERS
 	LevelTile.h
 	ImageWrapper.h
 	LevelTileLayer.h
+	LevelTileMapObject.h
 
 	states/GameState.h
 	states/SplashState.h
@@ -62,6 +67,9 @@ set(HEADERS
 	states/MenuItem.h
 	states/SettingsMenuState.h
 	states/ResolutionMenuState.h
+	
+	drawables/Goal.h
+	drawables/Spawn.h
 
 	ui/Label.h
 )

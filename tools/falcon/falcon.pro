@@ -12,9 +12,11 @@ LIBS += -ltiled
 SOURCES += main.cpp \
     Level.cpp \
     LevelTile.cpp \
-    LevelTileLayer.cpp
+    LevelTileLayer.cpp \
+    LevelTileMapObject.cpp
 
 HEADERS += \
     Level.h \
     LevelTile.h \
-    LevelTileLayer.h
+    LevelTileLayer.h \
+    LevelTileMapObject.h

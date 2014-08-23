@@ -1,6 +1,8 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
+#include <vector>
+
 #include <SDL2/SDL_render.h>
 
 #include "IState.h"
@@ -10,6 +12,7 @@ class Sprite;
 class Renderer;
 class StateHandler;
 class SettingsHandler;
+class IDrawable;
 
 class GameState : public IState
 {
@@ -26,6 +29,8 @@ class GameState : public IState
 		void onMouseMove(SDL_MouseMotionEvent event) override;
 
 	private:
+		std::vector<IDrawable *> m_objects;
+
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
 		SettingsHandler &m_settingsHandler;

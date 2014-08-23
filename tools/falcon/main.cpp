@@ -9,6 +9,8 @@
 #include <tiled/tileset.h>
 #include <tiled/mapreader.h>
 #include <tiled/map.h>
+#include <tiled/mapobject.h>
+#include <tiled/objectgroup.h>
 
 #include "Level.h"
 
@@ -16,6 +18,11 @@ int main(int argc, char **argv)
 {
 	QGuiApplication application(argc, argv);
 	QStringList arguments = application.arguments();
+	QStringList objectTypes =
+	{
+		"spawn",
+		"goal"
+	};
 
 	if (arguments.length() > 2)
 	{
@@ -60,6 +67,27 @@ int main(int argc, char **argv)
 							else
 							{
 								levelTile.setWalkable(false);
+							}
+						}
+					}
+
+					Tiled::ObjectGroup *objectLayer = dynamic_cast<Tiled::ObjectGroup *>(layer);
+
+					if (objectLayer)
+					{
+						const QList<Tiled::MapObject *> &objects = objectLayer->objects();
+
+						for (Tiled::MapObject *object : objects)
+						{
+							const QPointF &position = object->position();
+							const QPointF current(x, y);
+
+							if (current == position)
+							{
+								const QString &typeName = object->type();
+								const int id = objectTypes.indexOf(typeName);
+
+								levelTile.addMapObject(id);
 							}
 						}
 					}

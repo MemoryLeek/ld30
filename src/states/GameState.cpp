@@ -8,6 +8,9 @@
 #include "StateHandler.h"
 #include "Renderer.h"
 
+#include "drawables/Spawn.h"
+#include "drawables/Goal.h"
+
 GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
@@ -28,6 +31,29 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	{
 		BinaryStream stream(file);
 		stream >> m_level;
+
+		for (const LevelTile &tile : m_level.tiles())
+		{
+			for (const LevelTileMapObject &object : tile.objects())
+			{
+				switch (object.id())
+				{
+					case LevelTileMapObject::Spawn:
+					{
+						m_objects.push_back(new Spawn(tile.x() * TILE_SIZE, tile.y() * TILE_SIZE));
+
+						break;
+					}
+
+					case LevelTileMapObject::Goal:
+					{
+						m_objects.push_back(new Goal(tile.x() * TILE_SIZE, tile.y() * TILE_SIZE));
+
+						break;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -71,8 +97,13 @@ bool GameState::update(double delta)
 		}
 	}
 
+	for (IDrawable *drawable : m_objects)
+	{
+		drawable->draw(m_renderer);
+	}
+
 	// Rotate the character to verify that it actually works
-	m_character->setAngle(m_character->angle() + delta * 100);
+//	m_character->setAngle(m_character->angle() + delta * 100);
 
 	m_character->draw(m_renderer);
 
