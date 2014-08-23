@@ -7,6 +7,7 @@
 
 #include "IState.h"
 #include "Level.h"
+#include "Pathfinder.h"
 
 class Sprite;
 class Renderer;
@@ -37,6 +38,7 @@ class GameState : public IState
 
 		Sprite *m_character;
 		Level m_level;
+		Pathfinder m_pathfinder;
 
 		bool m_running;
 };

@@ -55,6 +55,8 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 			}
 		}
 	}
+
+	m_pathfinder.reload(m_level);
 }
 
 GameState::~GameState()

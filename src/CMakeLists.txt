@@ -26,6 +26,8 @@ set(SOURCES
 	ImageWrapper.cpp
 	LevelTileLayer.cpp
 	LevelTileMapObject.cpp
+	Pathfinder.cpp
+	PathNode.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -59,6 +61,10 @@ set(HEADERS
 	ImageWrapper.h
 	LevelTileLayer.h
 	LevelTileMapObject.h
+	Pathfinder.h
+	PathNode.h
+	DereferencedEqual.h
+	DereferencedLess.h
 
 	states/GameState.h
 	states/SplashState.h
