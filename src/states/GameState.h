@@ -30,8 +30,7 @@ class GameState : public IState
 
 	private:
 		void loadLevel(const std::string &fileName, Level &target);
-		void switchLevels(Level &targetLevel);
-		void moveToSpawn(Player *player, Level *level);
+		void switchLevels(Level &targetLevel, bool force = false);
 		void drawLevel(Level &level, double delta);
 
 		StateHandler &m_stateHandler;

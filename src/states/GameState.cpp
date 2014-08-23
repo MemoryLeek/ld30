@@ -40,7 +40,12 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	loadLevel("map2.wld", m_level2);
 
 	m_character = new Player(32, 32, texture);
-	moveToSpawn(m_character, m_currentLevel);
+	const Spawn *spawn = m_currentLevel->findTile<Spawn>();
+	if(spawn)
+	{
+		m_character->respawn(spawn->x(), spawn->y());
+		m_timeSinceRespawn = 0;
+	}
 
 	SDL_assert(m_character);
 }
@@ -53,6 +58,7 @@ bool GameState::update(double delta)
 {
 	SDL_RenderSetScale(m_renderer, m_cameraScale, m_cameraScale);
 	m_renderer.setCamera(m_character, m_cameraScale);
+	m_renderer.setCameraBounds({-TILE_SIZE / 2, -TILE_SIZE / 2, m_currentLevel->width() * TILE_SIZE, m_currentLevel->height() * TILE_SIZE});
 
 	if (m_levelSwitching)
 	{
@@ -68,12 +74,16 @@ bool GameState::update(double delta)
 	}
 	else if(m_character->isDead())
 	{
-		switchLevels(m_level1);
+		if(m_currentLevel != &m_level1)
+		{
+			switchLevels(m_level1, true);
+		}
 
 		const Spawn *spawn = m_currentLevel->findTile<Spawn>();
 		if(spawn)
 		{
 			m_character->respawn(spawn->x(), spawn->y());
+			m_timeSinceRespawn = 0;
 		}
 	}
 
@@ -179,9 +189,9 @@ void GameState::loadLevel(const std::string &fileName, Level &target)
 	}
 }
 
-void GameState::switchLevels(Level &targetLevel)
+void GameState::switchLevels(Level &targetLevel, bool force)
 {
-	if(m_character->isDead())
+	if(m_character->isDead() && !force)
 	{
 		return; // You're not going anywhere
 	}
@@ -198,18 +208,6 @@ void GameState::switchLevels(Level &targetLevel)
 		m_deathCamLifetime = 3;
 		SoundHandler::play(SoundHandler::Sound::Squish);
 		m_character->kill();
-	}
-}
-
-void GameState::moveToSpawn(Player *player, Level *level)
-{
-	const Spawn *spawn = m_currentLevel->findTile<Spawn>();
-	if(spawn)
-	{
-		const int x = spawn->x();
-		const int y = spawn->y();
-		m_character->setPosition(x, y);
-		m_timeSinceRespawn = 0;
 	}
 }
 

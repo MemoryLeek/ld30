@@ -18,7 +18,7 @@ class Renderer
 		int cameraOffsetX() const;
 		int cameraOffsetY() const;
 		void setCamera(Node *camera, float scale = 1);
-
+		void setCameraBounds(SDL_Rect bounds);
 
 	private:
 		SDL_Renderer *const m_renderer;
@@ -26,6 +26,7 @@ class Renderer
 		int m_width;
 		int m_height;
 		Node *m_camera;
+		SDL_Rect m_cameraBounds;
 		float m_cameraScale;
 };
 
