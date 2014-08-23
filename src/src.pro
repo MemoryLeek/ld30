@@ -6,7 +6,7 @@ TEMPLATE = app
 TARGET = ld30
 INCLUDEPATH += . states ui
 CONFIG += c++11
-LIBS += -lSDL2 -lSDL2_ttf -lSDL2_image
+LIBS += -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
 # Input
 HEADERS += IState.h \
@@ -23,6 +23,7 @@ HEADERS += IState.h \
     states/MenuItem.h \
     states/SettingsMenuState.h \
 	states/ResolutionMenuState.h \
+	states/VictoryState.h \
 	StringEx.h \
 	BinaryStream.h \
     SettingsHandler.h \
@@ -39,7 +40,9 @@ HEADERS += IState.h \
     drawables/Goal.h \
 	Util.h \
 	Player.h \
-	CollisionHandler.h
+	CollisionHandler.h \
+	SoundHandler.h \
+	GlobalDataStorage.h
 
 SOURCES += main.cpp \
            Node.cpp \
@@ -54,6 +57,7 @@ SOURCES += main.cpp \
     states/MenuState.cpp \
     states/SettingsMenuState.cpp \
 	states/ResolutionMenuState.cpp \
+	states/VictoryState.cpp \
 	StringEx.cpp \
 	BinaryStream.cpp \
     SettingsHandler.cpp \
@@ -68,4 +72,6 @@ SOURCES += main.cpp \
     drawables/Spawn.cpp \
 	drawables/Goal.cpp \
 	Player.cpp \
-	CollisionHandler.cpp
+	CollisionHandler.cpp \
+	SoundHandler.cpp \
+	GlobalDataStorage.cpp

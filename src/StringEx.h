@@ -10,7 +10,8 @@ class StringToken
 {
 	public:
 		StringToken(const std::string &value);
-		StringToken(const int value);
+		StringToken(int value);
+		StringToken(float value);
 
 		operator std::string() const;
 

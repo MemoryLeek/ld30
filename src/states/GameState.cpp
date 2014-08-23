@@ -20,11 +20,15 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
 	, m_settingsHandler(settingsHandler)
-	, m_level(&m_level1)
+	, m_deathCamLifetime(0)
+	, m_levelAlpha(255)
+	, m_currentLevel(&m_level1)
+	, m_otherLevel(&m_level2)
 	, m_level1(renderer)
 	, m_level2(renderer)
 	, m_mouseButtonDown(false)
 	, m_running(true)
+	, m_levelSwitching(false)
 {
 	SDL_Surface *image = IMG_Load("resources/sprites/standing.png");
 	// texture WILL LEAK, cba to properly free it for this simple test
@@ -34,8 +38,8 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	loadLevel("map.wld", m_level1);
 	loadLevel("map2.wld", m_level2);
 
-	m_character = new Player(0, 0, texture);
-	moveToSpawn(m_character, m_level);
+	m_character = new Player(32, 32, texture);
+	moveToSpawn(m_character, m_currentLevel);
 
 	SDL_assert(m_character);
 }
@@ -48,14 +52,23 @@ bool GameState::update(double delta)
 {
 	m_renderer.setCamera(m_character);
 
+	if (m_levelSwitching)
+	{
+		if ((m_levelAlpha -= delta * 500) <= 0)
+		{
+			switchLevels(*m_otherLevel);
+		}
+	}
+
 	if(m_deathCamLifetime > 0)
 	{
 		m_deathCamLifetime -= delta;
 	}
 	else if(m_character->isDead())
 	{
-		m_level = &m_level1;
-		const Spawn *spawn = m_level->findTile<Spawn>();
+		switchLevels(m_level1);
+
+		const Spawn *spawn = m_currentLevel->findTile<Spawn>();
 		if(spawn)
 		{
 			m_character->respawn(spawn->x(), spawn->y());
@@ -64,7 +77,8 @@ bool GameState::update(double delta)
 
 	if(!m_character->isDead())
 	{
-		if(m_mouseButtonDown)
+		// It's unhealthy to run while switching dimensions
+		if(m_mouseButtonDown && !m_levelSwitching)
 		{
 			const SDL_Point mouseWorld = {m_mousePosition.x + m_renderer.cameraOffsetX(), m_mousePosition.y + m_renderer.cameraOffsetY()};
 			m_character->walkTowards(mouseWorld);
@@ -84,9 +98,9 @@ bool GameState::update(double delta)
 
 		std::vector<Player*> movableObjects;
 		movableObjects.push_back(m_character);
-		CollisionHandler::resolveCollisions(movableObjects, m_level);
+		CollisionHandler::resolveCollisions(movableObjects, m_currentLevel);
 
-		const Goal *goal = m_level->findTile<Goal>();
+		const Goal *goal = m_currentLevel->findTile<Goal>();
 		if(goal && ((int)m_character->x() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileX() && ((int)m_character->y() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileY())
 		{
 			GlobalDataStorage::setLevelCompletionTime(m_timeSinceRespawn);
@@ -95,40 +109,8 @@ bool GameState::update(double delta)
 		}
 	}
 
-	int width = 0;
-	int height = 0;
-
-	SDL_QueryTexture(m_level->tileset(), nullptr, nullptr, &width, &height);
-
-	const int cx = m_renderer.cameraOffsetX();
-	const int cy = m_renderer.cameraOffsetY();
-
-	for (const LevelTile &tile : m_level->tiles())
-	{
-		const SDL_Rect target = { tile.x() * TILE_SIZE - TILE_SIZE / 2 - cx, tile.y() * TILE_SIZE - TILE_SIZE / 2 - cy, TILE_SIZE, TILE_SIZE };
-
-		for (const LevelTileLayer &layer : tile.layers())
-		{
-			const int w = width / 32;
-			const int y = layer.id() / w;
-			const int x = layer.id() - (y * w);
-
-			const SDL_Rect source = { x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE };
-
-			SDL_RenderCopy(m_renderer, m_level->tileset(), &source, &target);
-		}
-
-//		if (!tile.walkable())
-//		{
-//			SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-//			SDL_RenderDrawRect(m_renderer, &target);
-//		}
-
-		for (IDrawable *drawable : tile.objects())
-		{
-			drawable->draw(delta, m_renderer);
-		}
-	}
+	drawLevel(*m_otherLevel, delta);
+	drawLevel(*m_currentLevel, delta);
 
 	if(!m_character->isDead())
 	{
@@ -152,7 +134,9 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 
 		case SDLK_TAB:
 		{
-			switchLevels();
+			m_levelSwitching = true;
+
+			SoundHandler::play(SoundHandler::Sound::WorldSwitch);
 
 			break;
 		}
@@ -192,27 +176,20 @@ void GameState::loadLevel(const std::string &fileName, Level &target)
 	}
 }
 
-void GameState::switchLevels()
+void GameState::switchLevels(Level &targetLevel)
 {
 	if(m_character->isDead())
 	{
 		return; // You're not going anywhere
 	}
 
-	SoundHandler::play(SoundHandler::Sound::WorldSwitch);
-	if (m_level == &m_level1)
-	{
-		m_level = &m_level2;
-	}
-	else
-	{
-		m_level = &m_level1;
-	}
+	m_otherLevel = m_currentLevel;
+	m_currentLevel = &targetLevel;
 
-	// It's unhealthy to run while switching dimensions
-	m_mouseButtonDown = false;
+	m_levelSwitching = false;
+	m_levelAlpha = 255;
 
-	if(CollisionHandler::isPlayerInWall(*m_character, *m_level))
+	if(CollisionHandler::isPlayerInWall(*m_character, *m_currentLevel))
 	{
 		std::cout << "Dayyym, you dead." << std::endl;
 		m_deathCamLifetime = 3;
@@ -223,12 +200,46 @@ void GameState::switchLevels()
 
 void GameState::moveToSpawn(Player *player, Level *level)
 {
-	const Spawn *spawn = m_level->findTile<Spawn>();
+	const Spawn *spawn = m_currentLevel->findTile<Spawn>();
 	if(spawn)
 	{
 		const int x = spawn->x();
 		const int y = spawn->y();
 		m_character->setPosition(x, y);
 		m_timeSinceRespawn = 0;
+	}
+}
+
+void GameState::drawLevel(Level &level, double delta)
+{
+	int width = 0;
+	int height = 0;
+
+	SDL_Texture *tileset = level.tileset();
+	SDL_QueryTexture(tileset, nullptr, nullptr, &width, &height);
+
+	const int cx = m_renderer.cameraOffsetX();
+	const int cy = m_renderer.cameraOffsetY();
+
+	for (const LevelTile &tile : level.tiles())
+	{
+		for (const LevelTileLayer &layer : tile.layers())
+		{
+			const int w = width / 32;
+			const int y = layer.id() / w;
+			const int x = layer.id() - (y * w);
+			const int s = TILE_SIZE;
+
+			SDL_Rect target = { tile.x() * s - s / 2 - cx, tile.y() * s - s / 2 - cy, s, s };
+			SDL_Rect source = { x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE };
+
+			SDL_SetTextureAlphaMod(tileset, &level == m_otherLevel ? 255.0 - m_levelAlpha : m_levelAlpha);
+			SDL_RenderCopy(m_renderer, tileset, &source, &target);
+		}
+
+		for (IDrawable *drawable : tile.objects())
+		{
+			drawable->draw(delta, m_renderer);
+		}
 	}
 }
