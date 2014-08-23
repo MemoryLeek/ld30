@@ -36,7 +36,12 @@ HEADERS += IState.h \
     LevelTileLayer.h \
     LevelTileMapObject.h \
     drawables/Spawn.h \
-    drawables/Goal.h
+    drawables/Goal.h \
+	Global.h \
+	PathFinder.h \
+	PathNode.h \
+	DereferencedEqual.h \
+	DereferencedLess.h
 
 SOURCES += main.cpp \
            Node.cpp \
@@ -63,4 +68,6 @@ SOURCES += main.cpp \
     LevelTileLayer.cpp \
     LevelTileMapObject.cpp \
     drawables/Spawn.cpp \
-    drawables/Goal.cpp
+	drawables/Goal.cpp \
+	PathFinder.cpp \
+	PathNode.cpp

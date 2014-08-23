@@ -15,7 +15,9 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
 	, m_settingsHandler(settingsHandler)
-	, m_level(renderer)
+	, m_level(&m_level1)
+	, m_level1(renderer)
+	, m_level2(renderer)
 	, m_running(true)
 {
 	SDL_Surface *image = IMG_Load("resources/sprites/standing.png");
@@ -25,38 +27,10 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 
 	m_character = new Sprite(0, 0, 0, texture);
 
-	std::fstream file("map.wld", std::ios::in | std::ios::binary);
+	loadLevel("map.wld", m_level1);
+	loadLevel("map2.wld", m_level2);
 
-	if (file.is_open())
-	{
-		BinaryStream stream(file);
-		stream >> m_level;
-
-		for (const LevelTile &tile : m_level.tiles())
-		{
-			for (const LevelTileMapObject &object : tile.objects())
-			{
-				switch (object.id())
-				{
-					case LevelTileMapObject::Spawn:
-					{
-						m_objects.push_back(new Spawn(tile.x() * TILE_SIZE, tile.y() * TILE_SIZE));
-
-						break;
-					}
-
-					case LevelTileMapObject::Goal:
-					{
-						m_objects.push_back(new Goal(tile.x() * TILE_SIZE, tile.y() * TILE_SIZE));
-
-						break;
-					}
-				}
-			}
-		}
-	}
-
-	m_pathfinder.reload(m_level);
+	m_pathfinder.reload(m_level1);
 }
 
 GameState::~GameState()
@@ -72,12 +46,12 @@ bool GameState::update(double delta)
 	int width = 0;
 	int height = 0;
 
-	SDL_QueryTexture(m_level.tileset(), nullptr, nullptr, &width, &height);
+	SDL_QueryTexture(m_level->tileset(), nullptr, nullptr, &width, &height);
 
 	const int cx = m_renderer.cameraOffsetX();
 	const int cy = m_renderer.cameraOffsetY();
 
-	for (const LevelTile &tile : m_level.tiles())
+	for (const LevelTile &tile : m_level->tiles())
 	{
 		const SDL_Rect target = { tile.x() * TILE_SIZE - TILE_SIZE / 2 - cx, tile.y() * TILE_SIZE - TILE_SIZE / 2 - cy, TILE_SIZE, TILE_SIZE };
 
@@ -89,7 +63,7 @@ bool GameState::update(double delta)
 
 			const SDL_Rect source = { x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE };
 
-			SDL_RenderCopy(m_renderer, m_level.tileset(), &source, &target);
+			SDL_RenderCopy(m_renderer, m_level->tileset(), &source, &target);
 		}
 
 		if (!tile.walkable())
@@ -97,11 +71,11 @@ bool GameState::update(double delta)
 			SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 			SDL_RenderDrawRect(m_renderer, &target);
 		}
-	}
 
-	for (IDrawable *drawable : m_objects)
-	{
-		drawable->draw(m_renderer);
+		for (IDrawable *drawable : tile.objects())
+		{
+			drawable->draw(m_renderer);
+		}
 	}
 
 	// Rotate the character to verify that it actually works
@@ -119,6 +93,22 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 		case SDLK_ESCAPE:
 		{
 			m_running = false;
+
+			break;
+		}
+
+		case SDLK_TAB:
+		{
+			if (m_level == &m_level1)
+			{
+				m_level = &m_level2;
+				m_pathfinder.reload(m_level2);
+			}
+			else
+			{
+				m_level = &m_level1;
+				m_pathfinder.reload(m_level1);
+			}
 
 			break;
 		}
@@ -143,4 +133,15 @@ void GameState::onMouseButtonUp(SDL_MouseButtonEvent event)
 void GameState::onMouseMove(SDL_MouseMotionEvent event)
 {
 
+}
+
+void GameState::loadLevel(const std::string &fileName, Level &target)
+{
+	std::fstream file(fileName, std::ios::in | std::ios::binary);
+
+	if (file.is_open())
+	{
+		BinaryStream stream(file);
+		stream >> target;
+	}
 }

@@ -30,15 +30,18 @@ class GameState : public IState
 		void onMouseMove(SDL_MouseMotionEvent event) override;
 
 	private:
-		std::vector<IDrawable *> m_objects;
+		void loadLevel(const std::string &fileName, Level &target);
 
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
 		SettingsHandler &m_settingsHandler;
+		Pathfinder m_pathfinder;
 
 		Sprite *m_character;
-		Level m_level;
-		Pathfinder m_pathfinder;
+
+		Level *m_level;
+		Level m_level1;
+		Level m_level2;
 
 		bool m_running;
 };

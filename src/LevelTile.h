@@ -7,6 +7,8 @@
 
 const int TILE_SIZE = 32;
 
+class IDrawable;
+
 class LevelTile
 {
 	friend BinaryStream &operator >>(BinaryStream &stream, LevelTile &tile);
@@ -15,7 +17,7 @@ class LevelTile
 		LevelTile();
 
 		std::vector<LevelTileLayer> layers() const;
-		std::vector<LevelTileMapObject> objects() const;
+		std::vector<IDrawable *> objects() const;
 
 		bool walkable() const;
 
@@ -24,7 +26,7 @@ class LevelTile
 
 	private:
 		std::vector<LevelTileLayer> m_layers;
-		std::vector<LevelTileMapObject> m_objects;
+		std::vector<IDrawable *> m_objects;
 
 		bool m_walkable;
 
