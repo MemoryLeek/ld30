@@ -8,6 +8,9 @@ class Spawn : public IDrawable
 	public:
 		Spawn(int x, int y);
 
+		int x() const;
+		int y() const;
+
 		void draw(double delta, Renderer &renderer) override;
 
 	private:

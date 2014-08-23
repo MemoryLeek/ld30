@@ -20,6 +20,7 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_level(&m_level1)
 	, m_level1(renderer)
 	, m_level2(renderer)
+	, m_mouseButtonDown(false)
 	, m_running(true)
 {
 	SDL_Surface *image = IMG_Load("resources/sprites/standing.png");
@@ -57,6 +58,12 @@ bool GameState::update(double delta)
 	std::vector<Player*> movableObjects;
 	movableObjects.push_back(m_character);
 	CollisionHandler::resolveCollisions(movableObjects, m_level);
+
+	const Goal *goal = m_level->findTile<Goal>();
+	if(goal && ((int)m_character->x() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileX() && ((int)m_character->y() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileY())
+	{
+		std::cout << "Wow man, you made it to ze goal!" << std::endl;
+	}
 
 	int width = 0;
 	int height = 0;
@@ -175,19 +182,11 @@ void GameState::switchLevels()
 
 void GameState::moveToSpawn(Player *player, Level *level)
 {
-	for (const LevelTile &tile : m_level1.tiles())
+	const Spawn *spawn = m_level->findTile<Spawn>();
+	if(spawn)
 	{
-		for (IDrawable *drawable : tile.objects())
-		{
-			Spawn *spawn = dynamic_cast<Spawn *>(drawable);
-
-			if (spawn)
-			{
-				const int x = tile.x();
-				const int y = tile.y();
-
-				m_character->setPosition(x * TILE_SIZE, y * TILE_SIZE);
-			}
-		}
+		const int x = spawn->x();
+		const int y = spawn->y();
+		m_character->setPosition(x, y);
 	}
 }

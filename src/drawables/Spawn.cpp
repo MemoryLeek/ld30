@@ -11,6 +11,16 @@ Spawn::Spawn(int x, int y)
 
 }
 
+int Spawn::x() const
+{
+	return m_x;
+}
+
+int Spawn::y() const
+{
+	return m_y;
+}
+
 void Spawn::draw(double delta, Renderer &renderer)
 {
 	SDL_Rect target = { m_x - TILE_SIZE / 2 - renderer.cameraOffsetX(), m_y - TILE_SIZE / 2 - renderer.cameraOffsetY(), TILE_SIZE, TILE_SIZE };

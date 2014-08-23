@@ -8,6 +8,9 @@
 #include "ImageWrapper.h"
 #include "LevelTile.h"
 
+class Goal;
+class Spawn;
+
 class Level
 {
 	friend BinaryStream &operator >>(BinaryStream &stream, Level &level);
@@ -19,6 +22,25 @@ class Level
 
 		int width() const;
 		int height() const;
+
+		template<class T>
+		const T *findTile() const
+		{
+			for (const LevelTile &tile : tiles())
+			{
+				for (IDrawable *drawable : tile.objects())
+				{
+					T *o = dynamic_cast<T *>(drawable);
+
+					if (o)
+					{
+						return o;
+					}
+				}
+			}
+
+			return nullptr;
+		}
 
 		std::vector<LevelTile> tiles() const;
 

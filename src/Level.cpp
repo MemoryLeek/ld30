@@ -1,4 +1,6 @@
 #include "Level.h"
+#include "drawables/Goal.h"
+#include "drawables/Spawn.h"
 
 Level::Level(Renderer &renderer)
 	: m_tileset(renderer)
