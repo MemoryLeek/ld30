@@ -8,7 +8,7 @@ class Goal : public IDrawable
 	public:
 		Goal(int x, int y);
 
-		void draw(Renderer &renderer) override;
+		void draw(double delta, Renderer &renderer) override;
 
 	private:
 		int m_x;

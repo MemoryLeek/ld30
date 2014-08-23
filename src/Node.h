@@ -7,7 +7,9 @@ class Node
 		Node(float x, float y, float angle, Node *parent = nullptr);
 
 		float x() const;
+		void setX(float x);
 		float y() const;
+		void setY(float y);
 		float angle() const;
 		void setAngle(float angle);
 

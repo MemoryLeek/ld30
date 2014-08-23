@@ -1,5 +1,5 @@
 #include "LevelTile.h"
-#include "Global.h"
+#include "Util.h"
 
 #include "drawables/Goal.h"
 #include "drawables/Spawn.h"

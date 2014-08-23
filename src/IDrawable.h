@@ -6,7 +6,7 @@ class Renderer;
 class IDrawable
 {
 	public:
-		virtual void draw(Renderer &renderer) = 0;
+		virtual void draw(double delta, Renderer &renderer) = 0;
 };
 
 #endif // IDRAWABLE_H

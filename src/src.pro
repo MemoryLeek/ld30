@@ -37,7 +37,7 @@ HEADERS += IState.h \
     LevelTileMapObject.h \
     drawables/Spawn.h \
     drawables/Goal.h \
-	Global.h \
+	Util.h \
 	PathFinder.h \
 	PathNode.h \
 	DereferencedEqual.h \

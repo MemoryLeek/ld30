@@ -4,6 +4,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "GameState.h"
+#include "Player.h"
 #include "Sprite.h"
 #include "StateHandler.h"
 #include "Renderer.h"
@@ -25,7 +26,7 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, image);
 	SDL_FreeSurface(image);
 
-	m_character = new Sprite(0, 0, 0, texture);
+	m_character = new Player(0, 0, texture);
 
 	loadLevel("map.wld", m_level1);
 	loadLevel("map2.wld", m_level2);
@@ -39,9 +40,14 @@ GameState::~GameState()
 
 bool GameState::update(double delta)
 {
-	// Create camera node 100px in front of character
-	Node cameraNode(100, 0, 0, m_character);
-	m_renderer.setCamera(&cameraNode);
+	m_renderer.setCamera(m_character);
+
+	if(m_mouseButtonDown)
+	{
+		const SDL_Point mouseWorld = {(m_mousePosition.x + m_renderer.cameraOffsetX() + 16) / 32, (m_mousePosition.y + m_renderer.cameraOffsetY() + 16) / 32};
+		std::stack<SDL_Point> path = m_pathfinder.find({m_character->x() / 32, m_character->y() / 32}, mouseWorld);
+		m_character->setPath(path);
+	}
 
 	int width = 0;
 	int height = 0;
@@ -74,14 +80,14 @@ bool GameState::update(double delta)
 
 		for (IDrawable *drawable : tile.objects())
 		{
-			drawable->draw(m_renderer);
+			drawable->draw(delta, m_renderer);
 		}
 	}
 
 	// Rotate the character to verify that it actually works
 //	m_character->setAngle(m_character->angle() + delta * 100);
 
-	m_character->draw(m_renderer);
+	m_character->draw(delta, m_renderer);
 
 	return m_running;
 }
@@ -122,17 +128,19 @@ void GameState::onKeyUp(SDL_Keycode keyCode)
 
 void GameState::onMouseButtonDown(SDL_MouseButtonEvent event)
 {
-
+	m_mouseButtonDown = true;
+	m_mousePosition = {event.x, event.y};
 }
 
 void GameState::onMouseButtonUp(SDL_MouseButtonEvent event)
 {
-
+	m_mouseButtonDown = false;
+	m_mousePosition = {event.x, event.y};
 }
 
 void GameState::onMouseMove(SDL_MouseMotionEvent event)
 {
-
+	m_mousePosition = {event.x, event.y};
 }
 
 void GameState::loadLevel(const std::string &fileName, Level &target)

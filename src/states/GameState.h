@@ -9,7 +9,7 @@
 #include "Level.h"
 #include "Pathfinder.h"
 
-class Sprite;
+class Player;
 class Renderer;
 class StateHandler;
 class SettingsHandler;
@@ -37,11 +37,14 @@ class GameState : public IState
 		SettingsHandler &m_settingsHandler;
 		Pathfinder m_pathfinder;
 
-		Sprite *m_character;
+		Player *m_character;
 
 		Level *m_level;
 		Level m_level1;
 		Level m_level2;
+
+		bool m_mouseButtonDown;
+		SDL_Point m_mousePosition;
 
 		bool m_running;
 };

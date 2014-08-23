@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
 				fpsLabel.setText(std::to_string(fps).append(" FPS"));
 				lastFpsUpdate = 0;
 			}
-			fpsLabel.draw(renderer);
+			fpsLabel.draw(delta, renderer);
 		}
 
 		SDL_RenderPresent(renderer);

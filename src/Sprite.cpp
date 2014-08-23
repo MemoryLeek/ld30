@@ -8,7 +8,7 @@ Sprite::Sprite(float x, float y, float angle, SDL_Texture *texture)
 	SDL_QueryTexture(texture, nullptr, nullptr, &m_width, &m_height);
 }
 
-void Sprite::draw(Renderer &renderer)
+void Sprite::draw(double delta, Renderer &renderer)
 {
 	// x/y represents center of sprite
 	const SDL_Rect dest = {(int)x() - m_width / 2 - renderer.cameraOffsetX(),

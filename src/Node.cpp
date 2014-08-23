@@ -26,6 +26,11 @@ float Node::x() const
 	return m_parent->x() + cos(angle) * hypotenuse;
 }
 
+void Node::setX(float x)
+{
+	m_x = x;
+}
+
 float Node::y() const
 {
 	if(!m_parent)
@@ -40,6 +45,11 @@ float Node::y() const
 
 	// Calculate new "real" y (opposite)
 	return m_parent->y() + sin(angle) * hypotenuse;
+}
+
+void Node::setY(float y)
+{
+	m_y = y;
 }
 
 float Node::angle() const

@@ -28,6 +28,7 @@ set(SOURCES
 	LevelTileMapObject.cpp
 	Pathfinder.cpp
 	PathNode.cpp
+	Player.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -65,7 +66,8 @@ set(HEADERS
 	PathNode.h
 	DereferencedEqual.h
 	DereferencedLess.h
-	Global.h
+	Player.h
+	Util.h
 
 	states/GameState.h
 	states/SplashState.h
