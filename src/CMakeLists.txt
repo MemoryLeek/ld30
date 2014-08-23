@@ -65,6 +65,7 @@ set(HEADERS
 	PathNode.h
 	DereferencedEqual.h
 	DereferencedLess.h
+	Global.h
 
 	states/GameState.h
 	states/SplashState.h

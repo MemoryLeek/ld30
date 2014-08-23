@@ -5,16 +5,16 @@
  </tileset>
  <layer name="Foreground" width="15" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt0usKgCAMhmELO1iY3f/VVqDwsdSt7ABR8NKfPbogo5QyBdm1wb/tCduDP2otc2/nz49Z7vyU5dIJW0WSWtpVVkOSb8O9N7M9NUTnJ2LrBy16tOgdSWJjdzq138HAbMrlLPqYozW+o/+rKXDBzr7cXMvYMdMdtiFzTmhDV1npzm9brhL79/fVFshXFHU=
+   eJwTYGBgEKAi5iQCo6vHp5cSe9HFqaGXWP8NRb3kxicus4ixgxS9+NIQKXqxiVOStogNM3xuJkYvofAcinrpjYlNG+SkyVG9o3qHut7RfER+mGDDAJp7Gx0=
   </data>
  </layer>
  <layer name="Collision" width="15" height="40">
   <data encoding="base64" compression="zlib">
-   eJxjYKAOEMCC8YnjMoMU8aGud6AAtjghFDfIegmxaaV3JLl5FIyCUTAKRsHQBgCm+QMx
+   eJwTYGBgEKAiJgagq8enlxJ70cWpoZcYMFT1khufuMwixg5S9OIyi1S92MQpSVvEhhk+NxOjF595Q1UvvTExbsTl5lG9o3qHu97RfIRdL7kYAMGrDcE=
   </data>
  </layer>
  <objectgroup name="Objects" width="15" height="40">
-  <object name="Goal" type="goal" x="256" y="32" width="32" height="32"/>
-  <object name="Spawn" type="spawn" x="96" y="800" width="32" height="32"/>
+  <object name="Spawn" type="spawn" x="224" y="1184" width="32" height="32"/>
+  <object name="Goal" type="goal" x="64" y="64" width="32" height="32"/>
  </objectgroup>
 </map>

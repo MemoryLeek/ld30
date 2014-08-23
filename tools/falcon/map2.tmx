@@ -5,7 +5,13 @@
  </tileset>
  <layer name="Foreground" width="15" height="40">
   <data encoding="base64" compression="zlib">
-   eJxjYWBgYBnFdMfcODCx+ogVR1dDjhyyPCMUI7PpoZdU9xIKK2LjSAAJExtHuPRSkjYGOr2O4lE8ikfxKCYNAwDz4gpq
+   eJwTYGBgEKAAc5KBh7JeamJy3Dyc9GILj8GmlxhxYvWSkibprZeS9DuUyg1y3DLc9NIDY3MPufFLiV56pavB4l96pY2RFkfkYgAPWBv2
   </data>
  </layer>
+ <layer name="Collision" width="15" height="40">
+  <data encoding="base64" compression="zlib">
+   eJwTYGBgEKAAkwOGsl5qYnLcPJz0YguPwaaXGHFi9WIDhNxIL72UpN+hVG6Q45bhppceGJt7iHUzNfUSA2ihd6D8S6+0QU03EwMGOo7IxQBfBQ+x
+  </data>
+ </layer>
+ <objectgroup name="Object Layer" width="15" height="40"/>
 </map>
