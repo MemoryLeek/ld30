@@ -30,6 +30,7 @@ set(SOURCES
 	Player.cpp
 	CollisionHandler.cpp
 	SoundHandler.cpp
+	GlobalDataStorage.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -38,6 +39,7 @@ set(SOURCES
 	states/MenuItem.cpp
 	states/SettingsMenuState.cpp
 	states/ResolutionMenuState.cpp
+	states/VictoryState.cpp
 	
 	drawables/Goal.cpp
 	drawables/Spawn.cpp
@@ -67,6 +69,7 @@ set(HEADERS
 	Util.h
 	CollisionHandler.h
 	SoundHandler.h
+	GlobalDataStorage.h
 
 	states/GameState.h
 	states/SplashState.h
@@ -75,6 +78,7 @@ set(HEADERS
 	states/MenuItem.h
 	states/SettingsMenuState.h
 	states/ResolutionMenuState.h
+	states/VictoryState.h
 	
 	drawables/Goal.h
 	drawables/Spawn.h

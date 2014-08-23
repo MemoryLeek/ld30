@@ -10,6 +10,8 @@
 #include "StateHandler.h"
 #include "Renderer.h"
 #include "SoundHandler.h"
+#include "VictoryState.h"
+#include "GlobalDataStorage.h"
 
 #include "drawables/Spawn.h"
 #include "drawables/Goal.h"
@@ -87,7 +89,9 @@ bool GameState::update(double delta)
 		const Goal *goal = m_level->findTile<Goal>();
 		if(goal && ((int)m_character->x() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileX() && ((int)m_character->y() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileY())
 		{
-			std::cout << "Wow man, you made it to ze goal!" << std::endl;
+			GlobalDataStorage::setLevelCompletionTime(m_timeSinceRespawn);
+			m_stateHandler.changeState<VictoryState>();
+			return true;
 		}
 	}
 
@@ -129,6 +133,7 @@ bool GameState::update(double delta)
 	if(!m_character->isDead())
 	{
 		m_character->draw(delta, m_renderer);
+		m_timeSinceRespawn += delta;
 	}
 
 	return m_running;
@@ -224,5 +229,6 @@ void GameState::moveToSpawn(Player *player, Level *level)
 		const int x = spawn->x();
 		const int y = spawn->y();
 		m_character->setPosition(x, y);
+		m_timeSinceRespawn = 0;
 	}
 }
