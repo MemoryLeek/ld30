@@ -29,6 +29,7 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_mouseButtonDown(false)
 	, m_running(true)
 	, m_levelSwitching(false)
+	, m_cameraScale(2)
 {
 	SDL_Surface *image = IMG_Load("resources/sprites/standing.png");
 	// texture WILL LEAK, cba to properly free it for this simple test
@@ -50,7 +51,8 @@ GameState::~GameState()
 
 bool GameState::update(double delta)
 {
-	m_renderer.setCamera(m_character);
+	SDL_RenderSetScale(m_renderer, m_cameraScale, m_cameraScale);
+	m_renderer.setCamera(m_character, m_cameraScale);
 
 	if (m_levelSwitching)
 	{
@@ -118,6 +120,7 @@ bool GameState::update(double delta)
 		m_timeSinceRespawn += delta;
 	}
 
+	SDL_RenderSetScale(m_renderer, 1, 1);
 	return m_running;
 }
 
@@ -151,18 +154,18 @@ void GameState::onKeyUp(SDL_Keycode keyCode)
 void GameState::onMouseButtonDown(SDL_MouseButtonEvent event)
 {
 	m_mouseButtonDown = true;
-	m_mousePosition = {event.x, event.y};
+	m_mousePosition = {event.x / m_cameraScale, event.y / m_cameraScale};
 }
 
 void GameState::onMouseButtonUp(SDL_MouseButtonEvent event)
 {
 	m_mouseButtonDown = false;
-	m_mousePosition = {event.x, event.y};
+	m_mousePosition = {event.x / m_cameraScale, event.y / m_cameraScale};
 }
 
 void GameState::onMouseMove(SDL_MouseMotionEvent event)
 {
-	m_mousePosition = {event.x, event.y};
+	m_mousePosition = {event.x / m_cameraScale, event.y / m_cameraScale};
 }
 
 void GameState::loadLevel(const std::string &fileName, Level &target)

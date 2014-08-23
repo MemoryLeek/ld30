@@ -27,16 +27,17 @@ int Renderer::height() const
 
 int Renderer::cameraOffsetX() const
 {
-	return (m_camera) ? m_camera->x() - m_width / 2 : 0;
+	return (m_camera) ? m_camera->x() - m_width / (2 * m_cameraScale) : 0;
 }
 
 int Renderer::cameraOffsetY() const
 {
-	return (m_camera) ? m_camera->y() - m_height / 2 : 0;
+	return (m_camera) ? m_camera->y() - m_height / (2 * m_cameraScale) : 0;
 }
 
-void Renderer::setCamera(Node *camera)
+void Renderer::setCamera(Node *camera, float scale)
 {
 	m_camera = camera;
+	m_cameraScale = scale;
 }
 

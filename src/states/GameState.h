@@ -55,6 +55,7 @@ class GameState : public IState
 		bool m_running;
 		bool m_levelSwitching;
 
+		float m_cameraScale;
 		SDL_Point m_mousePosition;
 };
 

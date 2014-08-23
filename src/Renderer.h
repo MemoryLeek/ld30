@@ -17,7 +17,7 @@ class Renderer
 
 		int cameraOffsetX() const;
 		int cameraOffsetY() const;
-		void setCamera(Node *camera);
+		void setCamera(Node *camera, float scale = 1);
 
 
 	private:
@@ -26,6 +26,7 @@ class Renderer
 		int m_width;
 		int m_height;
 		Node *m_camera;
+		float m_cameraScale;
 };
 
 #endif // RENDERER_H
