@@ -58,7 +58,6 @@ bool GameState::update(double delta)
 {
 	SDL_RenderSetScale(m_renderer, m_cameraScale, m_cameraScale);
 	m_renderer.setCamera(m_character, m_cameraScale);
-	m_renderer.setCameraBounds({-TILE_SIZE / 2, -TILE_SIZE / 2, m_currentLevel->width() * TILE_SIZE, m_currentLevel->height() * TILE_SIZE});
 
 	if (m_levelSwitching)
 	{
