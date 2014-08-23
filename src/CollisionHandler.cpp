@@ -1,6 +1,6 @@
+#include <math.h>
 #include <iostream>
 
-#include "Renderer.h" // REMOVE LATER
 #include <SDL2/SDL_render.h>
 
 #include "CollisionHandler.h"
