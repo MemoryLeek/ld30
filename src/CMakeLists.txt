@@ -32,6 +32,9 @@ set(SOURCES
 	CollisionHandler.cpp
 	SoundHandler.cpp
 	GlobalDataStorage.cpp
+	SpriteBundle.cpp
+	SpriteBundleSprite.cpp
+	SpriteLoader.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -71,6 +74,9 @@ set(HEADERS
 	CollisionHandler.h
 	SoundHandler.h
 	GlobalDataStorage.h
+	SpriteBundle.h
+	SpriteBundleSprite.h
+	SpriteLoader.h
 
 	states/GameState.h
 	states/SplashState.h
