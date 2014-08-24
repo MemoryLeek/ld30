@@ -18,6 +18,7 @@ MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 
 bool MenuState::update(double delta)
 {
+	SDL_RenderSetScale(m_renderer, 1, 1);
 	const std::vector<MenuItem> &values = items();
 
 	for (int i = 0; i < values.size(); i++)

@@ -11,6 +11,7 @@
 #include "StateHandler.h"
 #include "Renderer.h"
 #include "SoundHandler.h"
+#include "MainMenuState.h"
 
 #include "drawables/Spawn.h"
 #include "drawables/Goal.h"
@@ -124,6 +125,12 @@ bool GameState::update(double delta)
 	{
 		SDL_RenderSetScale(m_renderer, 1, 1);
 		m_scoreboard->draw(delta, m_renderer);
+	}
+
+	if(!m_running)
+	{
+		m_stateHandler.changeState<MainMenuState>();
+		return true;
 	}
 
 	return m_running;

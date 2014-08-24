@@ -8,6 +8,7 @@ Settings DefaultSettingsProvider::load()
 
 	Settings settings;
 	settings.setResolution(800, 600);
+	settings.setSoundVolume(255);
 
 	return settings;
 }

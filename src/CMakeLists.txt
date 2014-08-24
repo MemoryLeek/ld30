@@ -42,6 +42,7 @@ set(SOURCES
 	states/MenuItem.cpp
 	states/SettingsMenuState.cpp
 	states/ResolutionMenuState.cpp
+	states/SoundVolumeMenuState.cpp
 	
 	drawables/Goal.cpp
 	drawables/Spawn.cpp
@@ -83,6 +84,7 @@ set(HEADERS
 	states/MenuItem.h
 	states/SettingsMenuState.h
 	states/ResolutionMenuState.h
+	states/SoundVolumeMenuState.h
 	
 	drawables/Goal.h
 	drawables/Spawn.h

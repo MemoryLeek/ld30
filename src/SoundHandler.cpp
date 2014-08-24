@@ -35,6 +35,16 @@ void SoundHandler::play(SoundHandler::Sound::Value sound)
 	}
 }
 
+void SoundHandler::setSoundVolume(int volume)
+{
+	if(!m_loaded)
+	{
+		init();
+	}
+
+	Mix_Volume(-1, volume);
+}
+
 void SoundHandler::init()
 {
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) != 0)

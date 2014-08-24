@@ -11,6 +11,7 @@ class SettingsMenuState : public MenuState
 		std::vector<MenuItem> items() override;
 
 		void resolutionMenu();
+		void soundVolumeMenu();
 
 	private:
 		void cancel() override;

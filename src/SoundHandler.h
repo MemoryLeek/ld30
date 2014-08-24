@@ -20,6 +20,7 @@ class SoundHandler
 		};
 
 		static void play(Sound::Value sound);
+		static void setSoundVolume(int volume);
 
 	private:
 		static void init();
