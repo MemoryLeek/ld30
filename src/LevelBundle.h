@@ -10,10 +10,10 @@ class LevelBundle
 	friend BinaryStream &operator >>(BinaryStream &stream, LevelBundle &bundle);
 
 	public:
-		LevelBundle(Level &level1, Level &level2);
+		LevelBundle(ImageWrapper &preview, Level &level1, Level &level2);
 
 	private:
-		ImageWrapper m_preview;
+		ImageWrapper &m_preview;
 
 		Level &m_level1;
 		Level &m_level2;

@@ -1,23 +1,51 @@
 #ifndef MAPSELECTIONSTATE_H
 #define MAPSELECTIONSTATE_H
 
+#include <SDL2/SDL_ttf.h>
+
 #include <vector>
 
-#include "MenuState.h"
+#include "IState.h"
 #include "MapSelectionItem.h"
 
-class MapSelectionState : public MenuState
+class StateHandler;
+class Renderer;
+class SettingsHandler;
+class MapSelectionToken;
+
+class MapSelectionState : public IState
 {
 	public:
 		MapSelectionState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken);
+		~MapSelectionState();
 
-		std::vector<MenuItem> items() override;
+		bool update(double delta) override;
+
+		void onKeyDown(SDL_Keycode keyCode) override;
+		void onKeyUp(SDL_Keycode keyCode) override;
+		void onMouseButtonDown(SDL_MouseButtonEvent event) override;
+		void onMouseButtonUp(SDL_MouseButtonEvent event) override;
+		void onMouseMove(SDL_MouseMotionEvent event) override;
+		void onControllerButtonDown(SDL_ControllerButtonEvent event) override;
+		void onControllerButtonUp(SDL_ControllerButtonEvent event) override;
+		void onControllerAxisMotion(SDL_ControllerAxisEvent event) override;
 
 	private:
-		void selectMap(MapSelectionItem &map);
-		void cancel() override;
+		void left();
+		void right();
+		void activate();
+		void cancel();
 
-		std::vector<MapSelectionItem> m_items;
+		StateHandler &m_stateHandler;
+		Renderer &m_renderer;
+		MapSelectionToken &m_mapSelectionToken;
+
+		TTF_Font *m_font;
+		SDL_Texture *m_background;
+
+		unsigned int m_selectedMap;
+
+		bool m_joystickReady;
 };
 
 #endif // MAPSELECTIONSTATE_H

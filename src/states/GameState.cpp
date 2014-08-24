@@ -30,10 +30,10 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_timeSinceStep(0)
 	, m_timeSinceRespawn(0)
 	, m_cameraScale(2)
+	, m_level1(mapSelectionToken.level1())
+	, m_level2(mapSelectionToken.level2())
 	, m_currentLevel(&m_level1)
 	, m_otherLevel(&m_level2)
-	, m_level1()
-	, m_level2()
 	, m_mouseButtonDown(false)
 	, m_running(true)
 	, m_levelSwitching(false)
@@ -45,9 +45,6 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 
 	m_character = new Player(13 * 32, 12 * 32, m_renderer);
 
-	MapSelectionItem *map = mapSelectionToken.mapSelection();
-
-	loadLevel(map);
 	respawn();
 
 	SoundHandler::playMusic(SoundHandler::Music::Ambient);
@@ -274,19 +271,6 @@ void GameState::onControllerAxisMotion(SDL_ControllerAxisEvent event)
 
 			break;
 		}
-	}
-}
-
-void GameState::loadLevel(MapSelectionItem *map)
-{
-	std::string fileName = map->fileName();
-	std::fstream file(fileName, std::ios::in | std::ios::binary);
-
-	if (file.is_open())
-	{
-		LevelBundle bundle(m_level1, m_level2);
-		BinaryStream stream(file, &m_renderer);
-		stream >> bundle;
 	}
 }
 

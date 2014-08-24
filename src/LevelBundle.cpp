@@ -1,7 +1,8 @@
 #include "LevelBundle.h"
 
-LevelBundle::LevelBundle(Level &level1, Level &level2)
-	: m_level1(level1)
+LevelBundle::LevelBundle(ImageWrapper &preview, Level &level1, Level &level2)
+	: m_preview(preview)
+	, m_level1(level1)
 	, m_level2(level2)
 {
 

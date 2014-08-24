@@ -54,10 +54,10 @@ class GameState : public IState
 		float m_timeSinceRespawn;
 		float m_cameraScale;
 
+		Level &m_level1;
+		Level &m_level2;
 		Level *m_currentLevel;
 		Level *m_otherLevel;
-		Level m_level1;
-		Level m_level2;
 
 		bool m_mouseButtonDown;
 		bool m_running;

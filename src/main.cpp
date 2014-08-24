@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 
 	// Wrap the renderer in our own class to manage camera etc.
 	Renderer renderer(sdlRenderer);
-	MapSelectionToken mapSelectionToken;
+	MapSelectionToken mapSelectionToken(renderer);
 	StateHandler stateHandler(renderer, settingsHandler, mapSelectionToken);
 
 	if(std::find(arguments.begin(), arguments.end(), "--nosplash") != arguments.end())
