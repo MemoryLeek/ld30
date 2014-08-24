@@ -114,7 +114,7 @@ bool GameState::update(double delta)
 
 	if (!m_character->isDead())
 	{
-		m_character->draw(delta, m_renderer);
+		m_character->draw(delta * m_running, m_renderer);
 
 		if (!m_showScoreboard)
 		{
