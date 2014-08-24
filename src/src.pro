@@ -23,7 +23,6 @@ HEADERS += IState.h \
     states/MenuItem.h \
     states/SettingsMenuState.h \
 	states/ResolutionMenuState.h \
-	states/VictoryState.h \
 	StringEx.h \
 	BinaryStream.h \
     SettingsHandler.h \
@@ -38,11 +37,11 @@ HEADERS += IState.h \
     LevelTileMapObject.h \
     drawables/Spawn.h \
     drawables/Goal.h \
+	drawables/Scoreboard.h \
 	Util.h \
 	Player.h \
 	CollisionHandler.h \
 	SoundHandler.h \
-	GlobalDataStorage.h \
 	SpriteBundle.h \
 	SpriteBundleSprite.h \
 	SpriteLoader.h
@@ -60,7 +59,6 @@ SOURCES += main.cpp \
     states/MenuState.cpp \
     states/SettingsMenuState.cpp \
 	states/ResolutionMenuState.cpp \
-	states/VictoryState.cpp \
 	StringEx.cpp \
 	BinaryStream.cpp \
     SettingsHandler.cpp \
@@ -74,10 +72,10 @@ SOURCES += main.cpp \
     LevelTileMapObject.cpp \
     drawables/Spawn.cpp \
 	drawables/Goal.cpp \
+	drawables/Scoreboard.cpp \
 	Player.cpp \
 	CollisionHandler.cpp \
 	SoundHandler.cpp \
-	GlobalDataStorage.cpp \
 	SpriteBundle.cpp \
 	SpriteBundleSprite.cpp \
 	SpriteLoader.cpp

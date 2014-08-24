@@ -41,7 +41,7 @@ void Scoreboard::setTime(float time)
 
 	SDL_QueryTexture(m_timeTexture, nullptr, nullptr, &m_timeDest.w, &m_timeDest.h);
 	m_timeDest.x = m_renderer.width() / 2 - m_timeDest.w / 2;
-	m_timeDest.y = m_renderer.height() / 2 - m_timeDest.h / 2;
+	m_timeDest.y = m_renderer.height() / 2 - m_timeDest.h / 2 - 4;
 
 	m_fadeIn = 0;
 }
