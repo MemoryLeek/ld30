@@ -95,19 +95,19 @@ void SplashState::onMouseMove(SDL_MouseMotionEvent event)
 	UNUSED(event);
 }
 
-void SplashState::onJoyButtonDown(SDL_JoyButtonEvent event)
+void SplashState::onControllerButtonDown(SDL_ControllerButtonEvent event)
 {
 	UNUSED(event);
 
 	skip();
 }
 
-void SplashState::onJoyButtonUp(SDL_JoyButtonEvent event)
+void SplashState::onControllerButtonUp(SDL_ControllerButtonEvent event)
 {
 	UNUSED(event);
 }
 
-void SplashState::onJoyAxisMotion(SDL_JoyAxisEvent event)
+void SplashState::onControllerAxisMotion(SDL_ControllerAxisEvent event)
 {
 	UNUSED(event);
 }

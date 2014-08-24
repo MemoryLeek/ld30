@@ -121,7 +121,7 @@ void MenuState::onMouseMove(SDL_MouseMotionEvent event)
 	}
 }
 
-void MenuState::onJoyButtonDown(SDL_JoyButtonEvent event)
+void MenuState::onControllerButtonDown(SDL_ControllerButtonEvent event)
 {
 	switch (event.button)
 	{
@@ -130,12 +130,12 @@ void MenuState::onJoyButtonDown(SDL_JoyButtonEvent event)
 	}
 }
 
-void MenuState::onJoyButtonUp(SDL_JoyButtonEvent event)
+void MenuState::onControllerButtonUp(SDL_ControllerButtonEvent event)
 {
 	UNUSED(event);
 }
 
-void MenuState::onJoyAxisMotion(SDL_JoyAxisEvent event)
+void MenuState::onControllerAxisMotion(SDL_ControllerAxisEvent event)
 {
 	event.value = (abs(event.value) > 6000) ? event.value : 0;
 

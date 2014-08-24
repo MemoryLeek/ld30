@@ -211,7 +211,7 @@ void GameState::onMouseMove(SDL_MouseMotionEvent event)
 	m_mousePosition = { event.x / int(m_cameraScale), event.y / int(m_cameraScale) };
 }
 
-void GameState::onJoyButtonDown(SDL_JoyButtonEvent event)
+void GameState::onControllerButtonDown(SDL_ControllerButtonEvent event)
 {
 	if (m_skipped)
 	{
@@ -243,12 +243,12 @@ void GameState::onJoyButtonDown(SDL_JoyButtonEvent event)
 	}
 }
 
-void GameState::onJoyButtonUp(SDL_JoyButtonEvent event)
+void GameState::onControllerButtonUp(SDL_ControllerButtonEvent event)
 {
 	UNUSED(event);
 }
 
-void GameState::onJoyAxisMotion(SDL_JoyAxisEvent event)
+void GameState::onControllerAxisMotion(SDL_ControllerAxisEvent event)
 {
 	if (m_skipped)
 	{

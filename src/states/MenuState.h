@@ -26,9 +26,9 @@ class MenuState : public IState
 		void onMouseButtonDown(SDL_MouseButtonEvent event) override;
 		void onMouseButtonUp(SDL_MouseButtonEvent event) override;
 		void onMouseMove(SDL_MouseMotionEvent event) override;
-		void onJoyButtonDown(SDL_JoyButtonEvent event) override;
-		void onJoyButtonUp(SDL_JoyButtonEvent event) override;
-		void onJoyAxisMotion(SDL_JoyAxisEvent event) override;
+		void onControllerButtonDown(SDL_ControllerButtonEvent event) override;
+		void onControllerButtonUp(SDL_ControllerButtonEvent event) override;
+		void onControllerAxisMotion(SDL_ControllerAxisEvent event) override;
 
 		void exit();
 

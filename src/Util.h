@@ -6,8 +6,8 @@
 
 enum GamepadButtons
 {
-	Accept = 1,
-	Reject = 2
+	Accept = 0,
+	Reject = 1
 };
 
 enum GamepadAxis
