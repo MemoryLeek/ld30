@@ -8,6 +8,7 @@ PKG_SEARCH_MODULE(SDL2_MIXER REQUIRED SDL2_mixer)
 
 project(ld30)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin")
 
 set(SOURCES
