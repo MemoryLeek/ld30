@@ -34,6 +34,8 @@ set(SOURCES
 	SpriteBundle.cpp
 	SpriteBundleSprite.cpp
 	SpriteLoader.cpp
+	MapSelectionItem.cpp
+	MapSelectionToken.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -44,6 +46,7 @@ set(SOURCES
 	states/ResolutionMenuState.cpp
 	states/SoundVolumeMenuState.cpp
 	states/MusicVolumeMenuState.cpp
+	states/MapSelectionState.cpp
 
 	drawables/Goal.cpp
 	drawables/Spawn.cpp
@@ -77,6 +80,8 @@ set(HEADERS
 	SpriteBundle.h
 	SpriteBundleSprite.h
 	SpriteLoader.h
+	MapSelectionItem.h
+	MapSelectionToken.h
 
 	states/GameState.h
 	states/SplashState.h
@@ -87,6 +92,7 @@ set(HEADERS
 	states/ResolutionMenuState.h
 	states/SoundVolumeMenuState.h
 	states/MusicVolumeMenuState.h
+	states/MapSelectionState.h
 	
 	drawables/Goal.h
 	drawables/Spawn.h
