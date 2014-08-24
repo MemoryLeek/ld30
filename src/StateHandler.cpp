@@ -1,6 +1,7 @@
-#include <SDL2/SDL.h>
-
+#include <math.h>
 #include <iostream>
+
+#include <SDL2/SDL.h>
 
 #include "StateHandler.h"
 #include "Renderer.h"
