@@ -1,3 +1,5 @@
+#include <SDL2/SDL_image.h>
+
 #include <iostream>
 
 #include "MenuState.h"
@@ -14,11 +16,19 @@ MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_itemUnderCursor(false)
 {
 	m_font = TTF_OpenFont("resources/ttf/MunroSmall.ttf", 20);
+
+	SDL_Surface *surface = IMG_Load("resources/menu.png");
+
+	m_background = SDL_CreateTextureFromSurface(renderer, surface);
+
+	SDL_FreeSurface(surface);
 }
 
 bool MenuState::update(double delta)
 {
 	SDL_RenderSetScale(m_renderer, 1, 1);
+	SDL_RenderCopy(m_renderer, m_background, nullptr, nullptr);
+
 	const std::vector<MenuItem> &values = items();
 
 	for (int i = 0; i < values.size(); i++)

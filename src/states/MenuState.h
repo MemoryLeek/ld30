@@ -39,6 +39,7 @@ class MenuState : public IState
 
 	private:
 		TTF_Font *m_font;
+		SDL_Texture *m_background;
 
 		int m_selectedIndex;
 		int m_mouseX;
