@@ -44,7 +44,9 @@ HEADERS += IState.h \
 	SoundHandler.h \
 	SpriteBundle.h \
 	SpriteBundleSprite.h \
-	SpriteLoader.h
+	SpriteLoader.h \
+	states/SoundVolumeMenuState.h \
+	states/MusicVolumeMenuState.h
 
 SOURCES += main.cpp \
            Node.cpp \
@@ -78,4 +80,6 @@ SOURCES += main.cpp \
 	SoundHandler.cpp \
 	SpriteBundle.cpp \
 	SpriteBundleSprite.cpp \
-	SpriteLoader.cpp
+	SpriteLoader.cpp \
+	states/SoundVolumeMenuState.cpp \
+	states/MusicVolumeMenuState.cpp
