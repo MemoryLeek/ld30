@@ -6,6 +6,7 @@ tools/falcon/falcon
 Makefile
 CMakeCache.txt
 ld30
+world2
 settings.dat
 
 *.o

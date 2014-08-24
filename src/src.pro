@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = ld30
+TARGET = world2
 INCLUDEPATH += . states ui
 CONFIG += c++11
 LIBS += -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
