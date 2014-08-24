@@ -13,6 +13,7 @@ class Renderer;
 class StateHandler;
 class SettingsHandler;
 class IDrawable;
+class Scoreboard;
 
 class GameState : public IState
 {
@@ -32,12 +33,14 @@ class GameState : public IState
 		void loadLevel(const std::string &fileName, Level &target);
 		void switchLevels(Level &targetLevel, bool force = false);
 		void drawLevel(Level &level, double delta);
+		void respawn();
 
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
 		SettingsHandler &m_settingsHandler;
 
 		Player *m_character;
+		Scoreboard *m_scoreboard;
 
 		float m_deathCamLifetime;
 		float m_levelAlpha;
@@ -53,6 +56,7 @@ class GameState : public IState
 		bool m_mouseButtonDown;
 		bool m_running;
 		bool m_levelSwitching;
+		bool m_showScoreboard;
 
 		float m_cameraScale;
 		SDL_Point m_mousePosition;

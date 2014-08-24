@@ -11,11 +11,10 @@
 #include "StateHandler.h"
 #include "Renderer.h"
 #include "SoundHandler.h"
-#include "VictoryState.h"
-#include "GlobalDataStorage.h"
 
 #include "drawables/Spawn.h"
 #include "drawables/Goal.h"
+#include "drawables/Scoreboard.h"
 
 GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
 	: m_stateHandler(stateHandler)
@@ -35,13 +34,11 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	loadLevel("resources/map.wld", m_level1);
 	loadLevel("resources/map2.wld", m_level2);
 
-	m_character = new Player(32, 32, m_renderer);
-	const Spawn *spawn = m_currentLevel->findTile<Spawn>();
-	if(spawn)
-	{
-		m_character->respawn(spawn->x(), spawn->y());
-		m_timeSinceRespawn = 0;
-	}
+	m_scoreboard = new Scoreboard(m_renderer);
+	m_scoreboard->setTime(13.37f);
+
+	m_character = new Player(13 * 32, 12 * 32, m_renderer);
+	respawn();
 
 	SDL_assert(m_character);
 }
@@ -69,20 +66,10 @@ bool GameState::update(double delta)
 	}
 	else if(m_character->isDead())
 	{
-		if(m_currentLevel != &m_level1)
-		{
-			switchLevels(m_level1, true);
-		}
-
-		const Spawn *spawn = m_currentLevel->findTile<Spawn>();
-		if(spawn)
-		{
-			m_character->respawn(spawn->x(), spawn->y());
-			m_timeSinceRespawn = 0;
-		}
+		respawn();
 	}
 
-	if(!m_character->isDead())
+	if(!m_character->isDead() && !m_showScoreboard)
 	{
 		// It's unhealthy to run while switching dimensions
 		if(m_mouseButtonDown && !m_levelSwitching)
@@ -115,9 +102,9 @@ bool GameState::update(double delta)
 		const Goal *goal = m_currentLevel->findTile<Goal>();
 		if(goal && ((int)m_character->x() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileX() && ((int)m_character->y() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileY())
 		{
-			GlobalDataStorage::setLevelCompletionTime(m_timeSinceRespawn);
-			m_stateHandler.changeState<VictoryState>();
-			return true;
+			m_character->walkTowards({0, 0}); // Stop running around!
+			m_scoreboard->setTime(m_timeSinceRespawn);
+			m_showScoreboard = true;
 		}
 	}
 
@@ -127,10 +114,18 @@ bool GameState::update(double delta)
 	if(!m_character->isDead())
 	{
 		m_character->draw(delta, m_renderer);
-		m_timeSinceRespawn += delta;
+		if(!m_showScoreboard)
+		{
+			m_timeSinceRespawn += delta;
+		}
 	}
 
-	SDL_RenderSetScale(m_renderer, 1, 1);
+	if(m_showScoreboard)
+	{
+		SDL_RenderSetScale(m_renderer, 1, 1);
+		m_scoreboard->draw(delta, m_renderer);
+	}
+
 	return m_running;
 }
 
@@ -156,6 +151,14 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 
 			break;
 		}
+
+		case SDLK_RETURN:
+		{
+			if(m_showScoreboard)
+			{
+				respawn();
+			}
+		}
 	}
 }
 
@@ -166,6 +169,11 @@ void GameState::onKeyUp(SDL_Keycode keyCode)
 
 void GameState::onMouseButtonDown(SDL_MouseButtonEvent event)
 {
+	if(m_showScoreboard)
+	{
+		respawn();
+	}
+
 	m_mouseButtonDown = true;
 	m_mousePosition = {event.x / m_cameraScale, event.y / m_cameraScale};
 }
@@ -250,5 +258,21 @@ void GameState::drawLevel(Level &level, double delta)
 		{
 			drawable->draw(delta, m_renderer);
 		}
+	}
+}
+
+void GameState::respawn()
+{
+	if(m_currentLevel != &m_level1)
+	{
+		switchLevels(m_level1, true);
+	}
+
+	const Spawn *spawn = m_currentLevel->findTile<Spawn>();
+	if(spawn)
+	{
+		m_character->respawn(spawn->x(), spawn->y());
+		m_timeSinceRespawn = 0;
+		m_showScoreboard = false;
 	}
 }
