@@ -44,6 +44,7 @@ class GameState : public IState
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
 		SettingsHandler &m_settingsHandler;
+		MapSelectionToken &m_mapHandler;
 
 		Player *m_character;
 		Scoreboard *m_scoreboard;

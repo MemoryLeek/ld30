@@ -1,7 +1,11 @@
 #include <iostream>
-#include "MapSelectionToken.h"
 
-MapSelectionToken::MapSelectionToken(Renderer &renderer)
+#include "MapSelectionToken.h"
+#include "SettingsHandler.h"
+
+MapSelectionToken::MapSelectionToken(Renderer &renderer, SettingsHandler &settingsHandler)
+	: m_settingsHandler(settingsHandler)
+	, m_map(nullptr)
 {
 	m_items =
 	{
@@ -10,16 +14,28 @@ MapSelectionToken::MapSelectionToken(Renderer &renderer)
 	};
 }
 
-MapSelectionItem *MapSelectionToken::mapSelection() const
-{
-	return m_map;
-}
-
 void MapSelectionToken::setMapSelection(MapSelectionItem *map)
 {
-	std::cout << map << " " << &m_items[0] << std::endl;
-
 	m_map = map;
+}
+
+void MapSelectionToken::markAsCleared()
+{
+	const unsigned int unlockedLevels = m_settingsHandler
+		.settings()
+		.unlockedLevels();
+
+	for (unsigned int i = 0; i < m_items.size(); i++)
+	{
+		MapSelectionItem &map = m_items[i];
+
+		if (i >= unlockedLevels && m_map == &map)
+		{
+			m_settingsHandler
+				.settings()
+				.setUnlockedLevels(i + 1);
+		}
+	}
 }
 
 std::vector<MapSelectionItem> &MapSelectionToken::items()

@@ -3,13 +3,15 @@
 
 #include "MapSelectionItem.h"
 
+class SettingsHandler;
+
 class MapSelectionToken
 {
 	public:
-		MapSelectionToken(Renderer &renderer);
+		MapSelectionToken(Renderer &renderer, SettingsHandler &settingsHandler);
 
-		MapSelectionItem *mapSelection() const;
 		void setMapSelection(MapSelectionItem *map);
+		void markAsCleared();
 
 		std::vector<MapSelectionItem> &items();
 
@@ -19,6 +21,7 @@ class MapSelectionToken
 	private:
 		std::vector<MapSelectionItem> m_items;
 
+		SettingsHandler &m_settingsHandler;
 		MapSelectionItem *m_map;
 };
 

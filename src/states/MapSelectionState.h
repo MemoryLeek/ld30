@@ -38,6 +38,7 @@ class MapSelectionState : public IState
 
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
+		SettingsHandler &m_settingsHandler;
 		MapSelectionToken &m_mapSelectionToken;
 
 		TTF_Font *m_font;

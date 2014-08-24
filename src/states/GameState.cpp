@@ -21,17 +21,18 @@
 #include "drawables/Goal.h"
 #include "drawables/Scoreboard.h"
 
-GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
+GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapHandler)
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
 	, m_settingsHandler(settingsHandler)
+	, m_mapHandler(mapHandler)
 	, m_deathCamLifetime(0)
 	, m_levelAlpha(255)
 	, m_timeSinceStep(0)
 	, m_timeSinceRespawn(0)
 	, m_cameraScale(2)
-	, m_level1(mapSelectionToken.level1())
-	, m_level2(mapSelectionToken.level2())
+	, m_level1(mapHandler.level1())
+	, m_level2(mapHandler.level2())
 	, m_currentLevel(&m_level1)
 	, m_otherLevel(&m_level2)
 	, m_mouseButtonDown(false)
@@ -343,6 +344,8 @@ void GameState::drawLevel(Level &level, double delta)
 						m_character->walkTowards({ 0, 0 }); // Stop running around!
 						m_scoreboard->setTime(m_timeSinceRespawn);
 						m_showScoreboard = true;
+
+						m_mapHandler.markAsCleared();
 					}
 				}
 			}
