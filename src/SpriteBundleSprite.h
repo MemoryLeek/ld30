@@ -3,8 +3,6 @@
 
 #include <vector>
 
-#include <SFML/Graphics/Texture.hpp>
-
 #include "BinaryStream.h"
 #include "ImageWrapper.h"
 
