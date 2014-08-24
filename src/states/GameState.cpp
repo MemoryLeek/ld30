@@ -13,6 +13,8 @@
 #include "SoundHandler.h"
 #include "MainMenuState.h"
 #include "MapSelectionToken.h"
+#include "MapSelectionState.h"
+#include "LevelBundle.h"
 #include "Util.h"
 
 #include "drawables/Spawn.h"
@@ -45,9 +47,7 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 
 	MapSelectionItem *map = mapSelectionToken.mapSelection();
 
-	loadLevel(map->fileName1(), m_level1);
-	loadLevel(map->fileName2(), m_level2);
-
+	loadLevel(map);
 	respawn();
 
 	SoundHandler::playMusic(SoundHandler::Music::Ambient);
@@ -135,7 +135,7 @@ bool GameState::update(double delta)
 	{
 		SoundHandler::stopMusic();
 
-		m_stateHandler.changeState<MainMenuState>(true);
+		m_stateHandler.changeState<MapSelectionState>(true);
 		m_skipped = true;
 
 		return true;
@@ -169,9 +169,9 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 
 		case SDLK_RETURN:
 		{
-			if(m_showScoreboard)
+			if (m_showScoreboard)
 			{
-				respawn();
+				m_running = false;
 			}
 
 			break;
@@ -193,7 +193,7 @@ void GameState::onMouseButtonDown(SDL_MouseButtonEvent event)
 
 	if (m_showScoreboard)
 	{
-		respawn();
+		m_running = false;
 	}
 
 	m_mouseButtonDown = true;
@@ -224,7 +224,7 @@ void GameState::onControllerButtonDown(SDL_ControllerButtonEvent event)
 		{
 			if (m_showScoreboard)
 			{
-				respawn();
+				m_running = false;
 			}
 			else
 			{
@@ -277,14 +277,16 @@ void GameState::onControllerAxisMotion(SDL_ControllerAxisEvent event)
 	}
 }
 
-void GameState::loadLevel(const std::string &fileName, Level &target)
+void GameState::loadLevel(MapSelectionItem *map)
 {
+	std::string fileName = map->fileName();
 	std::fstream file(fileName, std::ios::in | std::ios::binary);
 
 	if (file.is_open())
 	{
+		LevelBundle bundle(m_level1, m_level2);
 		BinaryStream stream(file, &m_renderer);
-		stream >> target;
+		stream >> bundle;
 	}
 }
 

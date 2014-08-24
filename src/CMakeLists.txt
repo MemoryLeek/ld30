@@ -36,6 +36,7 @@ set(SOURCES
 	SpriteLoader.cpp
 	MapSelectionItem.cpp
 	MapSelectionToken.cpp
+	LevelBundle.cpp
 
 	states/GameState.cpp
 	states/SplashState.cpp
@@ -82,6 +83,7 @@ set(HEADERS
 	SpriteLoader.h
 	MapSelectionItem.h
 	MapSelectionToken.h
+	LevelBundle.h
 
 	states/GameState.h
 	states/SplashState.h

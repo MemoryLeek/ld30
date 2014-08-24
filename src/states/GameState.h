@@ -15,6 +15,7 @@ class SettingsHandler;
 class IDrawable;
 class Scoreboard;
 class MapSelectionToken;
+class MapSelectionItem;
 
 class GameState : public IState
 {
@@ -34,7 +35,7 @@ class GameState : public IState
 		void onControllerAxisMotion(SDL_ControllerAxisEvent event) override;
 
 	private:
-		void loadLevel(const std::string &fileName, Level &target);
+		void loadLevel(MapSelectionItem *map);
 		void switchLevels(Level &targetLevel, bool force = false);
 		void drawLevel(Level &level, double delta);
 		void respawn();

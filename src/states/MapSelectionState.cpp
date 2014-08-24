@@ -2,6 +2,7 @@
 #include "MapSelectionToken.h"
 #include "StateHandler.h"
 #include "GameState.h"
+#include "MainMenuState.h"
 #include "Util.h"
 
 MapSelectionState::MapSelectionState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
@@ -9,8 +10,8 @@ MapSelectionState::MapSelectionState(StateHandler &stateHandler, Renderer &rende
 {
 	m_items =
 	{
-		MapSelectionItem("Level 1", "resources/maps/map1_1.wld", "resources/maps/map1_2.wld"),
-		MapSelectionItem("Level 2", "resources/maps/map2_1.wld", "resources/maps/map2_2.wld")
+		MapSelectionItem("Level 1", "resources/maps/level1.level"),
+		MapSelectionItem("Level 2", "resources/maps/level2.level")
 	};
 }
 
@@ -30,4 +31,9 @@ void MapSelectionState::selectMap(MapSelectionItem &map)
 {
 	m_mapSelectionToken.setMapSelection(&map);
 	m_stateHandler.changeState<GameState>(true);
+}
+
+void MapSelectionState::cancel()
+{
+	m_stateHandler.changeState<MainMenuState>(false);
 }

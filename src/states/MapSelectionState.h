@@ -15,6 +15,7 @@ class MapSelectionState : public MenuState
 
 	private:
 		void selectMap(MapSelectionItem &map);
+		void cancel() override;
 
 		std::vector<MapSelectionItem> m_items;
 };

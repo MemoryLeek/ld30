@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QFile>
 #include <QDataStream>
+#include <QDomDocument>
+#include <QFileInfo>
 
 #include <tiled/tile.h>
 #include <tiled/tilelayer.h>
@@ -13,97 +15,135 @@
 #include <tiled/objectgroup.h>
 
 #include "Level.h"
+#include "LevelBundle.h"
 
-int main(int argc, char **argv)
+Level *loadLevel(const QString &fileName)
 {
-	QGuiApplication application(argc, argv);
-	QStringList arguments = application.arguments();
-	QStringList objectTypes =
+	Tiled::MapReader mapReader;
+	Tiled::Map *map = mapReader.readMap(fileName);
+	Tiled::Tileset *tileset = map->tilesetAt(0);
+
+	const QString &tilesetFileName = tileset->imageSource();
+	const QImage image(tilesetFileName);
+	const QStringList objectTypes =
 	{
 		"spawn",
 		"goal"
 	};
 
-	if (arguments.length() > 2)
+	Level *level = new Level(map->width(), map->height(), image);
+
+	for (int x = 0; x < map->width(); x++)
 	{
-		const QString &source = arguments[1];
-		const QString &target = arguments[2];
-
-		Tiled::MapReader mapReader;
-		Tiled::Map *map = mapReader.readMap(source);
-		Tiled::Tileset *tileset = map->tilesetAt(0);
-
-		const QString &tilesetFileName = tileset->imageSource();
-		const QImage image(tilesetFileName);
-
-		qDebug() << map->width() << map->height();
-
-		Level level(map->width(), map->height(), image);
-
-		for (int x = 0; x < map->width(); x++)
+		for (int y = 0; y < map->height(); y++)
 		{
-			for (int y = 0; y < map->height(); y++)
+			LevelTile levelTile(x, y);
+
+			for (int i = 0; i < map->layerCount(); i++)
 			{
-				LevelTile levelTile(x, y);
+				Tiled::Layer *layer = map->layerAt(i);
+				Tiled::TileLayer *tileLayer = dynamic_cast<Tiled::TileLayer *>(layer);
 
-				for (int i = 0; i < map->layerCount(); i++)
+				if (tileLayer)
 				{
-					Tiled::Layer *layer = map->layerAt(i);
-					Tiled::TileLayer *tileLayer = dynamic_cast<Tiled::TileLayer *>(layer);
+					Tiled::Cell cell = tileLayer->cellAt(x, y);
+					Tiled::Tile *tile = cell.tile;
 
-					if (tileLayer)
+					if (tile)
 					{
-						Tiled::Cell cell = tileLayer->cellAt(x, y);
-						Tiled::Tile *tile = cell.tile;
-
-						if (tile)
+						if (layer->name() != "Collision")
 						{
-							if (layer->name() != "Collision")
-							{
-								const int id = tile->id();
+							const int id = tile->id();
 
-								levelTile.addLayer(id);
-							}
-							else
-							{
-								levelTile.setWalkable(false);
-							}
+							levelTile.addLayer(id);
 						}
-					}
-
-					Tiled::ObjectGroup *objectLayer = dynamic_cast<Tiled::ObjectGroup *>(layer);
-
-					if (objectLayer)
-					{
-						const QList<Tiled::MapObject *> &objects = objectLayer->objects();
-
-						for (Tiled::MapObject *object : objects)
+						else
 						{
-							const QPointF &position = object->position();
-							const QPointF current(x, y);
-
-							if (current == position)
-							{
-								const QString &typeName = object->type();
-								const int id = objectTypes.indexOf(typeName);
-
-								levelTile.addMapObject(id);
-							}
+							levelTile.setWalkable(false);
 						}
 					}
 				}
 
-				level.addTile(levelTile);
+				Tiled::ObjectGroup *objectLayer = dynamic_cast<Tiled::ObjectGroup *>(layer);
+
+				if (objectLayer)
+				{
+					const QList<Tiled::MapObject *> &objects = objectLayer->objects();
+
+					for (Tiled::MapObject *object : objects)
+					{
+						const QPointF &position = object->position();
+						const QPointF current(x, y);
+
+						if (current == position)
+						{
+							const QString &typeName = object->type();
+							const int id = objectTypes.indexOf(typeName);
+
+							levelTile.addMapObject(id);
+						}
+					}
+				}
 			}
+
+			level->addTile(levelTile);
 		}
+	}
 
-		QFile file(target);
+	return level;
+}
 
-		if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+int main(int argc, char **argv)
+{
+	QGuiApplication application(argc, argv);
+	QStringList arguments = application.arguments();
+
+	if (arguments.length() > 1)
+	{
+		QString sourceFileName = arguments[1];
+		QFile input (sourceFileName);
+		QDomDocument document;
+
+		if (input.open(QIODevice::ReadOnly))
 		{
-			QDataStream stream(&file);
-			stream.setByteOrder(QDataStream::LittleEndian);
-			stream << level;
+			document.setContent(&input);
+
+			const QDomElement &root = document
+				.namedItem("level")
+				.toElement();
+
+			const QString &fileName1 = root
+				.firstChildElement("file1")
+				.text();
+
+			const QString &fileName2 = root
+				.firstChildElement("file2")
+				.text();
+
+			const QString &previewFileName = root
+				.firstChildElement("preview")
+				.text();
+
+			const QImage preview(previewFileName);
+
+			Level *level1 = loadLevel(fileName1);
+			Level *level2 = loadLevel(fileName2);
+
+			LevelBundle bundle;
+			bundle.setLevel1(level1);
+			bundle.setLevel2(level2);
+			bundle.setPreview(preview);
+
+			QFileInfo fileInfo(sourceFileName);
+			QString targetFileName = fileInfo.baseName() + ".level";
+			QFile file(targetFileName);
+
+			if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+			{
+				QDataStream stream(&file);
+				stream.setByteOrder(QDataStream::LittleEndian);
+				stream << bundle;
+			}
 		}
 	}
 }

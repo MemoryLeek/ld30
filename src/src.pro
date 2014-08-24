@@ -49,7 +49,8 @@ HEADERS += IState.h \
 	states/MusicVolumeMenuState.h \
     MapSelectionItem.h \
     states/MapSelectionState.h \
-    MapSelectionToken.h
+    MapSelectionToken.h \
+    LevelBundle.h
 
 SOURCES += main.cpp \
            Node.cpp \
@@ -88,4 +89,5 @@ SOURCES += main.cpp \
 	states/MusicVolumeMenuState.cpp \
     MapSelectionItem.cpp \
     states/MapSelectionState.cpp \
-    MapSelectionToken.cpp
+    MapSelectionToken.cpp \
+    LevelBundle.cpp

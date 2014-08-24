@@ -7,16 +7,19 @@ TARGET = falcon
 INCLUDEPATH += .
 CONFIG += c++11
 LIBS += -ltiled
+QT += xml
 
 # Input
 SOURCES += main.cpp \
     Level.cpp \
     LevelTile.cpp \
     LevelTileLayer.cpp \
-    LevelTileMapObject.cpp
+    LevelTileMapObject.cpp \
+    LevelBundle.cpp
 
 HEADERS += \
     Level.h \
     LevelTile.h \
     LevelTileLayer.h \
-    LevelTileMapObject.h
+    LevelTileMapObject.h \
+    LevelBundle.h

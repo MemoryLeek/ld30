@@ -34,5 +34,5 @@ void MainMenuState::cancel()
 
 void MainMenuState::start()
 {
-	m_stateHandler.changeState<MapSelectionState>(true);
+	m_stateHandler.changeState<MapSelectionState>(false);
 }
