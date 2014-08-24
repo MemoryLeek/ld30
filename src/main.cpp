@@ -63,11 +63,11 @@ int main(int argc, char *argv[])
 
 	if(std::find(arguments.begin(), arguments.end(), "--nosplash") != arguments.end())
 	{
-		stateHandler.changeState<MainMenuState>();
+		stateHandler.changeState<MainMenuState>(false);
 	}
 	else
 	{
-		stateHandler.changeState<SplashState>();
+		stateHandler.changeState<SplashState>(false);
 	}
 
 	Ui::Label fpsLabel(5, 0, "", font, renderer);
@@ -144,15 +144,45 @@ int main(int argc, char *argv[])
 
 					break;
 				}
+
+				case SDL_JOYBUTTONDOWN:
+				{
+					stateHandler
+						.currentState()
+						.onJoyButtonDown(event.jbutton);
+
+					break;
+				}
+
+				case SDL_JOYBUTTONUP:
+				{
+					stateHandler
+						.currentState()
+						.onJoyButtonUp(event.jbutton);
+
+					break;
+				}
+
+				case SDL_JOYAXISMOTION:
+				{
+					stateHandler
+						.currentState()
+						.onJoyAxisMotion(event.jaxis);
+
+					break;
+				}
 			}
 		}
 
+		SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 
 		shouldRun &= stateHandler
 			.currentState()
 			.update(delta);
+
+		stateHandler.draw(delta, renderer);
 
 		// Clear camera before drawing UI
 		renderer.setCamera(nullptr);

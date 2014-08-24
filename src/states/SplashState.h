@@ -21,6 +21,9 @@ class SplashState : public IState
 		void onMouseButtonDown(SDL_MouseButtonEvent event) override;
 		void onMouseButtonUp(SDL_MouseButtonEvent event) override;
 		void onMouseMove(SDL_MouseMotionEvent event) override;
+		void onJoyButtonDown(SDL_JoyButtonEvent event) override;
+		void onJoyButtonUp(SDL_JoyButtonEvent event) override;
+		void onJoyAxisMotion(SDL_JoyAxisEvent event) override;
 
 	private:
 		void skip();
@@ -30,6 +33,9 @@ class SplashState : public IState
 		SDL_Texture *m_splashTexture;
 
 		double m_totalTime;
+
+		bool m_skipped;
+
 		SDL_Rect m_destination;
 };
 

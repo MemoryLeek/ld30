@@ -9,9 +9,6 @@ class Goal : public IDrawable
 	public:
 		Goal(int x, int y, Renderer &renderer);
 
-		int tileX() const;
-		int tileY() const;
-
 		void draw(double delta, Renderer &renderer) override;
 
 	private:

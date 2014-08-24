@@ -6,14 +6,19 @@
 #include "SplashState.h"
 #include "StateHandler.h"
 #include "Renderer.h"
+#include "Util.h"
 
 SplashState::SplashState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
 	, m_splashTexture(nullptr)
 	, m_totalTime(0)
+	, m_skipped(false)
 {
+	UNUSED(settingsHandler);
+
 	SDL_Surface *image = IMG_Load("resources/logo.png");
+
 	if(!image)
 	{
 		std::cout << "Failed to load image: " << IMG_GetError << std::endl;
@@ -63,30 +68,55 @@ bool SplashState::update(double delta)
 
 void SplashState::onKeyDown(SDL_Keycode keyCode)
 {
+	UNUSED(keyCode);
+
 	skip();
 }
 
 void SplashState::onKeyUp(SDL_Keycode keyCode)
 {
-
+	UNUSED(keyCode);
 }
 
 void SplashState::onMouseButtonDown(SDL_MouseButtonEvent event)
 {
+	UNUSED(event);
+
 	skip();
 }
 
 void SplashState::onMouseButtonUp(SDL_MouseButtonEvent event)
 {
-
+	UNUSED(event);
 }
 
 void SplashState::onMouseMove(SDL_MouseMotionEvent event)
 {
+	UNUSED(event);
+}
 
+void SplashState::onJoyButtonDown(SDL_JoyButtonEvent event)
+{
+	UNUSED(event);
+
+	skip();
+}
+
+void SplashState::onJoyButtonUp(SDL_JoyButtonEvent event)
+{
+	UNUSED(event);
+}
+
+void SplashState::onJoyAxisMotion(SDL_JoyAxisEvent event)
+{
+	UNUSED(event);
 }
 
 void SplashState::skip()
 {
-	m_stateHandler.changeState<MainMenuState>();
+	if (!m_skipped)
+	{
+		m_stateHandler.changeState<MainMenuState>(true);
+		m_skipped = true;
+	}
 }

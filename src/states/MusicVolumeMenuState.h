@@ -12,6 +12,7 @@ class MusicVolumeMenuState : public MenuState
 
 	private:
 		void setVolume(int volume);
+		void cancel() override;
 };
 
 #endif // MUSICVOLUMEMENUSTATE_H

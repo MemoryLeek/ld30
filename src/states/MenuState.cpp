@@ -4,6 +4,7 @@
 
 #include "MenuState.h"
 #include "Renderer.h"
+#include "Util.h"
 
 MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
 	: m_stateHandler(stateHandler)
@@ -15,28 +16,34 @@ MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_running(true)
 	, m_itemUnderCursor(false)
 {
-	m_font = TTF_OpenFont("resources/ttf/MunroSmall.ttf", 20);
-
 	SDL_Surface *surface = IMG_Load("resources/menu.png");
 
 	m_background = SDL_CreateTextureFromSurface(renderer, surface);
+	m_font = TTF_OpenFont("resources/ttf/MunroSmall.ttf", 20);
 
 	SDL_FreeSurface(surface);
 }
 
+MenuState::~MenuState()
+{
+	SDL_DestroyTexture(m_background);
+}
+
 bool MenuState::update(double delta)
 {
+	UNUSED(delta);
+
 	SDL_RenderSetScale(m_renderer, 1, 1);
 	SDL_RenderCopy(m_renderer, m_background, nullptr, nullptr);
 
 	const std::vector<MenuItem> &values = items();
 
-	for (int i = 0; i < values.size(); i++)
+	for (unsigned int i = 0; i < values.size(); i++)
 	{
 		const MenuItem &item = values[i];
 		const std::string &text = item.text();
 
-		SDL_Color color = { i == m_selectedIndex ? 255 : 0, 0, 0, SDL_ALPHA_OPAQUE };
+		SDL_Color color = { i == m_selectedIndex ? Uint8(255) : Uint8(0), 0, 0, SDL_ALPHA_OPAQUE };
 		SDL_Surface *surface = TTF_RenderText_Solid(m_font, text.c_str(), color);
 		SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surface);
 		SDL_Rect dest = { 0, 0, 0, 0 };
@@ -62,7 +69,7 @@ void MenuState::onKeyDown(SDL_Keycode keyCode)
 	{
 		case SDLK_DOWN:
 		{
-			if (++m_selectedIndex > availableItems.size() - 1)
+			if (m_selectedIndex++ == availableItems.size() - 1)
 			{
 				m_selectedIndex = 0;
 			}
@@ -72,7 +79,7 @@ void MenuState::onKeyDown(SDL_Keycode keyCode)
 
 		case SDLK_UP:
 		{
-			if (--m_selectedIndex < 0)
+			if (!m_selectedIndex--)
 			{
 				m_selectedIndex = availableItems.size() - 1;
 			}
@@ -98,7 +105,7 @@ void MenuState::onKeyDown(SDL_Keycode keyCode)
 
 void MenuState::onKeyUp(SDL_Keycode keyCode)
 {
-
+	UNUSED(keyCode);
 }
 
 void MenuState::onMouseButtonDown(SDL_MouseButtonEvent event)
@@ -119,7 +126,7 @@ void MenuState::onMouseButtonDown(SDL_MouseButtonEvent event)
 
 void MenuState::onMouseButtonUp(SDL_MouseButtonEvent event)
 {
-
+	UNUSED(event);
 }
 
 void MenuState::onMouseMove(SDL_MouseMotionEvent event)
@@ -143,6 +150,21 @@ void MenuState::onMouseMove(SDL_MouseMotionEvent event)
 	}
 }
 
+void MenuState::onJoyButtonDown(SDL_JoyButtonEvent event)
+{
+	UNUSED(event);
+}
+
+void MenuState::onJoyButtonUp(SDL_JoyButtonEvent event)
+{
+	UNUSED(event);
+}
+
+void MenuState::onJoyAxisMotion(SDL_JoyAxisEvent event)
+{
+	UNUSED(event);
+}
+
 void MenuState::exit()
 {
 	m_running = false;
@@ -155,7 +177,7 @@ void MenuState::cancel()
 
 void MenuState::activate()
 {
-	if (m_selectedIndex >= 0)
+	if (unsigned(-1) != m_selectedIndex)
 	{
 		const std::vector<MenuItem> &availableItems = items();
 		const MenuItem &item = availableItems[m_selectedIndex];

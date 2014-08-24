@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "Sprite.h"
+#include "Util.h"
 
 Sprite::Sprite(float x, float y, float angle, SDL_Texture *texture)
 	: Node(x, y, angle)
@@ -20,6 +21,8 @@ int Sprite::height() const
 
 void Sprite::draw(double delta, Renderer &renderer)
 {
+	UNUSED(delta);
+
 	// x/y represents center of sprite
 	const SDL_Rect dest = {(int)x() - m_width / 2 - renderer.cameraOffsetX(),
 						   (int)y() - m_height / 2 - renderer.cameraOffsetY(),

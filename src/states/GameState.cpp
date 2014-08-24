@@ -12,6 +12,7 @@
 #include "Renderer.h"
 #include "SoundHandler.h"
 #include "MainMenuState.h"
+#include "Util.h"
 
 #include "drawables/Spawn.h"
 #include "drawables/Goal.h"
@@ -23,6 +24,9 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_settingsHandler(settingsHandler)
 	, m_deathCamLifetime(0)
 	, m_levelAlpha(255)
+	, m_timeSinceStep(0)
+	, m_timeSinceRespawn(0)
+	, m_cameraScale(2)
 	, m_currentLevel(&m_level1)
 	, m_otherLevel(&m_level2)
 	, m_level1()
@@ -30,20 +34,20 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_mouseButtonDown(false)
 	, m_running(true)
 	, m_levelSwitching(false)
-	, m_cameraScale(2)
+	, m_showScoreboard(false)
+	, m_skipped(false)
 {
-	loadLevel("resources/map.wld", m_level1);
-	loadLevel("resources/map2.wld", m_level2);
-
 	m_scoreboard = new Scoreboard(m_renderer);
 	m_scoreboard->setTime(13.37f);
 
 	m_character = new Player(13 * 32, 12 * 32, m_renderer);
+
+	loadLevel("resources/map.wld", m_level1);
+	loadLevel("resources/map2.wld", m_level2);
+
 	respawn();
 
 	SoundHandler::playMusic(SoundHandler::Music::Ambient);
-
-	SDL_assert(m_character);
 }
 
 GameState::~GameState()
@@ -63,7 +67,7 @@ bool GameState::update(double delta)
 		}
 	}
 
-	if(m_deathCamLifetime > 0)
+	if (m_deathCamLifetime > 0)
 	{
 		m_deathCamLifetime -= delta;
 	}
@@ -72,7 +76,9 @@ bool GameState::update(double delta)
 		respawn();
 	}
 
-	if(!m_character->isDead() && !m_showScoreboard)
+	if (!m_skipped &&
+		!m_character->isDead() &&
+		!m_showScoreboard)
 	{
 		// It's unhealthy to run while switching dimensions
 		if(m_mouseButtonDown && !m_levelSwitching)
@@ -101,46 +107,47 @@ bool GameState::update(double delta)
 		std::vector<Player*> movableObjects;
 		movableObjects.push_back(m_character);
 		CollisionHandler::resolveCollisions(movableObjects, m_currentLevel);
-
-		const Goal *goal = m_currentLevel->findTile<Goal>();
-		if(goal && ((int)m_character->x() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileX() && ((int)m_character->y() + (TILE_SIZE / 2)) / TILE_SIZE == goal->tileY())
-		{
-			m_character->walkTowards({0, 0}); // Stop running around!
-			m_scoreboard->setTime(m_timeSinceRespawn);
-			m_showScoreboard = true;
-		}
 	}
 
 	drawLevel(*m_otherLevel, delta);
 	drawLevel(*m_currentLevel, delta);
 
-	if(!m_character->isDead())
+	if (!m_character->isDead())
 	{
 		m_character->draw(delta, m_renderer);
-		if(!m_showScoreboard)
+
+		if (!m_showScoreboard)
 		{
 			m_timeSinceRespawn += delta;
 		}
 	}
 
-	if(m_showScoreboard)
+	if (m_showScoreboard)
 	{
 		SDL_RenderSetScale(m_renderer, 1, 1);
 		m_scoreboard->draw(delta, m_renderer);
 	}
 
-	if(!m_running)
+	if (!m_skipped && !m_running)
 	{
 		SoundHandler::stopMusic();
-		m_stateHandler.changeState<MainMenuState>();
+
+		m_stateHandler.changeState<MainMenuState>(true);
+		m_skipped = true;
+
 		return true;
 	}
 
-	return m_running;
+	return m_skipped || m_running;
 }
 
 void GameState::onKeyDown(SDL_Keycode keyCode)
 {
+	if (m_skipped)
+	{
+		return;
+	}
+
 	switch (keyCode)
 	{
 		case SDLK_ESCAPE:
@@ -174,29 +181,49 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 
 void GameState::onKeyUp(SDL_Keycode keyCode)
 {
-
+	UNUSED(keyCode);
 }
 
 void GameState::onMouseButtonDown(SDL_MouseButtonEvent event)
 {
-	if(m_showScoreboard)
+	if (m_skipped)
+	{
+		return;
+	}
+
+	if (m_showScoreboard)
 	{
 		respawn();
 	}
 
 	m_mouseButtonDown = true;
-	m_mousePosition = {event.x / m_cameraScale, event.y / m_cameraScale};
+	m_mousePosition = { event.x / int(m_cameraScale), event.y / int(m_cameraScale) };
 }
 
 void GameState::onMouseButtonUp(SDL_MouseButtonEvent event)
 {
 	m_mouseButtonDown = false;
-	m_mousePosition = {event.x / m_cameraScale, event.y / m_cameraScale};
+	m_mousePosition = { event.x / int(m_cameraScale), event.y / int(m_cameraScale) };
 }
 
 void GameState::onMouseMove(SDL_MouseMotionEvent event)
 {
-	m_mousePosition = {event.x / m_cameraScale, event.y / m_cameraScale};
+	m_mousePosition = { event.x / int(m_cameraScale), event.y / int(m_cameraScale) };
+}
+
+void GameState::onJoyButtonDown(SDL_JoyButtonEvent event)
+{
+	UNUSED(event);
+}
+
+void GameState::onJoyButtonUp(SDL_JoyButtonEvent event)
+{
+	UNUSED(event);
+}
+
+void GameState::onJoyAxisMotion(SDL_JoyAxisEvent event)
+{
+	UNUSED(event);
 }
 
 void GameState::loadLevel(const std::string &fileName, Level &target)
@@ -225,7 +252,6 @@ void GameState::switchLevels(Level &targetLevel, bool force)
 
 	if(CollisionHandler::isPlayerInWall(*m_character, *m_currentLevel))
 	{
-		std::cout << "Dayyym, you dead." << std::endl;
 		m_deathCamLifetime = 3;
 		SoundHandler::play(SoundHandler::Sound::Squish);
 		m_character->kill();
@@ -267,6 +293,22 @@ void GameState::drawLevel(Level &level, double delta)
 		for (IDrawable *drawable : tile.objects())
 		{
 			drawable->draw(delta, m_renderer);
+
+			if (&level == m_currentLevel)
+			{
+				Goal *goal = dynamic_cast<Goal *>(drawable);
+
+				if (goal && !m_showScoreboard)
+				{
+					if (tile.x() == floor((m_character->x() + (TILE_SIZE / 2)) / TILE_SIZE) &&
+						tile.y() == floor((m_character->y() + (TILE_SIZE / 2)) / TILE_SIZE))
+					{
+						m_character->walkTowards({ 0, 0 }); // Stop running around!
+						m_scoreboard->setTime(m_timeSinceRespawn);
+						m_showScoreboard = true;
+					}
+				}
+			}
 		}
 	}
 }
@@ -279,6 +321,7 @@ void GameState::respawn()
 	}
 
 	const Spawn *spawn = m_currentLevel->findTile<Spawn>();
+
 	if(spawn)
 	{
 		m_character->respawn(spawn->x(), spawn->y());

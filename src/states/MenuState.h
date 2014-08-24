@@ -16,6 +16,7 @@ class MenuState : public IState
 {
 	public:
 		MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
+		~MenuState();
 
 		bool update(double delta) override;
 
@@ -24,6 +25,9 @@ class MenuState : public IState
 		void onMouseButtonDown(SDL_MouseButtonEvent event) override;
 		void onMouseButtonUp(SDL_MouseButtonEvent event) override;
 		void onMouseMove(SDL_MouseMotionEvent event) override;
+		void onJoyButtonDown(SDL_JoyButtonEvent event) override;
+		void onJoyButtonUp(SDL_JoyButtonEvent event) override;
+		void onJoyAxisMotion(SDL_JoyAxisEvent event) override;
 
 		void exit();
 
@@ -41,9 +45,9 @@ class MenuState : public IState
 		TTF_Font *m_font;
 		SDL_Texture *m_background;
 
-		int m_selectedIndex;
-		int m_mouseX;
-		int m_mouseY;
+		unsigned int m_selectedIndex;
+		unsigned int m_mouseX;
+		unsigned int m_mouseY;
 
 		bool m_running;
 		bool m_itemUnderCursor;

@@ -12,4 +12,10 @@ std::vector<T1> &operator <<(std::vector<T1> &vector, T2 element)
 	return vector;
 }
 
+template <typename T>
+void UNUSED(T &&)
+{
+
+}
+
 #endif // UTIL_H

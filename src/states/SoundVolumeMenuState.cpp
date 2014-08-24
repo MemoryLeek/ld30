@@ -32,6 +32,12 @@ std::vector<MenuItem> SoundVolumeMenuState::items()
 void SoundVolumeMenuState::setVolume(int volume)
 {
 	SoundHandler::setSoundVolume(volume);
+
 	m_settingsHandler.settings().setSoundVolume(volume);
-	m_stateHandler.changeState<SettingsMenuState>();
+	m_stateHandler.changeState<SettingsMenuState>(false);
+}
+
+void SoundVolumeMenuState::cancel()
+{
+	m_stateHandler.changeState<SettingsMenuState>(false);
 }

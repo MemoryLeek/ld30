@@ -24,7 +24,7 @@ std::vector<MenuItem> MainMenuState::items()
 
 void MainMenuState::settingsMenu()
 {
-	m_stateHandler.changeState<SettingsMenuState>();
+	m_stateHandler.changeState<SettingsMenuState>(false);
 }
 
 void MainMenuState::cancel()
@@ -34,5 +34,5 @@ void MainMenuState::cancel()
 
 void MainMenuState::start()
 {
-	m_stateHandler.changeState<GameState>();
+	m_stateHandler.changeState<GameState>(true);
 }

@@ -1,5 +1,6 @@
 #include <iomanip>
 #include <sstream>
+#include <iostream>
 
 #include <SDL2/SDL_image.h>
 

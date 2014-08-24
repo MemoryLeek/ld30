@@ -15,7 +15,7 @@ std::vector<MenuItem> SettingsMenuState::items()
 {
 	return
 	{
-		MenuItem("Resolution", std::bind(&SettingsMenuState::resolutionMenu, this)),
+//		MenuItem("Resolution", std::bind(&SettingsMenuState::resolutionMenu, this)),
 		MenuItem("Sound Volume", std::bind(&SettingsMenuState::soundVolumeMenu, this)),
 		MenuItem("Music Volume", std::bind(&SettingsMenuState::musicVolumeMenu, this)),
 	};
@@ -23,20 +23,20 @@ std::vector<MenuItem> SettingsMenuState::items()
 
 void SettingsMenuState::resolutionMenu()
 {
-	m_stateHandler.changeState<ResolutionMenuState>();
+	m_stateHandler.changeState<ResolutionMenuState>(false);
 }
 
 void SettingsMenuState::soundVolumeMenu()
 {
-	m_stateHandler.changeState<SoundVolumeMenuState>();
+	m_stateHandler.changeState<SoundVolumeMenuState>(false);
 }
 
 void SettingsMenuState::musicVolumeMenu()
 {
-	m_stateHandler.changeState<MusicVolumeMenuState>();
+	m_stateHandler.changeState<MusicVolumeMenuState>(false);
 }
 
 void SettingsMenuState::cancel()
 {
-	m_stateHandler.changeState<MainMenuState>();
+	m_stateHandler.changeState<MainMenuState>(false);
 }

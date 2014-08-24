@@ -13,16 +13,6 @@ Goal::Goal(int x, int y, Renderer &renderer)
 	loader.load("resources/goal.spb", m_bundle);
 }
 
-int Goal::tileX() const
-{
-	return m_x / TILE_SIZE;
-}
-
-int Goal::tileY() const
-{
-	return m_y / TILE_SIZE;
-}
-
 void Goal::draw(double delta, Renderer &renderer)
 {
 	m_bundle.update(delta * 1000);

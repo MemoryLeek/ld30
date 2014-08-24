@@ -17,7 +17,7 @@ namespace Ui
 
 			void setText(const std::string &text);
 
-			void draw(double drawable, Renderer &renderer) override;
+			void draw(double delta, Renderer &renderer) override;
 
 		private:
 			int m_x;

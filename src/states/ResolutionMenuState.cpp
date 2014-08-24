@@ -41,5 +41,5 @@ void ResolutionMenuState::setResolution(int width, int height)
 
 void ResolutionMenuState::cancel()
 {
-	m_stateHandler.changeState<SettingsMenuState>();
+	m_stateHandler.changeState<SettingsMenuState>(false);
 }

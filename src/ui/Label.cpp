@@ -2,6 +2,7 @@
 
 #include "Label.h"
 #include "Renderer.h"
+#include "Util.h"
 
 namespace Ui
 {
@@ -50,8 +51,10 @@ namespace Ui
 		SDL_FreeSurface(surface);
 	}
 
-	void Label::draw(double drawable, Renderer &renderer)
+	void Label::draw(double delta, Renderer &renderer)
 	{
+		UNUSED(delta);
+
 		if(!m_texture)
 		{
 			return;
