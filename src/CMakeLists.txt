@@ -94,4 +94,6 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} 
 # Hacks for crap OS
 if(WIN32)
 	add_definitions(-DM_PI=3.14159265358979323846)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mwindows")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mwindows")
 endif()
