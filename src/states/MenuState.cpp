@@ -13,7 +13,7 @@ MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_running(true)
 	, m_itemUnderCursor(false)
 {
-	m_font = TTF_OpenFont("resources/ttf/Oxygen-Regular.ttf", 20);
+	m_font = TTF_OpenFont("resources/ttf/MunroSmall.ttf", 20);
 }
 
 bool MenuState::update(double delta)
@@ -26,7 +26,7 @@ bool MenuState::update(double delta)
 		const std::string &text = item.text();
 
 		SDL_Color color = { i == m_selectedIndex ? 255 : 0, 0, 0, SDL_ALPHA_OPAQUE };
-		SDL_Surface *surface = TTF_RenderText_Blended(m_font, text.c_str(), color);
+		SDL_Surface *surface = TTF_RenderText_Solid(m_font, text.c_str(), color);
 		SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surface);
 		SDL_Rect dest = { 0, 0, 0, 0 };
 

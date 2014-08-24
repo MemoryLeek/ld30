@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	TTF_Font *font = TTF_OpenFont("resources/ttf/Oxygen-Regular.ttf", 10);
+	TTF_Font *font = TTF_OpenFont("resources/ttf/MunroSmall.ttf", 10);
 	if(!font)
 	{
 		std::cout << "Failed to load font: " << TTF_GetError() << std::endl;
