@@ -1,6 +1,7 @@
 #include "SettingsMenuState.h"
 #include "ResolutionMenuState.h"
 #include "SoundVolumeMenuState.h"
+#include "MusicVolumeMenuState.h"
 #include "MainMenuState.h"
 #include "StateHandler.h"
 
@@ -15,7 +16,8 @@ std::vector<MenuItem> SettingsMenuState::items()
 	return
 	{
 		MenuItem("Resolution", std::bind(&SettingsMenuState::resolutionMenu, this)),
-		MenuItem("Sound Volume", std::bind(&SettingsMenuState::soundVolumeMenu, this))
+		MenuItem("Sound Volume", std::bind(&SettingsMenuState::soundVolumeMenu, this)),
+		MenuItem("Music Volume", std::bind(&SettingsMenuState::musicVolumeMenu, this)),
 	};
 }
 
@@ -27,6 +29,11 @@ void SettingsMenuState::resolutionMenu()
 void SettingsMenuState::soundVolumeMenu()
 {
 	m_stateHandler.changeState<SoundVolumeMenuState>();
+}
+
+void SettingsMenuState::musicVolumeMenu()
+{
+	m_stateHandler.changeState<MusicVolumeMenuState>();
 }
 
 void SettingsMenuState::cancel()

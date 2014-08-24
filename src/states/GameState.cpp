@@ -41,6 +41,8 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	m_character = new Player(13 * 32, 12 * 32, m_renderer);
 	respawn();
 
+	SoundHandler::playMusic(SoundHandler::Music::Ambient);
+
 	SDL_assert(m_character);
 }
 
@@ -129,6 +131,7 @@ bool GameState::update(double delta)
 
 	if(!m_running)
 	{
+		SoundHandler::stopMusic();
 		m_stateHandler.changeState<MainMenuState>();
 		return true;
 	}

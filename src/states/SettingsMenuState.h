@@ -12,6 +12,7 @@ class SettingsMenuState : public MenuState
 
 		void resolutionMenu();
 		void soundVolumeMenu();
+		void musicVolumeMenu();
 
 	private:
 		void cancel() override;

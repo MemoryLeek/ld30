@@ -19,7 +19,12 @@ int Settings::height() const
 
 int Settings::soundVolume() const
 {
-	return m_volume;
+	return m_soundVolume;
+}
+
+int Settings::musicVolume() const
+{
+	return m_musicVolume;
 }
 
 void Settings::setResolution(int width, int height)
@@ -30,14 +35,20 @@ void Settings::setResolution(int width, int height)
 
 void Settings::setSoundVolume(int volume)
 {
-	m_volume = volume;
+	m_soundVolume = volume;
+}
+
+void Settings::setMusicVolume(int volume)
+{
+	m_musicVolume = volume;
 }
 
 BinaryStream &operator >>(BinaryStream &stream, Settings &settings)
 {
 	stream >> settings.m_width;
 	stream >> settings.m_height;
-	stream >> settings.m_volume;
+	stream >> settings.m_soundVolume;
+	stream >> settings.m_musicVolume;
 
 	return stream;
 }
@@ -46,7 +57,8 @@ BinaryStream &operator <<(BinaryStream &stream, const Settings &settings)
 {
 	stream << settings.m_width;
 	stream << settings.m_height;
-	stream << settings.m_volume;
+	stream << settings.m_soundVolume;
+	stream << settings.m_musicVolume;
 
 	return stream;
 }

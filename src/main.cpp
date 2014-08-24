@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
 	Settings &settings = settingsHandler.settings();
 
 	SoundHandler::setSoundVolume(settings.soundVolume());
+	SoundHandler::setMusicVolume(settings.musicVolume());
 
 	SDL_Window *window = SDL_CreateWindow("LD30", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, settings.width(), settings.height(), SDL_WINDOW_OPENGL);
 	assert(window);

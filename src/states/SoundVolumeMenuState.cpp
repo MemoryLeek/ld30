@@ -21,7 +21,7 @@ std::vector<MenuItem> SoundVolumeMenuState::items()
 	for (int i = 20; i <= 100; i += 20)
 	{
 		const std::string &title = std::to_string(i);
-		const MenuItem item(title, std::bind(&SoundVolumeMenuState::setVolume, this, 255 * i / 100));
+		const MenuItem item(title, std::bind(&SoundVolumeMenuState::setVolume, this, 128 * i / 100));
 
 		items.push_back(item);
 	}

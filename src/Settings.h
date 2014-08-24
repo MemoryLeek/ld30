@@ -14,14 +14,17 @@ class Settings
 		int width() const;
 		int height() const;
 		int soundVolume() const;
+		int musicVolume() const;
 
 		void setResolution(int width, int height);
-		void setSoundVolume(int soundVolume);
+		void setSoundVolume(int volume);
+		void setMusicVolume(int volume);
 
 	private:
 		int m_width;
 		int m_height;
-		int m_volume;
+		int m_soundVolume;
+		int m_musicVolume;
 };
 
 #endif // SETTINGS_H

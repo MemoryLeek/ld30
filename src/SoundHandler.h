@@ -19,8 +19,19 @@ class SoundHandler
 			};
 		};
 
+		struct Music
+		{
+			enum Value
+			{
+				Ambient
+			};
+		};
+
 		static void play(Sound::Value sound);
+		static void playMusic(Music::Value music);
+		static void stopMusic();
 		static void setSoundVolume(int volume);
+		static void setMusicVolume(int volume);
 
 	private:
 		static void init();
@@ -28,6 +39,7 @@ class SoundHandler
 		static const int CHANNELS;
 		static bool m_loaded;
 		static std::map<Sound::Value, Mix_Chunk*> m_samples;
+		static std::map<Music::Value, Mix_Music*> m_tracks;
 };
 
 #endif // SOUNDHANDLER_H
