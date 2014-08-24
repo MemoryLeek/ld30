@@ -44,8 +44,7 @@ void Player::draw(double delta, Renderer &renderer)
 {
 	m_bundle.update(delta * 1000);
 
-	const float dist = Util::distanceBetween(x(), y(), m_targetPoint.x, m_targetPoint.y);
-	if(dist > 16 && !(m_targetPoint.x == 0 && m_targetPoint.y == 0))
+	if(!(m_targetPoint.x == 0 && m_targetPoint.y == 0))
 	{
 		float angle = atanf((y() - m_targetPoint.y) / (x() - m_targetPoint.x)) * 180 / M_PI;
 		if(x() - m_targetPoint.x > 0)
