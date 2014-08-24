@@ -42,6 +42,9 @@ class MenuState : public IState
 		SettingsHandler &m_settingsHandler;
 
 	private:
+		void up();
+		void down();
+
 		TTF_Font *m_font;
 		SDL_Texture *m_background;
 
@@ -51,6 +54,7 @@ class MenuState : public IState
 
 		bool m_running;
 		bool m_itemUnderCursor;
+		bool m_joystickReady;
 };
 
 #endif // MENUSTATE_H

@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 {
 	std::vector<std::string> arguments(argv + 1, argv + argc);
 
-	if(SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0)
+	if(SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) != 0)
 	{
 		std::cout << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
 		return -1;
@@ -56,6 +56,13 @@ int main(int argc, char *argv[])
 	assert(window);
 	SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	assert(sdlRenderer);
+
+	for (int i = 0; i < SDL_NumJoysticks(); i++)
+	{
+		std::cout << "DEBUG: Opening joystick " << SDL_JoystickNameForIndex(i) << std::endl;
+
+		SDL_JoystickOpen(i);
+	}
 
 	// Wrap the renderer in our own class to manage camera etc.
 	Renderer renderer(sdlRenderer);

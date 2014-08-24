@@ -159,12 +159,7 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 
 		case SDLK_TAB:
 		{
-			if (!m_character->isDead() && !m_levelSwitching)
-			{
-				m_levelSwitching = true;
-
-				SoundHandler::play(SoundHandler::Sound::WorldSwitch);
-			}
+			trySwitchLevels();
 
 			break;
 		}
@@ -175,6 +170,8 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 			{
 				respawn();
 			}
+
+			break;
 		}
 	}
 }
@@ -213,7 +210,34 @@ void GameState::onMouseMove(SDL_MouseMotionEvent event)
 
 void GameState::onJoyButtonDown(SDL_JoyButtonEvent event)
 {
-	UNUSED(event);
+	if (m_skipped)
+	{
+		return;
+	}
+
+	switch (event.button)
+	{
+		case Accept:
+		{
+			if (m_showScoreboard)
+			{
+				respawn();
+			}
+			else
+			{
+				trySwitchLevels();
+			}
+
+			break;
+		}
+
+		case Reject:
+		{
+			m_running = false;
+
+			break;
+		}
+	}
 }
 
 void GameState::onJoyButtonUp(SDL_JoyButtonEvent event)
@@ -223,7 +247,29 @@ void GameState::onJoyButtonUp(SDL_JoyButtonEvent event)
 
 void GameState::onJoyAxisMotion(SDL_JoyAxisEvent event)
 {
-	UNUSED(event);
+	if (m_skipped)
+	{
+		return;
+	}
+
+	switch (event.axis)
+	{
+		case Horizontal:
+		{
+			m_mousePosition.x = (m_character->x() + event.value) * (event.value != 0);
+			m_mouseButtonDown = m_mousePosition.x || m_mousePosition.y;
+
+			break;
+		}
+
+		case Vertical:
+		{
+			m_mousePosition.y = (m_character->y() + event.value) * (event.value != 0);
+			m_mouseButtonDown = m_mousePosition.x || m_mousePosition.y;
+
+			break;
+		}
+	}
 }
 
 void GameState::loadLevel(const std::string &fileName, Level &target)
@@ -327,5 +373,16 @@ void GameState::respawn()
 		m_character->respawn(spawn->x(), spawn->y());
 		m_timeSinceRespawn = 0;
 		m_showScoreboard = false;
+	}
+}
+
+void GameState::trySwitchLevels()
+{
+	if (!m_character->isDead() &&
+		!m_levelSwitching)
+	{
+		m_levelSwitching = true;
+
+		SoundHandler::play(SoundHandler::Sound::WorldSwitch);
 	}
 }

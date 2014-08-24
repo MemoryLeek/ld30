@@ -4,6 +4,18 @@
 #include <math.h>
 #include <vector>
 
+enum GamepadButtons
+{
+	Accept = 1,
+	Reject = 2
+};
+
+enum GamepadAxis
+{
+	Horizontal = 0,
+	Vertical = 1
+};
+
 template<class T1, class T2>
 std::vector<T1> &operator <<(std::vector<T1> &vector, T2 element)
 {

@@ -15,6 +15,7 @@ MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_mouseY(0)
 	, m_running(true)
 	, m_itemUnderCursor(false)
+	, m_joystickReady(true)
 {
 	SDL_Surface *surface = IMG_Load("resources/menu.png");
 
@@ -63,43 +64,12 @@ bool MenuState::update(double delta)
 
 void MenuState::onKeyDown(SDL_Keycode keyCode)
 {
-	const std::vector<MenuItem> &availableItems = items();
-
 	switch (keyCode)
 	{
-		case SDLK_DOWN:
-		{
-			if (m_selectedIndex++ == availableItems.size() - 1)
-			{
-				m_selectedIndex = 0;
-			}
-
-			break;
-		}
-
-		case SDLK_UP:
-		{
-			if (!m_selectedIndex--)
-			{
-				m_selectedIndex = availableItems.size() - 1;
-			}
-
-			break;
-		}
-
-		case SDLK_RETURN:
-		{
-			activate();
-
-			break;
-		}
-
-		case SDLK_ESCAPE:
-		{
-			cancel();
-
-			break;
-		}
+		case SDLK_DOWN: down(); break;
+		case SDLK_UP: up(); break;
+		case SDLK_RETURN: activate(); break;
+		case SDLK_ESCAPE: cancel(); break;
 	}
 }
 
@@ -152,7 +122,11 @@ void MenuState::onMouseMove(SDL_MouseMotionEvent event)
 
 void MenuState::onJoyButtonDown(SDL_JoyButtonEvent event)
 {
-	UNUSED(event);
+	switch (event.button)
+	{
+		case Accept: activate(); break;
+		case Reject: cancel(); break;
+	}
 }
 
 void MenuState::onJoyButtonUp(SDL_JoyButtonEvent event)
@@ -162,7 +136,29 @@ void MenuState::onJoyButtonUp(SDL_JoyButtonEvent event)
 
 void MenuState::onJoyAxisMotion(SDL_JoyAxisEvent event)
 {
-	UNUSED(event);
+	if (event.axis == Vertical)
+	{
+		if (event.value != 0)
+		{
+			if (m_joystickReady)
+			{
+				m_joystickReady = false;
+
+				if (event.value < 0)
+				{
+					up();
+				}
+				else
+				{
+					down();
+				}
+			}
+		}
+		else
+		{
+			m_joystickReady = true;
+		}
+	}
 }
 
 void MenuState::exit()
@@ -183,5 +179,25 @@ void MenuState::activate()
 		const MenuItem &item = availableItems[m_selectedIndex];
 
 		item.invoke();
+	}
+}
+
+void MenuState::up()
+{
+	const std::vector<MenuItem> &availableItems = items();
+
+	if (!m_selectedIndex--)
+	{
+		m_selectedIndex = availableItems.size() - 1;
+	}
+}
+
+void MenuState::down()
+{
+	const std::vector<MenuItem> &availableItems = items();
+
+	if (m_selectedIndex++ == availableItems.size() - 1)
+	{
+		m_selectedIndex = 0;
 	}
 }

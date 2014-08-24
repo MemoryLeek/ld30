@@ -37,6 +37,7 @@ class GameState : public IState
 		void switchLevels(Level &targetLevel, bool force = false);
 		void drawLevel(Level &level, double delta);
 		void respawn();
+		void trySwitchLevels();
 
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
