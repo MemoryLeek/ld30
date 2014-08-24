@@ -40,7 +40,7 @@ bool MapSelectionState::update(double delta)
 	SDL_RenderSetScale(m_renderer, 1, 1);
 	SDL_RenderCopy(m_renderer, m_background, nullptr, nullptr);
 
-	const unsigned int w = 300;
+	const unsigned int w = 260;
 	const unsigned int width = source.size() * w;
 	const unsigned int unlockedLevels = m_settingsHandler
 		.settings()
@@ -135,7 +135,7 @@ void MapSelectionState::onMouseMove(SDL_MouseMotionEvent event)
 
 	std::vector<MapSelectionItem> &source = m_mapSelectionToken.items();
 
-	const unsigned int w = 300;
+	const unsigned int w = 260;
 	const unsigned int width = source.size() * w;
 	const unsigned int unlockedLevels = m_settingsHandler
 		.settings()
