@@ -23,7 +23,5 @@ int Spawn::y() const
 
 void Spawn::draw(double delta, Renderer &renderer)
 {
-	SDL_Rect target = { m_x - TILE_SIZE / 2 - renderer.cameraOffsetX(), m_y - TILE_SIZE / 2 - renderer.cameraOffsetY(), TILE_SIZE, TILE_SIZE };
-	SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawRect(renderer, &target);
+
 }

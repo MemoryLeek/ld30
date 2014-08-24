@@ -5,16 +5,16 @@
  </tileset>
  <layer name="Foreground" width="35" height="60">
   <data encoding="base64" compression="zlib">
-   eJzt2LlOAzEQBmCHq0IhoggNl0BQgYggUHBGSGm4lAqo0BYIaKAEGngDeAN4Vn4LjzKMvCsKH1tM8RW7KfJnPPbspmGMaSillKqdSWg6U3DDruleCwqP0FnWYA7m4RGe2LW1AIsJs6zDLbzBO6xAG2ZgCTqe+rUiZTmAQ/iAT5dlF/ZYFl4/qlXoLGdw4XzBN2zDCZzCJstC9dtw90JnKYR9l6Xt5M5Ca2YdJczCe7Lp1uycrZs1SJRF9mTHUytZL6pVjCzy91Kt+Dkn6zVIlIVqxc+51OeL7FObbct9f9ezlqGz8PNF9umxGc4Cq2/S7Gm+Bl2XZdoM9zYXq3cpy6z5OxP77vcvi7rF7F3KwnuY0FoUJXJkkedhrH30nyz8PIy5jyiLnEPUoz3PZ3Q/VhbfHKIeLZtRobP4zlPZH1LMc1eep7I/pFj9UjaP6N4IjMKYM2HiPjNUZRmHS7iC6xpkuYN7eDC/z505szzDC7zCauYs3E7GLD6aRbPUNYtvZvvmd4osZTM79pyuelfLMafL3tXqNqdz926uLPL/g57Jt49ozxSm+vk2xT5SSikVxg9D547c
+   eJzt2LsyBEEUBuBet0itLcFK3IoiWmWLJXDdUrWJW22ESE2gEAkReQQRMiI8AQpPgCfA0/in9Kk9TvVMCaa7J+jgC3Y2mH9Pn+4zswWlVCEIgiDInW4oaj2wyz7TtRJEBllnqcAFXMIVHMEADGpDMOwwyy3cwT2cwRiUoQ9GoGqoX8lSlgd4hCc411nmYJ5lqbB6Ua2yzrIOm9o13MAMrMIaTLEsE7AHk/pa1lkiYUFnKWu+syzCkrbsMAvvyaJesw22brGmoyyyJ6uGWsl6Ua1sZJG/l2rFzzlZr6ajLFQrfs65Ol9k7SlfnG1a379mWMuss/DzRfbpimrNglhDudnTfA1qOkuvau1tzlbvUpZ+9XcmNvTvHxV1s9m7lIX3MKG1iBL4yCLPQ1v76D9Z+Hlocx9RFjmHqEfrhu/ouq0spjlEPZo0o7LOYjpPZX9INs9deZ7K/pBs9UvSPKJrbdAOHVqXsvvMkJalE7ZgG3ZykGUfDuBQ/T53+sxyDCdwCuOes3CzHrOYhCwhC7+HaU6aZqaLLElz0vZsTHs/8jEbk96P8jYbyTO8wKvyv4/e4B0+cpDlE77g22IW+f9BXfnb07R/I5X+fOtiTwdBEATZ+AEh9JV4
   </data>
  </layer>
  <layer name="Collision" width="35" height="60">
   <data encoding="base64" compression="zlib">
-   eJzt1oENgCAMRFFW7f5LuEBBihUP+y8hEbHJI5Zoa4QQQhRjD8YbltF85K1osc51ry7L4u1XyeI9U90y06u7evcEyxdn2py5mmVUl2VZ2XMly936jn7Bsm7x7lexRMffLZ4tWlfR4r0XLFqWmTosWLBoW5S+jUqWaB2WOhaVf0xCCCE5uQBRkXY5
+   eJzt1osNgCAMRVFWZf8lHMBSPlZ42vsSEhGbHGKJlkIIIUQx9cF4w+LNPW9GS21ct+qiLNZ+lSzWM9ktI726q3e/YDlxpqsxV7N4dVGWlT1nsvTWd/QLlnWLdT+LZXb83WLZZusyWqz3gkXLMlKHBQuWu0Xpe6Rkma3DguWEReUfkxBCSEwuon52OQ==
   </data>
  </layer>
  <objectgroup name="Objects" width="35" height="60">
-  <object name="Spawn" type="spawn" x="544" y="1504" width="32" height="32"/>
+  <object name="Spawn" type="spawn" x="672" y="1472" width="32" height="32"/>
   <object name="Goal" type="goal" x="384" y="384" width="32" height="32"/>
  </objectgroup>
 </map>

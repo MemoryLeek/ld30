@@ -147,9 +147,12 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 
 		case SDLK_TAB:
 		{
-			m_levelSwitching = true;
+			if (!m_character->isDead() && !m_levelSwitching)
+			{
+				m_levelSwitching = true;
 
-			SoundHandler::play(SoundHandler::Sound::WorldSwitch);
+				SoundHandler::play(SoundHandler::Sound::WorldSwitch);
+			}
 
 			break;
 		}
