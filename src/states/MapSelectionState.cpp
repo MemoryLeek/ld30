@@ -15,6 +15,7 @@ MapSelectionState::MapSelectionState(StateHandler &stateHandler, Renderer &rende
 	, m_settingsHandler(settingsHandler)
 	, m_mapSelectionToken(mapSelectionToken)
 	, m_joystickReady(true)
+	, m_itemUnderCursor(false)
 {
 	SDL_Surface *surface = IMG_Load("resources/menu.png");
 	Settings &settings = settingsHandler.settings();
@@ -117,7 +118,10 @@ void MapSelectionState::onMouseButtonDown(SDL_MouseButtonEvent event)
 	{
 		case SDL_BUTTON_LEFT:
 		{
-			activate();
+			if (m_itemUnderCursor)
+			{
+				activate();
+			}
 
 			break;
 		}
@@ -131,6 +135,7 @@ void MapSelectionState::onMouseButtonUp(SDL_MouseButtonEvent event)
 
 void MapSelectionState::onMouseMove(SDL_MouseMotionEvent event)
 {
+	m_itemUnderCursor = false;
 	m_selectedMap = -1;
 
 	std::vector<MapSelectionItem> &source = m_mapSelectionToken.items();
@@ -151,6 +156,7 @@ void MapSelectionState::onMouseMove(SDL_MouseMotionEvent event)
 			event.y > iy && event.y < iy + 192)
 		{
 			m_selectedMap = i;
+			m_itemUnderCursor = true;
 		}
 	}
 }

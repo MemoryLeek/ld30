@@ -47,6 +47,7 @@ class MapSelectionState : public IState
 		unsigned int m_selectedMap;
 
 		bool m_joystickReady;
+		bool m_itemUnderCursor;
 };
 
 #endif // MAPSELECTIONSTATE_H
