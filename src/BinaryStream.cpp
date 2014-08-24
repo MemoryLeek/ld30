@@ -2,8 +2,9 @@
 
 #include "BinaryStream.h"
 
-BinaryStream::BinaryStream(std::fstream &subject)
+BinaryStream::BinaryStream(std::fstream &subject, Renderer *renderer)
 	: m_subject(subject)
+	, m_renderer(renderer)
 {
 
 }
@@ -14,6 +15,11 @@ char *BinaryStream::read(const unsigned int length)
 	m_subject.read(data, length);
 
 	return data;
+}
+
+Renderer *BinaryStream::renderer() const
+{
+	return m_renderer;
 }
 
 BinaryStream &operator >>(BinaryStream &stream, int &value)

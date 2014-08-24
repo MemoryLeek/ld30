@@ -12,13 +12,11 @@ class ImageWrapper
 	friend BinaryStream &operator >>(BinaryStream &stream, ImageWrapper &wrapper);
 
 	public:
-		ImageWrapper(Renderer &renderer);
-		~ImageWrapper();
+		ImageWrapper();
 
-		operator SDL_Texture *();
+		operator SDL_Texture *() const;
 
 	private:
-		Renderer &m_renderer;
 		SDL_Texture *m_texture;
 };
 

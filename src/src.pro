@@ -42,7 +42,10 @@ HEADERS += IState.h \
 	Player.h \
 	CollisionHandler.h \
 	SoundHandler.h \
-	GlobalDataStorage.h
+	GlobalDataStorage.h \
+	SpriteBundle.h \
+	SpriteBundleSprite.h \
+	SpriteLoader.h
 
 SOURCES += main.cpp \
            Node.cpp \
@@ -74,4 +77,7 @@ SOURCES += main.cpp \
 	Player.cpp \
 	CollisionHandler.cpp \
 	SoundHandler.cpp \
-	GlobalDataStorage.cpp
+	GlobalDataStorage.cpp \
+	SpriteBundle.cpp \
+	SpriteBundleSprite.cpp \
+	SpriteLoader.cpp

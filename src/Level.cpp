@@ -2,9 +2,8 @@
 #include "drawables/Goal.h"
 #include "drawables/Spawn.h"
 
-Level::Level(Renderer &renderer)
-	: m_tileset(renderer)
-	, m_width(0)
+Level::Level()
+	: m_width(0)
 	, m_height(0)
 {
 

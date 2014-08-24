@@ -4,6 +4,8 @@
 #include <fstream>
 #include <vector>
 
+class Renderer;
+
 class BinaryStream
 {
 	friend BinaryStream &operator >>(BinaryStream &stream, int &value);
@@ -16,12 +18,16 @@ class BinaryStream
 	friend BinaryStream &operator <<(BinaryStream &stream, const float &value);
 
 	public:
-		BinaryStream(std::fstream &subject);
+		BinaryStream(std::fstream &subject, Renderer *renderer);
 
 		char *read(const unsigned int length);
 
+		Renderer *renderer() const;
+
 	private:
 		std::fstream &m_subject;
+
+		Renderer *m_renderer;
 };
 
 template<class T>

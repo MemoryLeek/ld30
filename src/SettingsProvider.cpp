@@ -18,7 +18,7 @@ Settings SettingsProvider::load()
 	if(file.is_open())
 	{
 		Settings settings;
-		BinaryStream stream(file);
+		BinaryStream stream(file, nullptr);
 		stream >> settings;
 
 		return settings;
@@ -34,6 +34,6 @@ void SettingsProvider::save(const Settings &settings)
 	std::cout << "DEBUG: Persisting settings" << std::endl;
 	std::fstream file(m_fileName, std::ios::out | std::ios::binary);
 
-	BinaryStream stream(file);
+	BinaryStream stream(file, nullptr);
 	stream << settings;
 }

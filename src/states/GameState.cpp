@@ -25,22 +25,17 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_levelAlpha(255)
 	, m_currentLevel(&m_level1)
 	, m_otherLevel(&m_level2)
-	, m_level1(renderer)
-	, m_level2(renderer)
+	, m_level1()
+	, m_level2()
 	, m_mouseButtonDown(false)
 	, m_running(true)
 	, m_levelSwitching(false)
 	, m_cameraScale(2)
 {
-	SDL_Surface *image = IMG_Load("resources/sprites/standing.png");
-	// texture WILL LEAK, cba to properly free it for this simple test
-	SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, image);
-	SDL_FreeSurface(image);
+	loadLevel("resources/map.wld", m_level1);
+	loadLevel("resources/map2.wld", m_level2);
 
-	loadLevel("map.wld", m_level1);
-	loadLevel("map2.wld", m_level2);
-
-	m_character = new Player(32, 32, texture);
+	m_character = new Player(32, 32, m_renderer);
 	const Spawn *spawn = m_currentLevel->findTile<Spawn>();
 	if(spawn)
 	{
@@ -93,18 +88,23 @@ bool GameState::update(double delta)
 		if(m_mouseButtonDown && !m_levelSwitching)
 		{
 			const SDL_Point mouseWorld = {m_mousePosition.x + m_renderer.cameraOffsetX(), m_mousePosition.y + m_renderer.cameraOffsetY()};
+
 			m_character->walkTowards(mouseWorld);
+			m_character->setIsWalking(true);
 
 			if(m_timeSinceStep == 0 || m_timeSinceStep > 0.3)
 			{
 				SoundHandler::play((SoundHandler::Sound::Value)(SoundHandler::Sound::Step + rand() % 10));
 				m_timeSinceStep = 0;
 			}
+
 			m_timeSinceStep += delta;
 		}
 		else
 		{
 			m_character->walkTowards({0, 0});
+			m_character->setIsWalking(false);
+
 			m_timeSinceStep = 0;
 		}
 
@@ -147,12 +147,9 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 
 		case SDLK_TAB:
 		{
-			if (!m_character->isDead() && !m_levelSwitching)
-			{
-				m_levelSwitching = true;
+			m_levelSwitching = true;
 
-				SoundHandler::play(SoundHandler::Sound::WorldSwitch);
-			}
+			SoundHandler::play(SoundHandler::Sound::WorldSwitch);
 
 			break;
 		}
@@ -187,7 +184,7 @@ void GameState::loadLevel(const std::string &fileName, Level &target)
 
 	if (file.is_open())
 	{
-		BinaryStream stream(file);
+		BinaryStream stream(file, &m_renderer);
 		stream >> target;
 	}
 }

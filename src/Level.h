@@ -16,7 +16,7 @@ class Level
 	friend BinaryStream &operator >>(BinaryStream &stream, Level &level);
 
 	public:
-		Level(Renderer &renderer);
+		Level();
 
 		SDL_Texture *tileset();
 

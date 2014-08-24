@@ -1,18 +1,15 @@
+#include <iostream>
+
 #include "ImageWrapper.h"
 #include "Renderer.h"
 
-ImageWrapper::ImageWrapper(Renderer &renderer)
-	: m_renderer(renderer)
+ImageWrapper::ImageWrapper()
+	: m_texture(nullptr)
 {
 
 }
 
-ImageWrapper::~ImageWrapper()
-{
-	SDL_DestroyTexture(m_texture);
-}
-
-ImageWrapper::operator SDL_Texture *()
+ImageWrapper::operator SDL_Texture *() const
 {
 	return m_texture;
 }
@@ -27,7 +24,7 @@ BinaryStream &operator >>(BinaryStream &stream, ImageWrapper &wrapper)
 
 	SDL_RWops *handle = SDL_RWFromMem(data, size);
 	SDL_Surface *surface = IMG_LoadPNG_RW(handle);
-	SDL_Texture *texture = SDL_CreateTextureFromSurface(wrapper.m_renderer, surface);
+	SDL_Texture *texture = SDL_CreateTextureFromSurface(*stream.renderer(), surface);
 	SDL_FreeSurface(surface);
 
 	wrapper.m_texture = texture;
