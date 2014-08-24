@@ -6,8 +6,8 @@
 #include "StateHandler.h"
 #include "SoundHandler.h"
 
-SoundVolumeMenuState::SoundVolumeMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
-	: MenuState(stateHandler, renderer, settingsHandler)
+SoundVolumeMenuState::SoundVolumeMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
+	: MenuState(stateHandler, renderer, settingsHandler, mapSelectionToken)
 {
 }
 

@@ -12,13 +12,14 @@
 #include "Renderer.h"
 #include "SoundHandler.h"
 #include "MainMenuState.h"
+#include "MapSelectionToken.h"
 #include "Util.h"
 
 #include "drawables/Spawn.h"
 #include "drawables/Goal.h"
 #include "drawables/Scoreboard.h"
 
-GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
+GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
 	, m_settingsHandler(settingsHandler)
@@ -42,8 +43,10 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 
 	m_character = new Player(13 * 32, 12 * 32, m_renderer);
 
-	loadLevel("resources/map.wld", m_level1);
-	loadLevel("resources/map2.wld", m_level2);
+	MapSelectionItem *map = mapSelectionToken.mapSelection();
+
+	loadLevel(map->fileName1(), m_level1);
+	loadLevel(map->fileName2(), m_level2);
 
 	respawn();
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="35" height="35" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tileset2" tilewidth="32" tileheight="32">
+  <image source="tileset2.png" width="512" height="512"/>
+ </tileset>
+ <layer name="Foreground" width="35" height="35">
+  <data encoding="base64" compression="zlib">
+   eJzt1cFKAkEcx/GRrmlSdrMUs5uSZN60RPGm6SN40DfQx9Ku1aFzCtnVAvVV/Aqz8G9Z0D3MrNAcPiwsc/iyy+4vppSKOY7jROgUcSRCOEPSQEsaV7gOIYOsgZYCihhhjIH2ije86/s7Q329Q8lwi/SJGeai02O6xXseQ22JH/yKex6bLeM9TLVUUcOjlsIlToRzXIgzT6gbaGmjg2ctj1tMMMULcrgRZ7roGWjp++ze2UeAUsDZ/9jyhQW+Lbb4N+ABFaywxgb3KKtoNqCl/n5HDTRVdBsQ9L+xuQHHtEeyRe5R1Nso98jWNvo34BC2NuAQpjbAcRwnrC3zQmMH
+  </data>
+ </layer>
+ <layer name="Collision" width="35" height="35">
+  <data encoding="base64" compression="zlib">
+   eJztk8EJADAIxFy1+y/RGaTGCibg80I+RoiI/OU8HNHSuSOcttTuCOeGlkk/bYstmZbOHeG0pXZHODe0TPlpEZEsF1mkMOI=
+  </data>
+ </layer>
+ <objectgroup name="Object Layer" width="35" height="35">
+  <object name="Goal" type="goal" x="544" y="352" width="32" height="32"/>
+  <object name="Spawn" type="spawn" x="544" y="736" width="32" height="32"/>
+ </objectgroup>
+</map>

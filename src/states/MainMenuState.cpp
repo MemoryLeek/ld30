@@ -2,12 +2,12 @@
 #include <functional>
 
 #include "MainMenuState.h"
-#include "GameState.h"
 #include "SettingsMenuState.h"
 #include "StateHandler.h"
+#include "MapSelectionState.h"
 
-MainMenuState::MainMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
-	: MenuState(stateHandler, renderer, settingsHandler)
+MainMenuState::MainMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
+	: MenuState(stateHandler, renderer, settingsHandler, mapSelectionToken)
 {
 
 }
@@ -34,5 +34,5 @@ void MainMenuState::cancel()
 
 void MainMenuState::start()
 {
-	m_stateHandler.changeState<GameState>(true);
+	m_stateHandler.changeState<MapSelectionState>(true);
 }

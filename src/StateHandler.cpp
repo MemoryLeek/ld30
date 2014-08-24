@@ -6,9 +6,10 @@
 #include "Renderer.h"
 #include "IState.h"
 
-StateHandler::StateHandler(Renderer &renderer, SettingsHandler &settingsHandler)
+StateHandler::StateHandler(Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
 	: m_renderer(renderer)
 	, m_settingsHandler(settingsHandler)
+	, m_mapSelectionToken(mapSelectionToken)
 	, m_currentState(nullptr)
 	, m_nextState(nullptr)
 	, m_progress(0)

@@ -5,6 +5,7 @@
 
 class Renderer;
 class SettingsHandler;
+class MapSelectionToken;
 class IState;
 
 class StateHandler : public IDrawable
@@ -12,7 +13,7 @@ class StateHandler : public IDrawable
 	const float TRANSITION_LENGTH = 1000;
 
 	public:
-		StateHandler(Renderer &renderer, SettingsHandler &settingsHandler);
+		StateHandler(Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken);
 
 		IState &currentState();
 
@@ -21,14 +22,14 @@ class StateHandler : public IDrawable
 		{
 			if (transition)
 			{
-				m_nextState = new TState(*this, m_renderer, m_settingsHandler);
+				m_nextState = new TState(*this, m_renderer, m_settingsHandler, m_mapSelectionToken);
 				m_progress = TRANSITION_LENGTH;
 			}
 			else
 			{
 				delete m_currentState;
 
-				m_currentState = new TState(*this, m_renderer, m_settingsHandler);
+				m_currentState = new TState(*this, m_renderer, m_settingsHandler, m_mapSelectionToken);
 			}
 		}
 
@@ -37,6 +38,7 @@ class StateHandler : public IDrawable
 	private:
 		Renderer &m_renderer;
 		SettingsHandler &m_settingsHandler;
+		MapSelectionToken &m_mapSelectionToken;
 
 		IState *m_currentState;
 		IState *m_nextState;

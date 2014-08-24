@@ -6,10 +6,11 @@
 #include "Renderer.h"
 #include "Util.h"
 
-MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
+MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
 	, m_settingsHandler(settingsHandler)
+	, m_mapSelectionToken(mapSelectionToken)
 	, m_selectedIndex(0)
 	, m_mouseX(0)
 	, m_mouseY(0)

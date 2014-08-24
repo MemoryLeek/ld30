@@ -6,7 +6,7 @@
 class ResolutionMenuState : public MenuState
 {
 	public:
-		ResolutionMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
+		ResolutionMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken);
 
 		std::vector<MenuItem> items() override;
 

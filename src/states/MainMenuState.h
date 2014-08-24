@@ -6,7 +6,7 @@
 class MainMenuState : public MenuState
 {
 	public:
-		MainMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
+		MainMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken);
 
 		std::vector<MenuItem> items() override;
 

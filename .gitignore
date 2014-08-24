@@ -12,3 +12,4 @@ settings.dat
 *.o
 *.user
 *.cmake
+*.orig

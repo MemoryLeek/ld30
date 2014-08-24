@@ -5,8 +5,8 @@
 #include "MainMenuState.h"
 #include "StateHandler.h"
 
-SettingsMenuState::SettingsMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
-	: MenuState(stateHandler, renderer, settingsHandler)
+SettingsMenuState::SettingsMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
+	: MenuState(stateHandler, renderer, settingsHandler, mapSelectionToken)
 {
 
 }

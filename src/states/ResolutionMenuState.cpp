@@ -6,8 +6,8 @@
 #include "SettingsHandler.h"
 #include "StringEx.h"
 
-ResolutionMenuState::ResolutionMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
-	: MenuState(stateHandler, renderer, settingsHandler)
+ResolutionMenuState::ResolutionMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
+	: MenuState(stateHandler, renderer, settingsHandler, mapSelectionToken)
 {
 
 }

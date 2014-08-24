@@ -12,6 +12,7 @@
 #include "SettingsProvider.h"
 #include "SettingsHandler.h"
 #include "SoundHandler.h"
+#include "MapSelectionToken.h"
 
 #include "states/MainMenuState.h"
 #include "states/SplashState.h"
@@ -66,7 +67,8 @@ int main(int argc, char *argv[])
 
 	// Wrap the renderer in our own class to manage camera etc.
 	Renderer renderer(sdlRenderer);
-	StateHandler stateHandler(renderer, settingsHandler);
+	MapSelectionToken mapSelectionToken;
+	StateHandler stateHandler(renderer, settingsHandler, mapSelectionToken);
 
 	if(std::find(arguments.begin(), arguments.end(), "--nosplash") != arguments.end())
 	{

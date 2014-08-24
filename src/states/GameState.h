@@ -14,11 +14,12 @@ class StateHandler;
 class SettingsHandler;
 class IDrawable;
 class Scoreboard;
+class MapSelectionToken;
 
 class GameState : public IState
 {
 	public:
-		GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
+		GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken);
 		~GameState();
 
 		bool update(double delta) override;

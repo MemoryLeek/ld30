@@ -11,11 +11,12 @@
 class StateHandler;
 class Renderer;
 class SettingsHandler;
+class MapSelectionToken;
 
 class MenuState : public IState
 {
 	public:
-		MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
+		MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken);
 		~MenuState();
 
 		bool update(double delta) override;
@@ -40,6 +41,7 @@ class MenuState : public IState
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;
 		SettingsHandler &m_settingsHandler;
+		MapSelectionToken &m_mapSelectionToken;
 
 	private:
 		void up();

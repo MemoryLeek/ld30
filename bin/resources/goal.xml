@@ -1,0 +1,7 @@
+<images>
+	<image>
+		<filename>goal.gif</filename>
+		<loop>true</loop>
+		<delay>100</delay>
+	</image>
+</images>

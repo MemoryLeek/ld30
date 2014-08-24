@@ -46,7 +46,10 @@ HEADERS += IState.h \
 	SpriteBundleSprite.h \
 	SpriteLoader.h \
 	states/SoundVolumeMenuState.h \
-	states/MusicVolumeMenuState.h
+	states/MusicVolumeMenuState.h \
+    MapSelectionItem.h \
+    states/MapSelectionState.h \
+    MapSelectionToken.h
 
 SOURCES += main.cpp \
            Node.cpp \
@@ -82,4 +85,7 @@ SOURCES += main.cpp \
 	SpriteBundleSprite.cpp \
 	SpriteLoader.cpp \
 	states/SoundVolumeMenuState.cpp \
-	states/MusicVolumeMenuState.cpp
+	states/MusicVolumeMenuState.cpp \
+    MapSelectionItem.cpp \
+    states/MapSelectionState.cpp \
+    MapSelectionToken.cpp

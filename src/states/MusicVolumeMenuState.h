@@ -6,7 +6,7 @@
 class MusicVolumeMenuState : public MenuState
 {
 	public:
-		MusicVolumeMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
+		MusicVolumeMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken);
 
 		std::vector<MenuItem> items() override;
 

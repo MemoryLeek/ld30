@@ -8,7 +8,7 @@
 #include "Renderer.h"
 #include "Util.h"
 
-SplashState::SplashState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler)
+SplashState::SplashState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
 	: m_stateHandler(stateHandler)
 	, m_renderer(renderer)
 	, m_splashTexture(nullptr)

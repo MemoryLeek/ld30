@@ -6,7 +6,7 @@
 class SettingsMenuState : public MenuState
 {
 	public:
-		SettingsMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler);
+		SettingsMenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken);
 
 		std::vector<MenuItem> items() override;
 
