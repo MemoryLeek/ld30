@@ -136,6 +136,8 @@ void MenuState::onJoyButtonUp(SDL_JoyButtonEvent event)
 
 void MenuState::onJoyAxisMotion(SDL_JoyAxisEvent event)
 {
+	event.value = (abs(event.value) > 6000) ? event.value : 0;
+
 	if (event.axis == Vertical)
 	{
 		if (event.value != 0)

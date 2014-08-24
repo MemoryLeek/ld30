@@ -252,6 +252,8 @@ void GameState::onJoyAxisMotion(SDL_JoyAxisEvent event)
 		return;
 	}
 
+	event.value = (abs(event.value) > 6000) ? event.value : 0;
+
 	switch (event.axis)
 	{
 		case Horizontal:
