@@ -2,6 +2,7 @@ src/build/
 src/CMakeFiles
 
 tools/falcon/falcon
+tools/falcon/build/
 
 Makefile
 CMakeCache.txt
