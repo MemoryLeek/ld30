@@ -147,9 +147,12 @@ void GameState::onKeyDown(SDL_Keycode keyCode)
 
 		case SDLK_TAB:
 		{
-			m_levelSwitching = true;
+			if (!m_character->isDead() && !m_levelSwitching)
+			{
+				m_levelSwitching = true;
 
-			SoundHandler::play(SoundHandler::Sound::WorldSwitch);
+				SoundHandler::play(SoundHandler::Sound::WorldSwitch);
+			}
 
 			break;
 		}
@@ -239,7 +242,10 @@ void GameState::drawLevel(Level &level, double delta)
 			SDL_SetTextureAlphaMod(tileset, &level == m_otherLevel ? 255.0 - m_levelAlpha : m_levelAlpha);
 			SDL_RenderCopy(m_renderer, tileset, &source, &target);
 		}
+	}
 
+	for (const LevelTile &tile : level.tiles())
+	{
 		for (IDrawable *drawable : tile.objects())
 		{
 			drawable->draw(delta, m_renderer);

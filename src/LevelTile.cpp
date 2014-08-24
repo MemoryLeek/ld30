@@ -54,18 +54,20 @@ BinaryStream &operator >>(BinaryStream &stream, LevelTile &tile)
 		const int y = tile.m_y * TILE_SIZE;
 		const int id = object.id();
 
+		Renderer *renderer = stream.renderer();
+
 		switch (id)
 		{
 			case LevelTileMapObject::Spawn:
 			{
-				target << new Spawn(x, y);
+				target << new Spawn(x, y, *renderer);
 
 				break;
 			}
 
 			case LevelTileMapObject::Goal:
 			{
-				target << new Goal(x, y);
+				target << new Goal(x, y, *renderer);
 
 				break;
 			}
