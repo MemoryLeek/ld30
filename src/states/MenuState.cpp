@@ -121,6 +121,11 @@ void MenuState::onMouseMove(SDL_MouseMotionEvent event)
 	}
 }
 
+void MenuState::onMouseWheel(SDL_MouseWheelEvent event)
+{
+	UNUSED(event);
+}
+
 void MenuState::onControllerButtonDown(SDL_ControllerButtonEvent event)
 {
 	switch (event.button)

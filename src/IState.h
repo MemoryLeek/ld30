@@ -16,6 +16,7 @@ class IState
 		virtual void onMouseButtonDown(SDL_MouseButtonEvent event) = 0;
 		virtual void onMouseButtonUp(SDL_MouseButtonEvent event) = 0;
 		virtual void onMouseMove(SDL_MouseMotionEvent event) = 0;
+		virtual void onMouseWheel(SDL_MouseWheelEvent event) = 0;
 		virtual void onControllerButtonDown(SDL_ControllerButtonEvent event) = 0;
 		virtual void onControllerButtonUp(SDL_ControllerButtonEvent event) = 0;
 		virtual void onControllerAxisMotion(SDL_ControllerAxisEvent event) = 0;

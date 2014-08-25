@@ -18,6 +18,9 @@ MapSelectionState::MapSelectionState(StateHandler &stateHandler, Renderer &rende
 	, m_joystickReady(true)
 	, m_itemUnderCursor(false)
 	, m_skipped(false)
+	, m_adjustSoundVolume(false)
+	, m_adjustMusicVolume(false)
+	, m_running(true)
 {
 	SDL_Surface *surface = IMG_Load("resources/gfx/menu.png");
 	Settings &settings = settingsHandler.settings();
@@ -52,7 +55,7 @@ bool MapSelectionState::update(double delta)
 	{
 		for (unsigned ii = 0; ii < 3 && ii < source.size() - i; ii++)
 		{
-			const int y = i / 3 * ITEM_HEIGHT;
+			const int y = i / 3 * ITEM_HEIGHT - 20;
 			const int x = ii * ITEM_WIDTH;
 			const int ix = (m_renderer.width() - width + (ITEM_WIDTH - 256)) / 2 + x;
 			const int iy = (m_renderer.height() - height + (ITEM_HEIGHT - 192)) / 2 + y;
@@ -120,7 +123,37 @@ bool MapSelectionState::update(double delta)
 		}
 	}
 
-	return true;
+	SDL_Color textColor = { 255, 255, 255, SDL_ALPHA_OPAQUE };
+	SDL_Rect bottomRect = { 0, 768 - 30, 1024, 30 };
+	SDL_RenderFillRect(m_renderer, &bottomRect);
+
+	const int soundVolume = settings.soundVolume();
+	const int musicVolume = settings.musicVolume();
+
+	const std::string &soundVolumeString = StringEx::format("SOUND: %1%", (soundVolume / 128.0f) * 100.0f);
+	const std::string &musicVolumeString = StringEx::format("MUSIC: %1%", (musicVolume / 128.0f) * 100.0f);
+
+	// SOUND
+	SDL_Surface *soundTextSurface = TTF_RenderText_Solid(m_subFont, soundVolumeString.c_str(), textColor);
+	SDL_Texture *soundTextTexture = SDL_CreateTextureFromSurface(m_renderer, soundTextSurface);
+	SDL_Rect soundTextTarget = { 10, 768 - 25, 0, 0 };
+
+	SDL_QueryTexture(soundTextTexture, nullptr, nullptr, &soundTextTarget.w, &soundTextTarget.h);
+	SDL_RenderCopy(m_renderer, soundTextTexture, nullptr, &soundTextTarget);
+	SDL_FreeSurface(soundTextSurface);
+	SDL_DestroyTexture(soundTextTexture);
+
+	// VOLUME
+	SDL_Surface *musicTextSurface = TTF_RenderText_Solid(m_subFont, musicVolumeString.c_str(), textColor);
+	SDL_Texture *musicTextTexture = SDL_CreateTextureFromSurface(m_renderer, musicTextSurface);
+	SDL_Rect musicTextTarget = { 150, soundTextTarget.y, 0, 0 };
+
+	SDL_QueryTexture(musicTextTexture, nullptr, nullptr, &musicTextTarget.w, &musicTextTarget.h);
+	SDL_RenderCopy(m_renderer, musicTextTexture, nullptr, &musicTextTarget);
+	SDL_FreeSurface(musicTextSurface);
+	SDL_DestroyTexture(musicTextTexture);
+
+	return m_running;
 }
 
 void MapSelectionState::onKeyDown(SDL_Keycode keyCode)
@@ -162,6 +195,8 @@ void MapSelectionState::onMouseButtonUp(SDL_MouseButtonEvent event)
 
 void MapSelectionState::onMouseMove(SDL_MouseMotionEvent event)
 {
+	m_adjustSoundVolume = event.y > (760 - 30) && event.x < 150;
+	m_adjustMusicVolume = event.y > (760 - 30) && event.x > 150 && event.x < 300;
 	m_itemUnderCursor = false;
 	m_selectedMap = -1;
 
@@ -188,21 +223,43 @@ void MapSelectionState::onMouseMove(SDL_MouseMotionEvent event)
 			}
 		}
 	}
+}
 
-//	for (unsigned int i = 0; i < source.size() && i <= unlockedLevels; i++)
-//	{
-//		const int x = i * ITEM_WIDTH;
-//		const int y = i / 3 * ITEM_HEIGHT;
-//		const int ix = (m_renderer.width() - width + (ITEM_WIDTH - 256)) / 2 + x;
-//		const int iy = (m_renderer.height() - 192) / 2;
+void MapSelectionState::onMouseWheel(SDL_MouseWheelEvent event)
+{
+	Settings &settings = m_settingsHandler.settings();
 
-//		if (event.x > ix && event.x < ix + ITEM_WIDTH &&
-//			event.y > iy && event.y < iy + 192)
-//		{
-//			m_selectedMap = i;
-//			m_itemUnderCursor = true;
-//		}
-//	}
+	if (m_adjustSoundVolume)
+	{
+		if (event.y > 0)
+		{
+			settings.increaseSoundVolume();
+		}
+
+		if (event.y < 0)
+		{
+			settings.decreaseSoundVolume();
+		}
+	}
+
+	if (m_adjustMusicVolume)
+	{
+		if (event.y > 0)
+		{
+			settings.increaseMusicVolume();
+		}
+
+		if (event.y < 0)
+		{
+			settings.decreaseMusicVolume();
+		}
+	}
+
+	const int soundVolume = settings.soundVolume();
+	const int musicVolume = settings.musicVolume();
+
+	SoundHandler::setSoundVolume(soundVolume);
+	SoundHandler::setMusicVolume(musicVolume);
 }
 
 void MapSelectionState::onControllerButtonDown(SDL_ControllerButtonEvent event)
@@ -306,5 +363,5 @@ void MapSelectionState::activate()
 
 void MapSelectionState::cancel()
 {
-	m_stateHandler.changeState<MainMenuState>(false);
+	m_running = false;
 }

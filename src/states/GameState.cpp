@@ -211,6 +211,11 @@ void GameState::onMouseMove(SDL_MouseMotionEvent event)
 	m_mousePosition = { event.x / int(m_cameraScale), event.y / int(m_cameraScale) };
 }
 
+void GameState::onMouseWheel(SDL_MouseWheelEvent event)
+{
+	UNUSED(event);
+}
+
 void GameState::onControllerButtonDown(SDL_ControllerButtonEvent event)
 {
 	if (m_skipped)

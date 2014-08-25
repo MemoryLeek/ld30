@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	Settings &settings = settingsHandler.settings();
 
 	SoundHandler::setSoundVolume(settings.soundVolume());
-	SoundHandler::setMusicVolume(settings.musicVolume());
+	SoundHandler::setMusicVolume(settings.soundVolume());
 
 	SDL_Window *window = SDL_CreateWindow("World²", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, settings.width(), settings.height(), SDL_WINDOW_OPENGL);
 	assert(window);
@@ -155,6 +155,15 @@ int main(int argc, char *argv[])
 					stateHandler
 						.currentState()
 						.onMouseMove(event.motion);
+
+					break;
+				}
+
+				case SDL_MOUSEWHEEL:
+				{
+					stateHandler
+						.currentState()
+						.onMouseWheel(event.wheel);
 
 					break;
 				}

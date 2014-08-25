@@ -23,9 +23,13 @@ class Settings
 
 		float levelCompletionTime(unsigned int index) const;
 
+		void increaseSoundVolume();
+		void decreaseSoundVolume();
+
+		void increaseMusicVolume();
+		void decreaseMusicVolume();
+
 		void setResolution(int width, int height);
-		void setSoundVolume(int volume);
-		void setMusicVolume(int volume);
 		void setLastSelectedLevel(int lastSelectedLevel);
 		void markLevelAsCompleted(unsigned int index, float levelCompletionTime);
 

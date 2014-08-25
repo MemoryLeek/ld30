@@ -33,7 +33,7 @@ void SoundVolumeMenuState::setVolume(int volume)
 {
 	SoundHandler::setSoundVolume(volume);
 
-	m_settingsHandler.settings().setSoundVolume(volume);
+//	m_settingsHandler.settings().increaseVolume(volume);
 	m_stateHandler.changeState<SettingsMenuState>(false);
 }
 

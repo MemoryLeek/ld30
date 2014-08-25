@@ -4,6 +4,7 @@
 
 #include "MainMenuState.h"
 #include "SplashState.h"
+#include "MapSelectionState.h"
 #include "StateHandler.h"
 #include "Renderer.h"
 #include "Util.h"
@@ -95,6 +96,11 @@ void SplashState::onMouseMove(SDL_MouseMotionEvent event)
 	UNUSED(event);
 }
 
+void SplashState::onMouseWheel(SDL_MouseWheelEvent event)
+{
+	UNUSED(event);
+}
+
 void SplashState::onControllerButtonDown(SDL_ControllerButtonEvent event)
 {
 	UNUSED(event);
@@ -116,7 +122,7 @@ void SplashState::skip()
 {
 	if (!m_skipped)
 	{
-		m_stateHandler.changeState<MainMenuState>(true);
+		m_stateHandler.changeState<MapSelectionState>(true);
 		m_skipped = true;
 	}
 }
