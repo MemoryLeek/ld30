@@ -51,6 +51,7 @@ class MapSelectionState : public IState
 
 		bool m_joystickReady;
 		bool m_itemUnderCursor;
+		bool m_skipped;
 };
 
 #endif // MAPSELECTIONSTATE_H

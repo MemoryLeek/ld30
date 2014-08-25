@@ -16,6 +16,7 @@ MapSelectionState::MapSelectionState(StateHandler &stateHandler, Renderer &rende
 	, m_mapSelectionToken(mapSelectionToken)
 	, m_joystickReady(true)
 	, m_itemUnderCursor(false)
+	, m_skipped(false)
 {
 	SDL_Surface *surface = IMG_Load("resources/gfx/menu.png");
 	Settings &settings = settingsHandler.settings();
@@ -263,7 +264,7 @@ void MapSelectionState::right()
 
 void MapSelectionState::activate()
 {
-	if (unsigned(-1) != m_selectedMap)
+	if (!m_skipped && unsigned(-1) != m_selectedMap)
 	{
 		MapSelectionItem &map = m_mapSelectionToken
 			.items()
@@ -278,6 +279,8 @@ void MapSelectionState::activate()
 
 		m_stateHandler
 			.changeState<GameState>(true);
+
+		m_skipped = true;
 	}
 }
 
