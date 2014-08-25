@@ -130,8 +130,8 @@ bool MapSelectionState::update(double delta)
 	const int soundVolume = settings.soundVolume();
 	const int musicVolume = settings.musicVolume();
 
-	const std::string &soundVolumeString = StringEx::format("SOUND: %1%", (soundVolume / 128.0f) * 100.0f);
-	const std::string &musicVolumeString = StringEx::format("MUSIC: %1%", (musicVolume / 128.0f) * 100.0f);
+	const std::string &soundVolumeString = StringEx::format("SOUND: %1%", (soundVolume / 100.0f) * 100.0f);
+	const std::string &musicVolumeString = StringEx::format("MUSIC: %1%", (musicVolume / 100.0f) * 100.0f);
 
 	// SOUND
 	SDL_Surface *soundTextSurface = TTF_RenderText_Solid(m_subFont, soundVolumeString.c_str(), textColor);
@@ -258,8 +258,8 @@ void MapSelectionState::onMouseWheel(SDL_MouseWheelEvent event)
 	const int soundVolume = settings.soundVolume();
 	const int musicVolume = settings.musicVolume();
 
-	SoundHandler::setSoundVolume(soundVolume);
-	SoundHandler::setMusicVolume(musicVolume);
+	SoundHandler::setSoundVolume(soundVolume * 1.28f);
+	SoundHandler::setMusicVolume(musicVolume * 1.28f);
 }
 
 void MapSelectionState::onControllerButtonDown(SDL_ControllerButtonEvent event)

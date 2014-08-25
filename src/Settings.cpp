@@ -7,8 +7,8 @@ Settings::Settings()
 	: m_width(0)
 	, m_height(0)
 	, m_lastSelectedLevel(0)
-	, m_soundVolume(128)
-	, m_musicVolume(128)
+	, m_soundVolume(100)
+	, m_musicVolume(100)
 {
 
 }
@@ -66,7 +66,7 @@ void Settings::setResolution(int width, int height)
 
 void Settings::increaseSoundVolume()
 {
-	m_soundVolume = std::min(128, m_soundVolume + 10);
+	m_soundVolume = std::min(100, m_soundVolume + 10);
 }
 
 void Settings::decreaseSoundVolume()
@@ -76,7 +76,7 @@ void Settings::decreaseSoundVolume()
 
 void Settings::increaseMusicVolume()
 {
-	m_musicVolume = std::min(128, m_musicVolume + 10);
+	m_musicVolume = std::min(100, m_musicVolume + 10);
 }
 
 void Settings::decreaseMusicVolume()
