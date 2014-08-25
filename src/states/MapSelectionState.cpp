@@ -41,55 +41,59 @@ bool MapSelectionState::update(double delta)
 	SDL_RenderSetScale(m_renderer, 1, 1);
 	SDL_RenderCopy(m_renderer, m_background, nullptr, nullptr);
 
-	const unsigned int w = 260;
-	const unsigned int width = source.size() * w;
+	const unsigned int width = 3 * ITEM_WIDTH;
+	const unsigned int height = (source.size() / 3) * ITEM_HEIGHT;
 	const unsigned int unlockedLevels = m_settingsHandler
 		.settings()
 		.unlockedLevels();
 
-	for (unsigned int i = 0; i < source.size(); i++)
+	for (unsigned int i = 0; i < source.size(); i += 3)
 	{
-		const int x = i * w;
-		const int ix = (m_renderer.width() - width + (w - 256)) / 2 + x;
-		const int iy = (m_renderer.height() - 192) / 2;
-
-		MapSelectionItem &map = source[i];
-
-		SDL_Rect target = { ix, iy, 256, 192 };
-		SDL_RenderCopy(m_renderer, map.preview(), nullptr, &target);
-
-		SDL_Rect lockedRect = { ix, iy, 256, 192 };
-		SDL_Rect unlockedRect = { ix, iy + 75, 256, 42 };
-		SDL_Rect overlayRect = unlockedLevels < i ? lockedRect : unlockedRect;
-
-		SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255 * 0.7);
-		SDL_RenderFillRect(m_renderer, &overlayRect);
-
-		SDL_Color color = { 255, 255, 255, SDL_ALPHA_OPAQUE };
-		SDL_Surface *surface = TTF_RenderText_Solid(m_font, map.title().c_str(), color);
-		SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surface);
-		SDL_Rect dest = { 0, 0, 0, 0 };
-
-		SDL_QueryTexture(texture, nullptr, nullptr, &dest.w, &dest.h);
-
-		dest.x = target.x + (target.w - dest.w) / 2;
-		dest.y = target.y + (target.h - dest.h) / 2;
-
-		SDL_RenderCopy(m_renderer, texture, nullptr, &dest);
-		SDL_FreeSurface(surface);
-		SDL_DestroyTexture(texture);
-
-		if (i == m_selectedMap)
+		for (unsigned ii = 0; ii < 3 && ii < source.size() - i; ii++)
 		{
-			SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-			SDL_RenderDrawRect(m_renderer, &target);
+			const int y = i / 3 * ITEM_HEIGHT;
+			const int x = ii * ITEM_WIDTH;
+			const int ix = (m_renderer.width() - width + (ITEM_WIDTH - 256)) / 2 + x;
+			const int iy = (m_renderer.height() - height + (ITEM_HEIGHT - 192)) / 2 + y;
 
-			target.x -= 1;
-			target.y -= 1;
-			target.w += 2;
-			target.h += 2;
+			MapSelectionItem &map = source[i + ii];
 
-			SDL_RenderDrawRect(m_renderer, &target);
+			SDL_Rect target = { ix, iy, 256, 192 };
+			SDL_RenderCopy(m_renderer, map.preview(), nullptr, &target);
+
+			SDL_Rect lockedRect = { ix, iy, 256, 192 };
+			SDL_Rect unlockedRect = { ix, iy + 75, 256, 42 };
+			SDL_Rect overlayRect = unlockedLevels < (i + ii) ? lockedRect : unlockedRect;
+
+			SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255 * 0.7);
+			SDL_RenderFillRect(m_renderer, &overlayRect);
+
+			SDL_Color color = { 255, 255, 255, SDL_ALPHA_OPAQUE };
+			SDL_Surface *surface = TTF_RenderText_Solid(m_font, map.title().c_str(), color);
+			SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+			SDL_Rect dest = { 0, 0, 0, 0 };
+
+			SDL_QueryTexture(texture, nullptr, nullptr, &dest.w, &dest.h);
+
+			dest.x = target.x + (target.w - dest.w) / 2;
+			dest.y = target.y + (target.h - dest.h) / 2;
+
+			SDL_RenderCopy(m_renderer, texture, nullptr, &dest);
+			SDL_FreeSurface(surface);
+			SDL_DestroyTexture(texture);
+
+			if ((i + ii) == m_selectedMap)
+			{
+				SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
+				SDL_RenderDrawRect(m_renderer, &target);
+
+				target.x -= 1;
+				target.y -= 1;
+				target.w += 2;
+				target.h += 2;
+
+				SDL_RenderDrawRect(m_renderer, &target);
+			}
 		}
 	}
 
@@ -140,25 +144,44 @@ void MapSelectionState::onMouseMove(SDL_MouseMotionEvent event)
 
 	std::vector<MapSelectionItem> &source = m_mapSelectionToken.items();
 
-	const unsigned int w = 260;
-	const unsigned int width = source.size() * w;
+	const unsigned int width = 3 * ITEM_WIDTH;
+	const unsigned int height = (source.size() / 3) * ITEM_HEIGHT;
 	const unsigned int unlockedLevels = m_settingsHandler
 		.settings()
 		.unlockedLevels();
 
-	for (unsigned int i = 0; i < source.size() && i <= unlockedLevels; i++)
+	for (unsigned int i = 0; i < source.size(); i += 3)
 	{
-		const int x = i * w;
-		const int ix = (m_renderer.width() - width + (w - 256)) / 2 + x;
-		const int iy = (m_renderer.height() - 192) / 2;
-
-		if (event.x > ix && event.x < ix + w &&
-			event.y > iy && event.y < iy + 192)
+		for (unsigned ii = 0; ii < 3 && ii < source.size() - i && (i + ii) <= unlockedLevels; ii++)
 		{
-			m_selectedMap = i;
-			m_itemUnderCursor = true;
+			const int y = i / 3 * ITEM_HEIGHT;
+			const int x = ii * ITEM_WIDTH;
+			const int ix = (m_renderer.width() - width + (ITEM_WIDTH - 256)) / 2 + x;
+			const int iy = (m_renderer.height() - height + (ITEM_HEIGHT - 192)) / 2 + y;
+
+			if (event.x > ix && event.x < ix + ITEM_WIDTH &&
+				event.y > iy && event.y < iy + 192)
+			{
+				m_selectedMap = (i + ii);
+				m_itemUnderCursor = true;
+			}
 		}
 	}
+
+//	for (unsigned int i = 0; i < source.size() && i <= unlockedLevels; i++)
+//	{
+//		const int x = i * ITEM_WIDTH;
+//		const int y = i / 3 * ITEM_HEIGHT;
+//		const int ix = (m_renderer.width() - width + (ITEM_WIDTH - 256)) / 2 + x;
+//		const int iy = (m_renderer.height() - 192) / 2;
+
+//		if (event.x > ix && event.x < ix + ITEM_WIDTH &&
+//			event.y > iy && event.y < iy + 192)
+//		{
+//			m_selectedMap = i;
+//			m_itemUnderCursor = true;
+//		}
+//	}
 }
 
 void MapSelectionState::onControllerButtonDown(SDL_ControllerButtonEvent event)

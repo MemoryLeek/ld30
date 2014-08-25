@@ -15,6 +15,9 @@ class MapSelectionToken;
 
 class MapSelectionState : public IState
 {
+	const int ITEM_WIDTH = 270;
+	const int ITEM_HEIGHT = 206;
+
 	public:
 		MapSelectionState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken);
 		~MapSelectionState();

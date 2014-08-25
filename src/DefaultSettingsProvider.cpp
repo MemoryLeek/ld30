@@ -7,7 +7,7 @@ Settings DefaultSettingsProvider::load()
 	std::cout << "DEBUG: Loading defaults" << std::endl;
 
 	Settings settings;
-	settings.setResolution(800, 600);
+	settings.setResolution(1024, 768);
 	settings.setSoundVolume(128);
 	settings.setMusicVolume(128);
 
