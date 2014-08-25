@@ -49,7 +49,7 @@ bool MapSelectionState::update(double delta)
 	SDL_RenderCopy(m_renderer, m_background, nullptr, nullptr);
 
 	const unsigned int width = 3 * ITEM_WIDTH;
-	const unsigned int height = (source.size() / 3) * ITEM_HEIGHT;
+	const unsigned int height = ITEM_HEIGHT;
 
 	for (unsigned int i = 0; i < source.size(); i += 3)
 	{
@@ -204,7 +204,7 @@ void MapSelectionState::onMouseMove(SDL_MouseMotionEvent event)
 	const Settings &settings = m_settingsHandler.settings();
 
 	const unsigned int width = 3 * ITEM_WIDTH;
-	const unsigned int height = (source.size() / 3) * ITEM_HEIGHT;
+	const unsigned int height = ITEM_HEIGHT;
 
 	for (unsigned int i = 0; i < source.size(); i += 3)
 	{
