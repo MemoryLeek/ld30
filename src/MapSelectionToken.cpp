@@ -14,7 +14,7 @@ MapSelectionToken::MapSelectionToken(Renderer &renderer, SettingsHandler &settin
 		MapSelectionItem("Level 3", "resources/maps/level3.level", renderer),
 		MapSelectionItem("Level 4", "resources/maps/level4.level", renderer),
 		MapSelectionItem("Level 5", "resources/maps/level5.level", renderer),
-		MapSelectionItem("Level 5", "resources/maps/level5.level", renderer)
+		MapSelectionItem("Level 6", "resources/maps/level6.level", renderer)
 	};
 }
 

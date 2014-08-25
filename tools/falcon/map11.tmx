@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="54" height="55" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tileset2" tilewidth="32" tileheight="32">
+  <image source="tileset2.png" width="512" height="512"/>
+ </tileset>
+ <layer name="Foreground" width="54" height="55">
+  <data encoding="base64" compression="zlib">
+   eJztmEFOFUEQhps9CiFxp0ICS32Q6AqDj5CwURPfSjiBegJ1q55APImyUU+g7ICNuhNPAFzAv+NUXlmp6m7fY3qGpBbfYqqrO/0nVTXVNRNCmHEcx3Ecx7lkzIIr4GqCOTDfg7vy+3K0u90CN8DNBItgqQeatPtad4t+t8E6uAcGDLKtgrUeaOL3pTuuZnQ9AA+FLrL1UdcTsCt08Zy6y/x2Gt+B+I5774R+5BrpegqeC10yRrcbv2eN70B8b4X+5BrpegFeKbp4jA4av5eNr/bN47nLmEzlV1zbAPcnYAg2O9bF7z5kuh6Bx1Mw6lCXdvd4n5L/8DS0XVes/zKvGYfgCByHcV3QbDn4nrbrivVf5nn3C5yA32Gch5otB9/Tdl2RfQTVDZ53p+AMnIdxHmo24hpYUOx8T9t1RfYRpGvSmrHSnBfPWc74tllXrDqv5R3lXmqNzpPn1O77U3Eo+/fFwrUYv/S/uJ7wraFLxiHZP4HP4EvhGo/fUfi3/+R9ZNu9iBWHZP8KvoGDwjXrfN5H1tSlxWG0fwc/wM/CNconyiHef1IfWVOXFoeyNxwWrFE+yXyr3TtacWjV+VFmjdfDtYxvF3E4aX9I70/+xuyiP0zFoewPiVxPGN+fWxmfGv2h9k7R+kPif3pCi7Zrh/VO0fpDQusJ+/butN4p074pu353lswPczWEasCssM8n9taqG6n5YW7Wq/WN0baZ2FujbljzQ0u7VQOi32vwBrxluvjeWrPh1PyQ+6TmUlQDot87sAfeG7pqzYZT80OipIZQDbV0ybl+LV25+XzpWR/AR7AvdMm5fg1d1vxwmrN4bGox3Pb/y/ovX8RZqR65Ru/rOI7jOI7j/OUPC1jinQ==
+  </data>
+ </layer>
+ <layer name="Collision" width="54" height="55">
+  <data encoding="base64" compression="zlib">
+   eJztlMkRBCEIAE11809iExBFDg+mu4rHeEHXKK0BAAAA3MHvkjjtlXFmppe2NmlPbx6veKR6NV6a75u9pD2ra/Hyo63de/6NXjsiy+t07PbqrRuNreRrLd9rNv6y1yhfNS/vezn9vqTxCl7a+7Eyp1n7klfvf8y+I9H2w9W5m7yq/q+q70vKWbEfVvUa1RedPxJtP3zVy3KfIvNH431HUZHlJY1/wcty1mzvqX5o8ZrtlXJGgpf//VjuqZVdfUPK9ZLXSt3ZXqcDLwAAAIBc/kY2NaE=
+  </data>
+ </layer>
+ <objectgroup name="Object Layer" width="54" height="55">
+  <object name="Spawn" type="spawn" x="864" y="864" width="32" height="32"/>
+  <object name="Goal" type="goal" x="640" y="864" width="32" height="32"/>
+  <object name="Goal" type="goal" x="640" y="864" width="32" height="32"/>
+ </objectgroup>
+</map>
