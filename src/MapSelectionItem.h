@@ -14,7 +14,7 @@ class MapSelectionItem
 
 		std::string title() const;
 
-		ImageWrapper preview();
+		ImageWrapper preview() const;
 
 		Level &level1();
 		Level &level2();

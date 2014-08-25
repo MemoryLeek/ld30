@@ -15,7 +15,7 @@ StringToken::StringToken(int value)
 StringToken::StringToken(float value)
 {
 	std::ostringstream out;
-	out << std::setprecision(2) << value;
+	out << std::setprecision(3) << value;
 
 	m_value = out.str();
 }

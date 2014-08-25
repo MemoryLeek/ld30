@@ -8,6 +8,7 @@
 #include "SettingsHandler.h"
 #include "Renderer.h"
 #include "Util.h"
+#include "StringEx.h"
 
 MapSelectionState::MapSelectionState(StateHandler &stateHandler, Renderer &renderer, SettingsHandler &settingsHandler, MapSelectionToken &mapSelectionToken)
 	: m_stateHandler(stateHandler)
@@ -23,7 +24,8 @@ MapSelectionState::MapSelectionState(StateHandler &stateHandler, Renderer &rende
 
 	m_selectedMap = settings.lastSelectedLevel();
 	m_background = SDL_CreateTextureFromSurface(renderer, surface);
-	m_font = TTF_OpenFont("resources/ttf/MunroSmall.ttf", 40);
+	m_mainFont = TTF_OpenFont("resources/ttf/MunroSmall.ttf", 40);
+	m_subFont = TTF_OpenFont("resources/ttf/MunroSmall.ttf", 20);
 
 	SDL_FreeSurface(surface);
 }
@@ -37,16 +39,14 @@ bool MapSelectionState::update(double delta)
 {
 	UNUSED(delta);
 
-	std::vector<MapSelectionItem> &source = m_mapSelectionToken.items();
+	const std::vector<MapSelectionItem> &source = m_mapSelectionToken.items();
+	const Settings &settings = m_settingsHandler.settings();
 
 	SDL_RenderSetScale(m_renderer, 1, 1);
 	SDL_RenderCopy(m_renderer, m_background, nullptr, nullptr);
 
 	const unsigned int width = 3 * ITEM_WIDTH;
 	const unsigned int height = (source.size() / 3) * ITEM_HEIGHT;
-	const unsigned int unlockedLevels = m_settingsHandler
-		.settings()
-		.unlockedLevels();
 
 	for (unsigned int i = 0; i < source.size(); i += 3)
 	{
@@ -57,31 +57,53 @@ bool MapSelectionState::update(double delta)
 			const int ix = (m_renderer.width() - width + (ITEM_WIDTH - 256)) / 2 + x;
 			const int iy = (m_renderer.height() - height + (ITEM_HEIGHT - 192)) / 2 + y;
 
-			MapSelectionItem &map = source[i + ii];
+			const bool lu = settings.isLevelUnlocked(i + ii);
+			const bool lc = settings.isLevelCompleted(i + ii);
+
+			const MapSelectionItem &map = source[i + ii];
 
 			SDL_Rect target = { ix, iy, 256, 192 };
 			SDL_RenderCopy(m_renderer, map.preview(), nullptr, &target);
 
 			SDL_Rect lockedRect = { ix, iy, 256, 192 };
-			SDL_Rect unlockedRect = { ix, iy + 75, 256, 42 };
-			SDL_Rect overlayRect = unlockedLevels < (i + ii) ? lockedRect : unlockedRect;
+			SDL_Rect unlockedRect = { ix, iy + 61, 256, 70 };
+			SDL_Rect overlayRect = lu ? unlockedRect : lockedRect;
 
 			SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255 * 0.7);
 			SDL_RenderFillRect(m_renderer, &overlayRect);
 
-			SDL_Color color = { 255, 255, 255, SDL_ALPHA_OPAQUE };
-			SDL_Surface *surface = TTF_RenderText_Solid(m_font, map.title().c_str(), color);
-			SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surface);
-			SDL_Rect dest = { 0, 0, 0, 0 };
+			SDL_Color textColor = { 255, 255, 255, SDL_ALPHA_OPAQUE };
+			SDL_Surface *levelNameSurface = TTF_RenderText_Solid(m_mainFont, map.title().c_str(), textColor);
+			SDL_Texture *levelNameTexture = SDL_CreateTextureFromSurface(m_renderer, levelNameSurface);
+			SDL_Rect levelNameTarget = { 0, 0, 0, 0 };
 
-			SDL_QueryTexture(texture, nullptr, nullptr, &dest.w, &dest.h);
+			SDL_QueryTexture(levelNameTexture, nullptr, nullptr, &levelNameTarget.w, &levelNameTarget.h);
 
-			dest.x = target.x + (target.w - dest.w) / 2;
-			dest.y = target.y + (target.h - dest.h) / 2;
+			levelNameTarget.x = target.x + (target.w - levelNameTarget.w) / 2;
+			levelNameTarget.y = target.y + (target.h - levelNameTarget.h) / 2 - 11; /* 11 is a good number */
 
-			SDL_RenderCopy(m_renderer, texture, nullptr, &dest);
-			SDL_FreeSurface(surface);
-			SDL_DestroyTexture(texture);
+			SDL_RenderCopy(m_renderer, levelNameTexture, nullptr, &levelNameTarget);
+			SDL_FreeSurface(levelNameSurface);
+			SDL_DestroyTexture(levelNameTexture);
+
+			// I take no responsibility for this horrible mess of code
+			const std::string &subString = lu ?
+				 lc ? "BEST TIME: " + StringEx::format("%1 SEC", settings.levelCompletionTime(i + ii))
+					: "NOT YET COMPLETED"
+					: "NOT YET UNLOCKED";
+
+			SDL_Surface *subSurface = TTF_RenderText_Solid(m_subFont, subString.c_str(), textColor);
+			SDL_Texture *subTexture = SDL_CreateTextureFromSurface(m_renderer, subSurface);
+			SDL_Rect subTarget = { 0, 0, 0, 0 };
+
+			SDL_QueryTexture(subTexture, nullptr, nullptr, &subTarget.w, &subTarget.h);
+
+			subTarget.x = target.x + (target.w - subTarget.w) / 2;
+			subTarget.y = levelNameTarget.y + levelNameTarget.h;
+
+			SDL_RenderCopy(m_renderer, subTexture, nullptr, &subTarget);
+			SDL_FreeSurface(subSurface);
+			SDL_DestroyTexture(subTexture);
 
 			if ((i + ii) == m_selectedMap)
 			{
@@ -143,17 +165,15 @@ void MapSelectionState::onMouseMove(SDL_MouseMotionEvent event)
 	m_itemUnderCursor = false;
 	m_selectedMap = -1;
 
-	std::vector<MapSelectionItem> &source = m_mapSelectionToken.items();
+	const std::vector<MapSelectionItem> &source = m_mapSelectionToken.items();
+	const Settings &settings = m_settingsHandler.settings();
 
 	const unsigned int width = 3 * ITEM_WIDTH;
 	const unsigned int height = (source.size() / 3) * ITEM_HEIGHT;
-	const unsigned int unlockedLevels = m_settingsHandler
-		.settings()
-		.unlockedLevels();
 
 	for (unsigned int i = 0; i < source.size(); i += 3)
 	{
-		for (unsigned ii = 0; ii < 3 && ii < source.size() - i && (i + ii) <= unlockedLevels; ii++)
+		for (unsigned ii = 0; ii < 3 && ii < source.size() - i && settings.isLevelUnlocked(i + ii); ii++)
 		{
 			const int y = i / 3 * ITEM_HEIGHT;
 			const int x = ii * ITEM_WIDTH;

@@ -22,21 +22,17 @@ void MapSelectionToken::setMapSelection(MapSelectionItem *map)
 	m_map = map;
 }
 
-void MapSelectionToken::markAsCleared()
+void MapSelectionToken::markAsCleared(float levelCompletionTime)
 {
-	const unsigned int unlockedLevels = m_settingsHandler
-		.settings()
-		.unlockedLevels();
-
 	for (unsigned int i = 0; i < m_items.size(); i++)
 	{
 		MapSelectionItem &map = m_items[i];
 
-		if (i >= unlockedLevels && m_map == &map)
+		if (m_map == &map)
 		{
 			m_settingsHandler
 				.settings()
-				.setUnlockedLevels(i + 1);
+				.markLevelAsCompleted(i, levelCompletionTime);
 		}
 	}
 }

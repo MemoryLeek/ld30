@@ -21,7 +21,7 @@ std::string MapSelectionItem::title() const
 	return m_title;
 }
 
-ImageWrapper MapSelectionItem::preview()
+ImageWrapper MapSelectionItem::preview() const
 {
 	return m_preview;
 }

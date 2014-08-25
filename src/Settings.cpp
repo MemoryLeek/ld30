@@ -1,10 +1,12 @@
+#include <iostream>
+
 #include "Settings.h"
+#include "Util.h"
 
 Settings::Settings()
 	: m_width(0)
 	, m_height(0)
 	, m_lastSelectedLevel(0)
-	, m_unlockedLevels(0)
 {
 
 }
@@ -36,7 +38,22 @@ int Settings::lastSelectedLevel() const
 
 int Settings::unlockedLevels() const
 {
-	return m_unlockedLevels;
+	return m_levelCompletionTimes.size();
+}
+
+bool Settings::isLevelUnlocked(unsigned int index) const
+{
+	return m_levelCompletionTimes.size() >= index;
+}
+
+bool Settings::isLevelCompleted(unsigned int index) const
+{
+	return m_levelCompletionTimes.size() >= (index + 1);
+}
+
+float Settings::levelCompletionTime(unsigned int index) const
+{
+	return m_levelCompletionTimes[index];
 }
 
 void Settings::setResolution(int width, int height)
@@ -60,9 +77,19 @@ void Settings::setLastSelectedLevel(int lastSelectedLevel)
 	m_lastSelectedLevel = lastSelectedLevel;
 }
 
-void Settings::setUnlockedLevels(int unlockedLevels)
+void Settings::markLevelAsCompleted(unsigned int index, float levelCompletionTime)
 {
-	m_unlockedLevels = unlockedLevels;
+	if (m_levelCompletionTimes.size() >= (index + 1))
+	{
+		if (m_levelCompletionTimes[index] >= levelCompletionTime)
+		{
+			m_levelCompletionTimes[index] = levelCompletionTime;
+		}
+	}
+	else
+	{
+		m_levelCompletionTimes << levelCompletionTime;
+	}
 }
 
 BinaryStream &operator >>(BinaryStream &stream, Settings &settings)
@@ -72,7 +99,7 @@ BinaryStream &operator >>(BinaryStream &stream, Settings &settings)
 	stream >> settings.m_soundVolume;
 	stream >> settings.m_musicVolume;
 	stream >> settings.m_lastSelectedLevel;
-	stream >> settings.m_unlockedLevels;
+	stream >> settings.m_levelCompletionTimes;
 
 	return stream;
 }
@@ -84,7 +111,7 @@ BinaryStream &operator <<(BinaryStream &stream, const Settings &settings)
 	stream << settings.m_soundVolume;
 	stream << settings.m_musicVolume;
 	stream << settings.m_lastSelectedLevel;
-	stream << settings.m_unlockedLevels;
+	stream << settings.m_levelCompletionTimes;
 
 	return stream;
 }

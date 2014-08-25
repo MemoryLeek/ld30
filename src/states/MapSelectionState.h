@@ -44,7 +44,9 @@ class MapSelectionState : public IState
 		SettingsHandler &m_settingsHandler;
 		MapSelectionToken &m_mapSelectionToken;
 
-		TTF_Font *m_font;
+		TTF_Font *m_mainFont;
+		TTF_Font *m_subFont;
+
 		SDL_Texture *m_background;
 
 		unsigned int m_selectedMap;

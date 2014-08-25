@@ -47,4 +47,18 @@ BinaryStream &operator >>(BinaryStream &stream, std::vector<T> &vector)
 	return stream;
 }
 
+template<class T>
+BinaryStream &operator <<(BinaryStream &stream, const std::vector<T> &vector)
+{
+	unsigned int size = vector.size();
+	stream << size;
+
+	for(const T &t : vector)
+	{
+		stream << t;
+	}
+
+	return stream;
+}
+
 #endif // BINARYSTREAM_H

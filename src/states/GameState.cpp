@@ -350,7 +350,7 @@ void GameState::drawLevel(Level &level, double delta)
 						m_scoreboard->setTime(m_timeSinceRespawn);
 						m_showScoreboard = true;
 
-						m_mapHandler.markAsCleared();
+						m_mapHandler.markAsCleared(m_timeSinceRespawn);
 					}
 				}
 			}

@@ -11,7 +11,7 @@ class MapSelectionToken
 		MapSelectionToken(Renderer &renderer, SettingsHandler &settingsHandler);
 
 		void setMapSelection(MapSelectionItem *map);
-		void markAsCleared();
+		void markAsCleared(float levelCompletionTime);
 
 		std::vector<MapSelectionItem> &items();
 
