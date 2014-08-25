@@ -183,6 +183,7 @@ void MapSelectionState::onMouseButtonDown(SDL_MouseButtonEvent event)
 			if (m_itemUnderCursor)
 			{
 				activate();
+				SoundHandler::play(SoundHandler::Sound::Click);
 			}
 
 			break;
@@ -262,6 +263,7 @@ void MapSelectionState::onMouseWheel(SDL_MouseWheelEvent event)
 
 	SoundHandler::setSoundVolume(soundVolume * 1.28f);
 	SoundHandler::setMusicVolume(musicVolume * 1.28f);
+	SoundHandler::play(SoundHandler::Sound::Click);
 }
 
 void MapSelectionState::onControllerButtonDown(SDL_ControllerButtonEvent event)
