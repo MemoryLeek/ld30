@@ -12,7 +12,7 @@ Scoreboard::Scoreboard(Renderer &renderer)
 {
 	m_font = TTF_OpenFont("resources/ttf/MunroSmall.ttf", 72);
 
-	SDL_Surface *image = IMG_Load("resources/scoreboard.png");
+	SDL_Surface *image = IMG_Load("resources/gfx/scoreboard.png");
 	m_boardTexture = SDL_CreateTextureFromSurface(renderer, image);
 	SDL_FreeSurface(image);
 

@@ -23,8 +23,8 @@ class SoundHandler
 		{
 			enum Value
 			{
-				Ambient,
-				Ambient2
+				Aztec,
+				Tech
 			};
 		};
 

@@ -48,7 +48,7 @@ GameState::GameState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 
 	respawn();
 
-	SoundHandler::playMusic(SoundHandler::Music::Ambient);
+	SoundHandler::playMusic(SoundHandler::Music::Aztec);
 }
 
 GameState::~GameState()
@@ -391,8 +391,8 @@ SoundHandler::Music::Value GameState::getCurrentMusic()
 {
 	if (m_currentLevel == &m_level1)
 	{
-		return SoundHandler::Music::Ambient;
+		return SoundHandler::Music::Aztec;
 	}
 
-	return SoundHandler::Music::Ambient2;
+	return SoundHandler::Music::Tech;
 }

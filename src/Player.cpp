@@ -11,7 +11,7 @@ Player::Player(float x, float y, Renderer &renderer)
 	, m_dead(false)
 {
 	SpriteLoader loader(renderer);
-	loader.load("resources/character.spb", m_bundle);
+	loader.load("resources/sprites/character.sprite", m_bundle);
 }
 
 int Player::width() const

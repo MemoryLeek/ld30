@@ -114,8 +114,8 @@ void SoundHandler::init()
 		}
 		m_samples.emplace(Sound::Squish, Mix_LoadWAV("resources/sfx/squish.wav"));
 
-		m_tracks.emplace(Music::Ambient, Mix_LoadMUS("resources/ambient2.ogg"));
-		m_tracks.emplace(Music::Ambient2, Mix_LoadMUS("resources/ambient.ogg"));
+		m_tracks.emplace(Music::Aztec, Mix_LoadMUS("resources/music/aztec.ogg"));
+		m_tracks.emplace(Music::Tech, Mix_LoadMUS("resources/music/tech.ogg"));
 	}
 
 	m_loaded = true;

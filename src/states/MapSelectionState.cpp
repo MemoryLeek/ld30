@@ -17,7 +17,7 @@ MapSelectionState::MapSelectionState(StateHandler &stateHandler, Renderer &rende
 	, m_joystickReady(true)
 	, m_itemUnderCursor(false)
 {
-	SDL_Surface *surface = IMG_Load("resources/menu.png");
+	SDL_Surface *surface = IMG_Load("resources/gfx/menu.png");
 	Settings &settings = settingsHandler.settings();
 
 	m_selectedMap = settings.lastSelectedLevel();

@@ -17,7 +17,7 @@ SplashState::SplashState(StateHandler &stateHandler, Renderer &renderer, Setting
 {
 	UNUSED(settingsHandler);
 
-	SDL_Surface *image = IMG_Load("resources/logo.png");
+	SDL_Surface *image = IMG_Load("resources/gfx/logo.png");
 
 	if(!image)
 	{

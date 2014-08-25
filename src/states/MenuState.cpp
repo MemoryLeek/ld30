@@ -18,7 +18,7 @@ MenuState::MenuState(StateHandler &stateHandler, Renderer &renderer, SettingsHan
 	, m_itemUnderCursor(false)
 	, m_joystickReady(true)
 {
-	SDL_Surface *surface = IMG_Load("resources/menu.png");
+	SDL_Surface *surface = IMG_Load("resources/gfx/menu.png");
 
 	m_background = SDL_CreateTextureFromSurface(renderer, surface);
 	m_font = TTF_OpenFont("resources/ttf/MunroSmall.ttf", 20);

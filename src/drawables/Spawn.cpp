@@ -10,7 +10,7 @@ Spawn::Spawn(int x, int y, Renderer &renderer)
 	, m_y(y)
 {
 	SpriteLoader loader(renderer);
-	loader.load("resources/spawn.spb", m_bundle);
+	loader.load("resources/sprites/spawn.sprite", m_bundle);
 }
 
 int Spawn::x() const

@@ -10,7 +10,7 @@ Goal::Goal(int x, int y, Renderer &renderer)
 	, m_y(y)
 {
 	SpriteLoader loader(renderer);
-	loader.load("resources/goal.spb", m_bundle);
+	loader.load("resources/sprites/goal.sprite", m_bundle);
 }
 
 void Goal::draw(double delta, Renderer &renderer)

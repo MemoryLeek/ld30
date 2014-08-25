@@ -19,6 +19,8 @@
 
 #include "ui/Label.h"
 
+#undef main
+
 int main(int argc, char *argv[])
 {
 	std::vector<std::string> arguments(argv + 1, argv + argc);

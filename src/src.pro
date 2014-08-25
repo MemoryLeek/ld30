@@ -7,6 +7,7 @@ TARGET = world2
 INCLUDEPATH += . states ui
 CONFIG += c++11
 LIBS += -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
+DEFINES += "M_PI=3.14159265358979323846"
 
 # Input
 HEADERS += IState.h \
