@@ -23,7 +23,8 @@ class SoundHandler
 		{
 			enum Value
 			{
-				Ambient
+				Ambient,
+				Ambient2
 			};
 		};
 
@@ -33,6 +34,8 @@ class SoundHandler
 		static void setSoundVolume(int volume);
 		static void setMusicVolume(int volume);
 
+		static void update(double delta);
+
 	private:
 		static void init();
 
@@ -40,6 +43,9 @@ class SoundHandler
 		static bool m_loaded;
 		static std::map<Sound::Value, Mix_Chunk*> m_samples;
 		static std::map<Music::Value, Mix_Music*> m_tracks;
+		static Music::Value m_music;
+
+		static float m_musicPosition;
 };
 
 #endif // SOUNDHANDLER_H

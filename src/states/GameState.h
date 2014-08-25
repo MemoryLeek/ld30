@@ -7,6 +7,7 @@
 
 #include "IState.h"
 #include "Level.h"
+#include "SoundHandler.h"
 
 class Player;
 class Renderer;
@@ -40,6 +41,8 @@ class GameState : public IState
 		void drawLevel(Level &level, double delta);
 		void respawn();
 		void trySwitchLevels();
+
+		SoundHandler::Music::Value getCurrentMusic();
 
 		StateHandler &m_stateHandler;
 		Renderer &m_renderer;

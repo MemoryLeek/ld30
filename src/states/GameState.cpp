@@ -57,6 +57,8 @@ GameState::~GameState()
 
 bool GameState::update(double delta)
 {
+	SoundHandler::update(delta);
+
 	SDL_RenderSetScale(m_renderer, m_cameraScale, m_cameraScale);
 	m_renderer.setCamera(m_character, m_cameraScale);
 
@@ -288,6 +290,9 @@ void GameState::switchLevels(Level &targetLevel, bool force)
 	m_levelSwitching = false;
 	m_levelAlpha = 255;
 
+	SoundHandler::Music::Value music = getCurrentMusic();
+	SoundHandler::playMusic(music);
+
 	if(CollisionHandler::isPlayerInWall(*m_character, *m_currentLevel))
 	{
 		m_deathCamLifetime = 3;
@@ -373,10 +378,21 @@ void GameState::respawn()
 void GameState::trySwitchLevels()
 {
 	if (!m_character->isDead() &&
-		!m_levelSwitching)
+		!m_levelSwitching &&
+		!m_showScoreboard)
 	{
 		m_levelSwitching = true;
 
 		SoundHandler::play(SoundHandler::Sound::WorldSwitch);
 	}
+}
+
+SoundHandler::Music::Value GameState::getCurrentMusic()
+{
+	if (m_currentLevel == &m_level1)
+	{
+		return SoundHandler::Music::Ambient;
+	}
+
+	return SoundHandler::Music::Ambient2;
 }

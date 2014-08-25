@@ -9,6 +9,8 @@ const int SoundHandler::CHANNELS = 32;
 bool SoundHandler::m_loaded = false;
 std::map<SoundHandler::Sound::Value, Mix_Chunk*> SoundHandler::m_samples;
 std::map<SoundHandler::Music::Value, Mix_Music*> SoundHandler::m_tracks;
+float SoundHandler::m_musicPosition = 0;
+SoundHandler::Music::Value SoundHandler::m_music;
 
 void SoundHandler::play(SoundHandler::Sound::Value sound)
 {
@@ -38,6 +40,8 @@ void SoundHandler::play(SoundHandler::Sound::Value sound)
 
 void SoundHandler::playMusic(Music::Value music)
 {
+	m_music = music;
+
 	// Check that the music is loaded
 	if(m_tracks.find(music) == m_tracks.end())
 	{
@@ -45,11 +49,21 @@ void SoundHandler::playMusic(Music::Value music)
 		return;
 	}
 
-	Mix_PlayMusic(m_tracks[music], -1);
+	Mix_FadeInMusicPos(m_tracks[music], 0, 100, m_musicPosition);
+	Mix_PauseMusic();
+	Mix_HookMusicFinished([]()
+	{
+		m_musicPosition = 0;
+
+		playMusic(m_music);
+	});
 }
 
 void SoundHandler::stopMusic()
 {
+	m_musicPosition = 0;
+
+	Mix_HookMusicFinished(nullptr);
 	Mix_FadeOutMusic(1000);
 }
 
@@ -73,6 +87,13 @@ void SoundHandler::setMusicVolume(int volume)
 	Mix_VolumeMusic(volume);
 }
 
+void SoundHandler::update(double delta)
+{
+	m_musicPosition += delta;
+
+	Mix_ResumeMusic();
+}
+
 void SoundHandler::init()
 {
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) != 0)
@@ -93,7 +114,8 @@ void SoundHandler::init()
 		}
 		m_samples.emplace(Sound::Squish, Mix_LoadWAV("resources/sfx/squish.wav"));
 
-		m_tracks.emplace(Music::Ambient, Mix_LoadMUS("resources/ambient.ogg"));
+		m_tracks.emplace(Music::Ambient, Mix_LoadMUS("resources/ambient2.ogg"));
+		m_tracks.emplace(Music::Ambient2, Mix_LoadMUS("resources/ambient.ogg"));
 	}
 
 	m_loaded = true;
