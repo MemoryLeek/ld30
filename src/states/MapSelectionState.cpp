@@ -125,6 +125,8 @@ bool MapSelectionState::update(double delta)
 
 	SDL_Color textColor = { 255, 255, 255, SDL_ALPHA_OPAQUE };
 	SDL_Rect bottomRect = { 0, 768 - 30, 1024, 30 };
+
+	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255 * 0.7);
 	SDL_RenderFillRect(m_renderer, &bottomRect);
 
 	const int soundVolume = settings.soundVolume();
